@@ -1,11 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import {
-
-  GridActionsCellItem
-} from '@mui/x-data-grid-pro';
+import { GridActionsCellItem } from '@mui/x-data-grid-pro';
 import { useState, useEffect } from 'react';
-
 import TextField from '@mui/material/TextField';
 import PopUpAddForm from '../components/PopUpAddForm';
 import PopUpEdit from '../components/PopUpEdit'
@@ -19,10 +15,6 @@ export default function Events(props) {
   const [editObj, setEditObj] = useState();
   const [searchTerm, setSearchTerm] = useState("")
 
-  const changeHandle = (e) => {
-    setSearchTerm(e.target.value)
-    setIsSearch(true)
-  }
   useEffect(() => {
     console.log("search===>", searchTerm)
     const filterdEvent = props.rows.filter((event) => {
@@ -50,21 +42,20 @@ export default function Events(props) {
   }
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 80, editable: true },
-    { field: 'name', width: 180, headerName: 'Name', editable: true },
+    { field: 'id', headerName: 'ID', width: 80 },
+    { field: 'name', width: 180, headerName: 'Name' },
     {
       field: 'date',
       headerName: 'Date',
       type: 'date',
-      width: 120,
-      editable: true,
+      width: 120
     },
     {
       field: 'venue',
       headerName: 'Venue',
-      width: 220,
-      editable: true,
+      width: 220
     },
+    { field: 'guests', headerName: 'Total Guests', width: 80 },
     {
       field: 'actions',
       type: 'actions',
@@ -85,8 +76,6 @@ export default function Events(props) {
           <GridActionsCellItem
             icon={<DeleteDialog setRows={props.setRows} rows={props.rows} id={id} />}
             label="Delete"
-
-
           />,
         ];
       },
@@ -101,22 +90,20 @@ export default function Events(props) {
         sx={{
           height: 500,
           width: '100%',
-          '& .actions': {
-            color: 'text.secondary',
-          },
+          '& .actions': { color: 'text.secondary' },
           '& .textPrimary': {
             color: 'text.primary',
           },
         }}
       >
         <Box sx={{ flexGrow: 1, display: { xs: 'flex' }, justifyContent: 'space-between', mb: 2 }}>
-          <TextField onFocus={() => {setIsSearch(true) }} onBlur={() => { setIsSearch(false) }} onChange={(e) => {setSearchTerm(e.target.value);  }} id="outlined-basic" label="Search here" variant="outlined" />
+          <TextField onFocus={() => { setIsSearch(true) }} onBlur={() => { setIsSearch(false) }} onChange={(e) => { setSearchTerm(e.target.value); }} id="outlined-basic" label="Search here" variant="outlined" />
           <PopUpAddForm rows={props.rows} setRows={props.setRows} AddEvent={props.AddEvent} setAddEvent={props.setAddEvent} />
 
         </Box>
 
         <DataGrid
-          rows={isSearch && searchTerm.length>0 ? filteredEvent : props.rows}
+          rows={isSearch && searchTerm.length > 0 ? filteredEvent : props.rows}
           columns={columns}
         />
       </Box>

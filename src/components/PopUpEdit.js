@@ -64,6 +64,7 @@ export default function PopUpEdit(props) {
 
   return (
     <div>
+
       <Button variant="contained" color="success" onClick={handleClickOpen}>
         Edit
       </Button>
@@ -76,10 +77,10 @@ export default function PopUpEdit(props) {
           Edit Event
         </BootstrapDialogTitle>
         <DialogContent dividers>
-
           <FormEditLStorage setOpen={setOpen} editObj={props.editObj} id={props.id} handleClose={handleClose} rows={props.rows} setRows={props.setRows} />
         </DialogContent>
       </BootstrapDialog>
+
     </div>
   );
 }

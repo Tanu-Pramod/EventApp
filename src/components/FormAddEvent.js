@@ -20,6 +20,7 @@ export default function FormAddEvent(props) {
 
   const submitHandle = (e) => {
     e.preventDefault();
+    console.log(e);
     props.setOpen(false);
     if (values.name === "" || values.date === "" || values.venue === "") {
       alert("None of the field can be empty")

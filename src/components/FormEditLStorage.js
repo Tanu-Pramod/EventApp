@@ -49,7 +49,6 @@ export default function FormEditLStorage(props) {
           label="Event Name"
           id="name"
           onChange={(e) => handleChange(e)}
-          // onChange={(e) => setName(e.target.value)}
           value={values.name}
           sx={{ m: 1, width: '50ch' }}
 
