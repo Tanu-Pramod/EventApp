@@ -4,77 +4,126 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+
+
 
 
 export default function FormAddEvent(props) {
+  const guestValidationSchema = Yup.object({
+    email: Yup.string().email('Invalid email').required('please provide your email'),
+    contact: Yup.string().min(10, 'contact Must be of 10 digit').max(11, 'cannot be of more than 10 digit').required('Please fill in your phone number')
 
-  const [values, setValues] = useState({
-    name: '',
-    date: '',
-    venue: ''
   });
-
-  const handleChange = (e) => {
-    setValues({ ...values, id: new Date().getTime(), [e.target.id]: e.target.value });
-  };
-
-  const submitHandle = (e) => {
-    e.preventDefault();
-    console.log(e);
-    props.setOpen(false);
-    if (values.name === "" || values.date === "" || values.venue === "") {
-      alert("None of the field can be empty")
-      return false;
-    }
-    else {
-      props.setRows([...props.rows, values]);
-      localStorage.setItem("event_list", JSON.stringify([...props.rows, values]));
-      setValues({
-        name: '',
-        date: '',
-        venue: ''
-      });
-    }
-
+  const formikField = {
+    width: '100%'
   }
+
+
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
 
-      <form onSubmit={(e) => submitHandle(e)}>
-        <TextField
-          label="Event Name"
-          id="name"
-          onChange={(e) => handleChange(e)}
-          value={values.name}
-          sx={{ m: 1, width: '50ch' }}
+      {
+        props.guestPage ? <Formik
+          initialValues={{
+            id: new Date().getTime(),
+            name: '',
+            email: '',
+            contact: ''
+          }}
+          onSubmit={(values, { setSubmitting }) => {
 
-        />
-        <TextField
-          label="Date"
-          sx={{ m: 1, width: '50ch' }}
-          type="date"
-          id="date"
-          onChange={(e) => handleChange(e)}
-          value={values.date}
-          InputProps={{
-            startAdornment: <InputAdornment position="start"></InputAdornment>,
+            props.setOpen(false);
+            props.setGuest([...props.guest, values]);
+            localStorage.setItem("guest_list", JSON.stringify([...props.guest, values]));
+            setSubmitting(false);
+
+          }}
+          validationSchema={guestValidationSchema}>
+          {() => (
+            <Form className='formikForm'>
+
+              <Field
+                placeholder="Guest Name"
+                type="text"
+                name="name"
+                className='formikField'
+              />
+              <ErrorMessage name="name" component="div" />
+              <Field
+                placeholder="Email"
+                type="email"
+                name="email"
+                className='formikField'
+              />
+              <ErrorMessage name="email" component="div" />
+              <Field
+                placeholder="Contact"
+                type="text"
+                name="contact"
+                className='formikField'
+              />
+              <ErrorMessage name="contact" component="div" />
+              <Box>
+                <Button type='submit'>
+                  Save
+                </Button>
+              </Box>
+            </Form>
+          )
+          }
+        </Formik> : <Formik
+          initialValues={{
+            id: new Date().getTime(),
+            name: '',
+            date: '',
+            venue: ''
+          }}
+          onSubmit={(values, { setSubmitting }) => {
+
+            props.setOpen(false);
+            props.setRows([...props.rows, values]);
+            localStorage.setItem("event_list", JSON.stringify([...props.rows, values]));
+            setSubmitting(false);
+
           }}
 
-        />
-        <TextField
-          label="Venue"
-          id="venue"
-          onChange={(e) => handleChange(e)}
-          value={values.venue}
-          sx={{ m: 1, width: '50ch' }}
+        >{() => (
+          <Form >
+            <Field
+              placeholder="Event Name"
+              type="text"
+              name="name"
+              className='formikField'
 
-        />
-        <Box>
-          <Button type='submit'>
-            Save
-          </Button>
-        </Box>
-      </form>
+            />
+            <ErrorMessage name="name" component="div" />
+            <Field
+              placeholder="Date"
+              type="date"
+              name="date"
+              className='formikField'
+            />
+            <ErrorMessage name="venue" component="div" />
+            <Field
+              placeholder="Venue"
+              type="text"
+              name="venue"
+              className='formikField'
+            />
+            <ErrorMessage name="contact" component="div" />
+            <Box>
+              <Button type='submit'>
+                Save
+              </Button>
+            </Box>
+          </Form>
+        )
+          }
+        </Formik>
+      }
+
     </Box>
   );
 }

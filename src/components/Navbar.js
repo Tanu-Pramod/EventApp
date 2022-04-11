@@ -18,7 +18,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -27,6 +27,10 @@ const ResponsiveAppBar = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+  const handleClick = (page)=>{
+    console.log("Page",page);
+  }
+
 
 
 
@@ -79,7 +83,7 @@ const ResponsiveAppBar = () => {
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">
                     
-                    <Link to={`/${page}`} style={{ textDecoration: "none", color: 'white' }}>{page}</Link>
+                    <Link onClick={handleClick(page)} to={`/${page}`} style={{ textDecoration: "none", color: 'black' }}>{page}</Link>
                   </Typography>
                 </MenuItem>
               ))}
@@ -100,7 +104,7 @@ const ResponsiveAppBar = () => {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                <Link to={`/${page}`} style={{ textDecoration: "none", color: 'white' }}>{page}</Link>
+                <Link onClick={handleClick(page)}  to={`/${page}`} style={{ textDecoration: "none", color: 'white' }}>{page}</Link>
               </Button>
             ))}
           </Box>

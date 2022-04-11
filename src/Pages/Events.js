@@ -7,11 +7,12 @@ import PopUpAddForm from '../components/PopUpAddForm';
 import PopUpEdit from '../components/PopUpEdit'
 import { DataGrid } from '@mui/x-data-grid';
 import DeleteDialog from '../components/DeleteDialogMui';
+import ShowGuestDialog from '../components/ShowGuestDialog';
+
 
 export default function Events(props) {
   const [isSearch, setIsSearch] = useState(false);
   const [filteredEvent, setFilteredEvent] = useState()
-  console.log("isSearch===>", isSearch)
   const [editObj, setEditObj] = useState();
   const [searchTerm, setSearchTerm] = useState("")
 
@@ -30,7 +31,7 @@ export default function Events(props) {
     setFilteredEvent(filterdEvent)
   }, [searchTerm])
 
-
+  props.setGuestPage(false);
   const editHandle = (id) => {
     const editList = props.rows.filter((row) => {
       return row.id === id
@@ -41,6 +42,7 @@ export default function Events(props) {
     })
   }
 
+ 
   const columns = [
     { field: 'id', headerName: 'ID', width: 80 },
     { field: 'name', width: 180, headerName: 'Name' },
@@ -60,7 +62,7 @@ export default function Events(props) {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
-      width: 200,
+      width: 300,
       cellClassName: 'actions',
       getActions: ({ id }) => {
 
@@ -73,13 +75,20 @@ export default function Events(props) {
 
             color="inherit"
           />,
-          <GridActionsCellItem
-            icon={<DeleteDialog setRows={props.setRows} rows={props.rows} id={id} />}
-            label="Delete"
-          />,
+        <GridActionsCellItem
+        icon={<DeleteDialog setRows={props.setRows} rows={props.rows} id={id} />}
+        label="Delete"
+    />,
+    //   <GridActionsCellItem
+    //   icon={<ShowGuestDialog setGuestPage={props.setGuestPage} guestPage={props.guestPage} guest={props.guest} setGuest={props.setGuest}/>}
+    //   label="Show Guests"
+    // />
+        
+        
         ];
       },
     },
+
   ];
 
   return (
@@ -98,7 +107,7 @@ export default function Events(props) {
       >
         <Box sx={{ flexGrow: 1, display: { xs: 'flex' }, justifyContent: 'space-between', mb: 2 }}>
           <TextField onFocus={() => { setIsSearch(true) }} onBlur={() => { setIsSearch(false) }} onChange={(e) => { setSearchTerm(e.target.value); }} id="outlined-basic" label="Search here" variant="outlined" />
-          <PopUpAddForm rows={props.rows} setRows={props.setRows} AddEvent={props.AddEvent} setAddEvent={props.setAddEvent} />
+          <PopUpAddForm rows={props.rows} setRows={props.setRows} guestPage={props.guestPage} />
 
         </Box>
 

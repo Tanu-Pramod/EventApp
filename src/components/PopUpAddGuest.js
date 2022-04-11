@@ -9,9 +9,7 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-import FormEditLStorage from './FormEditLStorage';
-import { Link } from 'react-router-dom'
-
+import FormAddEvent from './FormAddEvent';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -23,6 +21,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 const BootstrapDialogTitle = (props) => {
+
+
   const { children, onClose, ...other } = props;
 
   return (
@@ -51,9 +51,8 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function PopUpEdit(props) {
+export default function PopUpAddForm(props) {
   const [open, setOpen] = React.useState(false);
-
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -64,9 +63,8 @@ export default function PopUpEdit(props) {
 
   return (
     <div>
-
       <Button variant="contained" color="success" onClick={handleClickOpen}>
-        Edit
+        Add Guest
       </Button>
       <BootstrapDialog
         onClose={handleClose}
@@ -74,14 +72,14 @@ export default function PopUpEdit(props) {
         open={open}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          {props.guestPage ? "Edit Guest" :"Edit Event" }
-         
+          Add Guest
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <FormEditLStorage setOpen={setOpen} editObj={props.editObj} id={props.id} handleClose={handleClose} rows={props.rows} setRows={props.setRows} guestPage={props.guestPage} guest={props.guest} setGuest={props.setGuest} />
-        </DialogContent>
-      </BootstrapDialog>
+          <FormAddEvent setOpen={setOpen} rows={props.rows} setRows={props.setRows} />
 
+        </DialogContent>
+
+      </BootstrapDialog>
     </div>
   );
 }
