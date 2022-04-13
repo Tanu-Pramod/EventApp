@@ -10,7 +10,8 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import FormAddEvent from './FormAddEvent';
-import FormAddGuest from './FormAddGuest';
+
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -76,6 +77,7 @@ export default function PopUpAddForm(props) {
         {props.guestPage? "Add Guest":"Add Event"}
         </BootstrapDialogTitle>
         <DialogContent dividers>
+          
            <FormAddEvent setOpen={setOpen} guestPage={props.guestPage} rows={props.rows} setRows={props.setRows} guest={props.guest} setGuest={props.setGuest}  />
           
 

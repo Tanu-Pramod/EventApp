@@ -28,7 +28,7 @@ const ResponsiveAppBar = () => {
     setAnchorElNav(null);
   };
   const handleClick = (page)=>{
-    console.log("Page",page);
+    // console.log("Page",page);
   }
 
 

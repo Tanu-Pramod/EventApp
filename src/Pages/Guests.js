@@ -7,6 +7,10 @@ import PopUpAddForm from '../components/PopUpAddForm';
 import PopUpEdit from '../components/PopUpEdit'
 import { DataGrid } from '@mui/x-data-grid';
 import DeleteDialog from '../components/DeleteDialogMui';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
+
 
 
 export default function Guests(props) {
@@ -61,11 +65,18 @@ export default function Guests(props) {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
-      width: 200,
+      width: 270,
       cellClassName: 'actions',
       getActions: ({ id }) => {
 
         return [
+          <GridActionsCellItem
+            icon={ <Button variant="contained" color="success" >
+        
+            View
+           </Button>}
+            label="View"
+          />,
           <GridActionsCellItem
             icon={<PopUpEdit guestPage={props.guestPage} editObj={editObj} id={id} guest={props.guest} setGuest={props.setGuest} />}
             label="Edit"
@@ -102,7 +113,24 @@ export default function Guests(props) {
       >
         <Box sx={{ flexGrow: 1, display: { xs: 'flex' }, justifyContent: 'space-between', mb: 2 }}>
           <TextField onFocus={() => { setIsSearch(true) }} onBlur={() => { setIsSearch(false) }} onChange={(e) => { setSearchTerm(e.target.value); }} id="outlined-basic" label="Search here" variant="outlined" />
-          <PopUpAddForm guest={props.guest} setGuest={props.setGuest} guestPage={props.guestPage} />
+          {/* <PopUpAddForm guest={props.guest} setGuest={props.setGuest} guestPage={props.guestPage} /> */}
+          
+
+
+
+    <Stack direction="row">
+    <Link to='/GuestStepperForm'>
+     
+      <Button variant="contained" color="success" >
+        
+       Add Guest
+      </Button>
+      </Link>
+     
+    </Stack>
+
+
+
 
         </Box>
 

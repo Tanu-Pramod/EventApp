@@ -4,64 +4,73 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
 
 export default function FormAddGuest(props) {
+  const guestValidationSchema = Yup.object({
+    name: Yup.string().required('Please enter the guest name'),
+    email: Yup.string().email('Invalid email').required('please provide your email'),
+    contact: Yup.string().min(10, 'contact Must be of 10 digit').max(11, 'cannot be of more than 10 digit').required('Please fill in your phone number')
 
-  const [values, setValues] = useState({
-    name: '',
-    email: ''
   });
-
-  const handleChange = (e) => {
-    setValues({ ...values, id: new Date().getTime(), [e.target.id]: e.target.value });
-  };
-
-  const submitHandle = (e) => {
-    e.preventDefault();
-    console.log(e);
-    props.setOpen(false);
-    if (values.name === "" || values.email === "") {
-      alert("None of the field can be empty")
-      return false;
-    }
-    else {
-      props.setGuest([...props.guest, values]);
-      localStorage.setItem("guest_list", JSON.stringify([...props.guest, values]));
-      setValues({
-        name: '',
-        email: ''
-      });
-    }
-
-  }
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+    <Box sx={{ display: 'flex', flexWrap: 'wrap',marginTop:'20px' }}>
+      
 
-      <form onSubmit={(e) => submitHandle(e)}>
-        <TextField
-          label="Full Name"
-          id="name"
-          onChange={(e) => handleChange(e)}
-          value={values.name}
-          sx={{ m: 1, width: '50ch' }}
+<Formik
+          initialValues={{
+            id: new Date().getTime(),
+            name: '',
+            email: '',
+            contact: ''
+          }}
+          onSubmit={(values, { setSubmitting }) => {
 
-        />
-       
-        <TextField
-          label="Email"
-          id="email"
-          onChange={(e) => handleChange(e)}
-          value={values.email}
-          sx={{ m: 1, width: '50ch' }}
+            props.setOpen(false);
+            props.setGuest([...props.guest, values]);
+            localStorage.setItem("guest_list", JSON.stringify([...props.guest, values]));
+            setSubmitting(false);
+            
 
-        />
-        <Box>
-          <Button type='submit'>
-            Save
-          </Button>
-        </Box>
-      </form>
+          }}
+          validationSchema={guestValidationSchema}>
+          {() => (
+            <Form >
+
+              <Field
+                placeholder="Guest Name"
+                type="text"
+                name="name"
+                className='formikFieldGuest'
+              />
+              <ErrorMessage name="name" component="div" />
+              <Field
+                placeholder="Email"
+                type="email"
+                name="email"
+                className="formikFieldGuest"
+                
+              />
+              <ErrorMessage name="email" component="div" />
+              <Field
+                placeholder="Contact"
+                type="text"
+                name="contact"
+                className="formikFieldGuest"
+              
+              />
+              <ErrorMessage name="contact" component="div" />
+              <Box>
+                <Button type='submit'>
+                  Save
+                </Button>
+              </Box>
+            </Form>
+          )
+          }
+        </Formik>
     </Box>
   );
 }

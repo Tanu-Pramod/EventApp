@@ -7,7 +7,7 @@ import PopUpAddForm from '../components/PopUpAddForm';
 import PopUpEdit from '../components/PopUpEdit'
 import { DataGrid } from '@mui/x-data-grid';
 import DeleteDialog from '../components/DeleteDialogMui';
-import ShowGuestDialog from '../components/ShowGuestDialog';
+
 
 
 export default function Events(props) {
@@ -62,7 +62,7 @@ export default function Events(props) {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
-      width: 300,
+      width: 200,
       cellClassName: 'actions',
       getActions: ({ id }) => {
 
@@ -79,10 +79,7 @@ export default function Events(props) {
         icon={<DeleteDialog setRows={props.setRows} rows={props.rows} id={id} />}
         label="Delete"
     />,
-    //   <GridActionsCellItem
-    //   icon={<ShowGuestDialog setGuestPage={props.setGuestPage} guestPage={props.guestPage} guest={props.guest} setGuest={props.setGuest}/>}
-    //   label="Show Guests"
-    // />
+  
         
         
         ];

@@ -20,7 +20,7 @@ export default function FormEditLStorage(props) {
     date: props.editObj.date,
     venue: props.editObj.venue
   });
-  console.log("valueesss", values)
+ 
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.id]: e.target.value });

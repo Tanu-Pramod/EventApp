@@ -11,108 +11,66 @@ import * as Yup from 'yup';
 
 
 export default function FormAddEvent(props) {
-  const guestValidationSchema = Yup.object({
-    email: Yup.string().email('Invalid email').required('please provide your email'),
-    contact: Yup.string().min(10, 'contact Must be of 10 digit').max(11, 'cannot be of more than 10 digit').required('Please fill in your phone number')
+
+  const eventValidationSchema = Yup.object({
+    name: Yup.string().required('please enter the event name'),
+    date: Yup.string().required('please select the date'),
+    venue: Yup.string().required('Please enter the venue')
 
   });
-  const formikField = {
-    width: '100%'
-  }
-
-
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
 
-      {
-        props.guestPage ? <Formik
-          initialValues={{
-            id: new Date().getTime(),
-            name: '',
-            email: '',
-            contact: ''
-          }}
-          onSubmit={(values, { setSubmitting }) => {
+      <Formik
+        initialValues={{
+          id: new Date().getTime(),
+          name: '',
+          date: '',
+          venue: ''
+        }}
+        onSubmit={(values, { setSubmitting }) => {
 
-            props.setOpen(false);
-            props.setGuest([...props.guest, values]);
-            localStorage.setItem("guest_list", JSON.stringify([...props.guest, values]));
-            setSubmitting(false);
+          props.setOpen(false);
+          props.setRows([...props.rows, values]);
+          localStorage.setItem("event_list", JSON.stringify([...props.rows, values]));
+          setSubmitting(false);
 
-          }}
-          validationSchema={guestValidationSchema}>
-          {() => (
-            <Form className='formikForm'>
-
-              <Field
-                placeholder="Guest Name"
-                type="text"
-                name="name"
-                className='formikField'
-              />
-              <ErrorMessage name="name" component="div" />
-              <Field
-                placeholder="Email"
-                type="email"
-                name="email"
-                className='formikField'
-              />
-              <ErrorMessage name="email" component="div" />
-              <Field
-                placeholder="Contact"
-                type="text"
-                name="contact"
-                className='formikField'
-              />
-              <ErrorMessage name="contact" component="div" />
-              <Box>
-                <Button type='submit'>
-                  Save
-                </Button>
-              </Box>
-            </Form>
-          )
-          }
-        </Formik> : <Formik
-          initialValues={{
-            id: new Date().getTime(),
-            name: '',
-            date: '',
-            venue: ''
-          }}
-          onSubmit={(values, { setSubmitting }) => {
-
-            props.setOpen(false);
-            props.setRows([...props.rows, values]);
-            localStorage.setItem("event_list", JSON.stringify([...props.rows, values]));
-            setSubmitting(false);
-
-          }}
-
-        >{() => (
+        }}
+        validationSchema={eventValidationSchema}>{() => (
           <Form >
             <Field
-              placeholder="Event Name"
+            // component={TextField}
+            Placeholder="Event Name"
+              // Label="Event Name"
               type="text"
               name="name"
               className='formikField'
+              // sx={{ m: 1, width: '50ch' }}
+              
 
             />
             <ErrorMessage name="name" component="div" />
             <Field
-              placeholder="Date"
+              // component={TextField}
+              // Label="Date"
               type="date"
               name="date"
               className='formikField'
+              // sx={{ m: 1, width: '50ch' }}
+              
             />
-            <ErrorMessage name="venue" component="div" />
+            <ErrorMessage name="date" component="div" />
             <Field
-              placeholder="Venue"
+              // component={TextField}
+              // Label="Venue"
+              Placeholder="Venue"
               type="text"
               name="venue"
-              className='formikField'
+              className="formikField"
+              // sx={{ m: 1, width: '50ch' }}
+          
             />
-            <ErrorMessage name="contact" component="div" />
+            <ErrorMessage name="venue" component="div" />
             <Box>
               <Button type='submit'>
                 Save
@@ -120,9 +78,9 @@ export default function FormAddEvent(props) {
             </Box>
           </Form>
         )
-          }
-        </Formik>
-      }
+        }
+      </Formik>
+
 
     </Box>
   );
