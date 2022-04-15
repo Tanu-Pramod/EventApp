@@ -7,6 +7,7 @@ import Events from './Pages/Events';
 import React from 'react';
 import Guests from './Pages/Guests';
 import GuestStepperForm from './components/GuestStepperForm';
+import GuestDetail from './components/GuestDetail';
 
 
 
@@ -44,7 +45,9 @@ function App() {
           <Route path='/Events' element={<Events guestPage={guestPage} setGuestPage={setGuestPage} guest={guest} setGuest={setGuest} rows={rows} setRows={setRows} />} />
           <Route path='/Guests' element={<Guests guest={guest} setGuest={setGuest} guestPage={guestPage} setGuestPage={setGuestPage} />} />
           <Route path='/GuestStepperForm' element={<GuestStepperForm guest={guest} setGuest={setGuest} guestPage={guestPage} setGuestPage={setGuestPage} guestData={guestData} setGuestData={setGuestData} />} />
+          <Route path='/GuestDetail/:id' element={<GuestDetail guest={guest} />} />
         </Routes>
+        
       </BrowserRouter>
 
     </div>

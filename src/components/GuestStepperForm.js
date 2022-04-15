@@ -31,6 +31,7 @@ export default function GuestStepperForm(props) {
         id: new Date().getTime(),
         name: '',
         age: '',
+        img:'',
         gender:'',
         email: '',
         contact: '',
@@ -43,6 +44,7 @@ export default function GuestStepperForm(props) {
   React.useEffect(() => {
     console.log("nextguestData", props.guestData)
   }, [props.guestData])
+
   React.useEffect(() => {
     console.log("newguest", props.guest)
   }, [props.guest])

@@ -9,7 +9,7 @@ function ContactDetail(props) {
   const contactValidationSchema = Yup.object({
 
     email: Yup.string().email('Invalid email').required('please provide your email'),
-    contact: Yup.string().min(10, 'contact Must be of 10 digit').max(11, 'cannot be of more than 10 digit').required('Please fill in your phone number')
+    contact: Yup.string().min(10, 'contact Must be of 10 digit').max(11, 'cannot be of more than 10 digit').required('Please fill in your phone number in numeric format')
 
   });
   const handleSubmit = (values)=>{
@@ -32,14 +32,14 @@ function ContactDetail(props) {
             name="email"
             className="formikFieldGuest"
           />
-          <ErrorMessage name="email" component="div" />
+          <ErrorMessage name="email" component="div" className='error'    />
           <Field
             placeholder="Contact"
             type="number"
             name="contact"
             className="formikFieldGuest"
           />
-          <ErrorMessage name="contact" component="div" />
+          <ErrorMessage name="contact" component="div" className='error' />
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
               color="inherit"
