@@ -19,10 +19,13 @@ function App() {
     name: '',
     id: new Date().getTime(),
     age: '',
+    gender:'',
+    img:'',
     email: '',
     contact: '',
     account_no: ''
   })
+  // console.log("AppguestData",guestData)
 
   useEffect(() => {
     const eventList = JSON.parse(localStorage.getItem("event_list"))

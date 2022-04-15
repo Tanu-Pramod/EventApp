@@ -5,11 +5,12 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import FormAddGuest from './FormAddGuest';
+
 
 import ContactDetail from './ContactDetail';
 import PersonalDetail from './PersonalDetail';
 import AccountDetail from './AccountDetail';
+import { Link } from 'react-router-dom';
 
 
 export default function GuestStepperForm(props) {
@@ -19,47 +20,42 @@ export default function GuestStepperForm(props) {
   const handleNext = (newData) => {
 
     props.setGuestData(prev => ({ ...prev, ...newData }));
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    
 
-    if(activeStep === step.length-1){
-      props.setGuest([...props.guest,newData]);
-      localStorage.setItem('guest_list',JSON.stringify([...props.guest,newData]));
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+
+    if (activeStep === step.length - 1) {
+      props.setGuest([...props.guest, newData]);
+      localStorage.setItem('guest_list', JSON.stringify([...props.guest, newData]));
       props.setGuestData({
-        name:'',
-        age:'',
-        email:'',
-        contact:'',
-        account_no:''
-  
+        id: new Date().getTime(),
+        name: '',
+        age: '',
+        gender:'',
+        email: '',
+        contact: '',
+        account_no: ''
+
       })
-      
+
     }
   };
-  React.useEffect(()=>{
-    console.log("guestData",props.guestData)
-  },[props.guestData])
-  React.useEffect(()=>{
-    console.log("newguest",props.guest)
-  },[props.guest])
+  React.useEffect(() => {
+    console.log("nextguestData", props.guestData)
+  }, [props.guestData])
+  React.useEffect(() => {
+    console.log("newguest", props.guest)
+  }, [props.guest])
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+
   const handleReset = () => {
     setActiveStep(0);
-   
-    props.setGuestData({
-      name:'',
-      age:'',
-      email:'',
-      contact:'',
-      account_no:''
-
-    })
-    
   };
+
 
 
 
@@ -103,7 +99,7 @@ export default function GuestStepperForm(props) {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <Box sx={{ mt: 5, mb: 1 }}>{step[activeStep]}</Box>
+          <Box sx={{ mt: 5, mb: 1 }}><div style={{width:'50%',margin:'auto'}}>{step[activeStep]}</div></Box>
 
 
         </React.Fragment>

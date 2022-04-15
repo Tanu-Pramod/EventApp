@@ -35,7 +35,7 @@ function ContactDetail(props) {
           <ErrorMessage name="email" component="div" />
           <Field
             placeholder="Contact"
-            type="text"
+            type="number"
             name="contact"
             className="formikFieldGuest"
           />
@@ -51,7 +51,7 @@ function ContactDetail(props) {
             </Button>
             <Box sx={{ flex: '1 1 auto' }} />
             <Button type="submit">
-              {props.activeStep === props.steps.length - 1 ? 'Finish' : 'Next'}
+              Next
             </Button>
           </Box>
 

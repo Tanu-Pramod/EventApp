@@ -71,7 +71,7 @@ export default function Guests(props) {
 
         return [
           <GridActionsCellItem
-            icon={ <Button variant="contained" color="success" >
+            icon={ <Button id={id} variant="contained" color="success" >
         
             View
            </Button>}

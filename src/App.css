@@ -1,7 +1,10 @@
 .App {
   text-align: center;
 }
-
+*{
+  box-sizing: border-box;
+}
+/* 
 .formikField{
   width: 80%;
   margin-bottom: 20px;
@@ -11,16 +14,18 @@
   font-size: large;
   border-radius: 4px;
   box-shadow: 2px,4px,6px #888888;
-}
+} */
 
 .formikFieldGuest{
-  width: 50%;
+  width: 100%;
   margin-bottom: 20px;
-
-  height: 20px;
+  font-size: 18px;
   padding: 10px;
-  font-size: large;
-  border-radius: 4px;
-  height: 100%;
-  box-shadow: 2px,4px,6px #888888;
+  
+}
+.formikFieldGender{
+  text-align: start
+}
+.error{
+  color:red;
 }
