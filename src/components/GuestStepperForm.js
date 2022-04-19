@@ -18,12 +18,8 @@ export default function GuestStepperForm(props) {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = (newData) => {
-
     props.setGuestData(prev => ({ ...prev, ...newData }));
-
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-
-
     if (activeStep === step.length - 1) {
       props.setGuest([...props.guest, newData]);
       localStorage.setItem('guest_list', JSON.stringify([...props.guest, newData]));
@@ -31,15 +27,18 @@ export default function GuestStepperForm(props) {
         id: new Date().getTime(),
         name: '',
         age: '',
-        img:'',
-        gender:'',
+        img: '',
+        gender: '',
         email: '',
         contact: '',
-        account_no: ''
+        address:'',
+        account_no: '',
+
 
       })
 
     }
+
   };
   React.useEffect(() => {
     console.log("nextguestData", props.guestData)
@@ -62,7 +61,7 @@ export default function GuestStepperForm(props) {
 
 
 
-  const step = [<PersonalDetail steps={steps} activeStep={activeStep} guestData={props.guestData} next={handleNext} />, <ContactDetail steps={steps} activeStep={activeStep} guestData={props.guestData} next={handleNext} back={handleBack} />, <AccountDetail steps={steps} activeStep={activeStep} guestData={props.guestData} next={handleNext} back={handleBack} />]
+  const step = [<PersonalDetail steps={steps} activeStep={activeStep} setGuest={props.setGuest} guest={props.guest} guestData={props.guestData} setGuestData={props.setGuestData} next={handleNext} />, <ContactDetail steps={steps} activeStep={activeStep} guestData={props.guestData} next={handleNext} back={handleBack} />, <AccountDetail steps={steps} activeStep={activeStep} guestData={props.guestData} next={handleNext} back={handleBack} />]
 
 
 
@@ -101,7 +100,7 @@ export default function GuestStepperForm(props) {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <Box sx={{ mt: 5, mb: 1 }}><div style={{width:'50%',margin:'auto'}}>{step[activeStep]}</div></Box>
+          <Box sx={{ mt: 5, mb: 1 }}><div style={{ width: '50%', margin: 'auto' }}>{step[activeStep]}</div></Box>
 
 
         </React.Fragment>

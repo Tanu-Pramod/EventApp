@@ -8,44 +8,57 @@ import Typography from '@mui/material/Typography';
 import { useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 
+
+
 export default function GuestDetail(props) {
   const params = useParams();
-
-  
-
+  console.log("propsss",props)
 
   return (
 
-    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 5 }}>
+    <Box sx={{ pt: 4}}>
       {
-        props.guest.filter((guest)=>{
+        props.guest.filter((guest) => {
           return guest.id === Number(params.id)
-        }).map(guest=>
+        }).map(guest =>
           
-          <Card sx={{ maxWidth: 345,m:'auto' }}>
-            {console.log("imageUrl====>",guest.img)}
-          <CardMedia
-            component="img"
-            height="140"
-            image="/logo512.png"
-            alt="green iguana"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              Lizard
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over 6,000
-              species, ranging across all continents except Antarctica
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small">Share</Button>
-            <Button size="small">Learn More</Button>
-          </CardActions>
-        </Card>
+
+          <Card sx={{ maxWidth: 350, m: 'auto',p: 1}}>
+            {console.log("image",guest.img)}
+            {console.log("imageUrl====>", guest.img)}
+            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+          
+             
+            <CardContent sx={{width:'70%',textAlign:'left'}}>
+              <Typography gutterBottom  component="div">
+                Name : {guest.name}
+              </Typography>
+              <Typography gutterBottom  component="div" >
+              Email : {guest.email}
+              </Typography>
+              <Typography gutterBottom  component="div" >
+              Contact : {guest.contact}
+              </Typography>
+              <Typography gutterBottom  component="div" >
+              Address : {guest.address}
+              </Typography>
+            </CardContent>
+            <Box sx={{ flex: '1 1 auto' }} />
+            <CardMedia
+              component="img"
+              height="140"
+              image={guest.img}
+              sx={{width:'30%'}}
+              
+            />
+            </Box>
+            <CardActions sx={{float:'right'}}>
+              <Button size="small">Share</Button>
+             
+            </CardActions>
+          </Card>
         )
       }
-</Box>
+    </Box>
   );
 }

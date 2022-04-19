@@ -44,35 +44,35 @@ export default function FormAddEvent(props) {
               // Label="Event Name"
               type="text"
               name="name"
-              className='formikField'
+              className='formikFieldGuest'
               // sx={{ m: 1, width: '50ch' }}
               
 
             />
-            <ErrorMessage name="name" component="div" />
+            <ErrorMessage name="name" component="div" className='error' />
             <Field
               // component={TextField}
               // Label="Date"
               type="date"
               name="date"
-              className='formikField'
+              className='formikFieldGuest'
               // sx={{ m: 1, width: '50ch' }}
               
             />
-            <ErrorMessage name="date" component="div" />
+            <ErrorMessage name="date" component="div" className='error' />
             <Field
               // component={TextField}
               // Label="Venue"
               Placeholder="Venue"
               type="text"
               name="venue"
-              className="formikField"
+              className="formikFieldGuest"
               // sx={{ m: 1, width: '50ch' }}
           
             />
-            <ErrorMessage name="venue" component="div" />
-            <Box>
-              <Button type='submit'>
+            <ErrorMessage name="venue" component="div" className='error' />
+            <Box sx={{float:'right'}}>
+              <Button  type='submit'>
                 Save
               </Button>
             </Box>

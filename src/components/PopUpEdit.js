@@ -78,7 +78,10 @@ export default function PopUpEdit(props) {
          
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <FormEditLStorage setOpen={setOpen} editObj={props.editObj} id={props.id} handleClose={handleClose} rows={props.rows} setRows={props.setRows} guestPage={props.guestPage} guest={props.guest} setGuest={props.setGuest} />
+          
+        
+          <FormEditLStorage setOpen={setOpen} editObj={props.editObj} id={props.id} handleClose={handleClose} rows={props.rows} setRows={props.setRows} guestPage={props.guestPage} guest={props.guest} setGuest={props.setGuest} guestData={props.guestData} setGuestData={props.setGuestData} />
+          
         </DialogContent>
       </BootstrapDialog>
 

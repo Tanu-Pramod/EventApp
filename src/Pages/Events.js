@@ -87,6 +87,7 @@ export default function Events(props) {
     },
 
   ];
+  {console.log("eventrow",props.rows)}
 
   return (
 
@@ -107,6 +108,7 @@ export default function Events(props) {
           <PopUpAddForm rows={props.rows} setRows={props.setRows} guestPage={props.guestPage} />
 
         </Box>
+       
 
         <DataGrid
           rows={isSearch && searchTerm.length > 0 ? filteredEvent : props.rows}

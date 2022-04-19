@@ -58,7 +58,7 @@ export default function Guests(props) {
     {
       field: 'contact',
       headerName: 'Contact',
-      width: 220
+      width: 120
     },
     
     {
@@ -79,7 +79,8 @@ export default function Guests(props) {
             label="View"
           />,
           <GridActionsCellItem
-            icon={<PopUpEdit guestPage={props.guestPage} editObj={editObj} id={id} guest={props.guest} setGuest={props.setGuest} />}
+            icon={
+              <PopUpEdit guestPage={props.guestPage} editObj={editObj} id={id} guest={props.guest} setGuest={props.setGuest} guestData={props.guestData} setGuestData={props.setGuestData} />}
             label="Edit"
             onClick={() => { editHandle(id) }}
             className="textPrimary"
@@ -97,6 +98,7 @@ export default function Guests(props) {
     },
 
   ];
+
 
   return (
 

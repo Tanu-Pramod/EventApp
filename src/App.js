@@ -8,6 +8,7 @@ import React from 'react';
 import Guests from './Pages/Guests';
 import GuestStepperForm from './components/GuestStepperForm';
 import GuestDetail from './components/GuestDetail';
+import FormEditLStorage from './components/FormEditLStorage';
 
 
 
@@ -21,12 +22,14 @@ function App() {
     id: new Date().getTime(),
     age: '',
     gender:'',
-    img:'',
+    img:null,
     email: '',
     contact: '',
-    account_no: ''
+    address:'',
+    account_no: '',
+  
   })
-  // console.log("AppguestData",guestData)
+  
 
   useEffect(() => {
     const eventList = JSON.parse(localStorage.getItem("event_list"))
@@ -43,9 +46,10 @@ function App() {
         <Routes>
           <Route path='/' element={<Navigate replace to="/Events" />} />
           <Route path='/Events' element={<Events guestPage={guestPage} setGuestPage={setGuestPage} guest={guest} setGuest={setGuest} rows={rows} setRows={setRows} />} />
-          <Route path='/Guests' element={<Guests guest={guest} setGuest={setGuest} guestPage={guestPage} setGuestPage={setGuestPage} />} />
+          <Route path='/Guests' element={<Guests guest={guest} setGuest={setGuest} guestPage={guestPage} setGuestPage={setGuestPage} guestData={guestData} setGuestData={setGuestData} />} />
           <Route path='/GuestStepperForm' element={<GuestStepperForm guest={guest} setGuest={setGuest} guestPage={guestPage} setGuestPage={setGuestPage} guestData={guestData} setGuestData={setGuestData} />} />
           <Route path='/GuestDetail/:id' element={<GuestDetail guest={guest} />} />
+          
         </Routes>
         
       </BrowserRouter>
