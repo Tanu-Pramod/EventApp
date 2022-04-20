@@ -1,27 +1,39 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import CardMedia from '@mui/material/CardMedia';
-import { useState } from 'react';
-import { Form, Formik, Field } from 'formik';
+
+import { Form, Formik, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
 
 export default function FormEditLStorage(props) {
 
-  const id = props.editObj.id;
+  const guestValidationSchema = Yup.object({
+    name: Yup.string().required('Please enter the guest name !!'),
+    age: Yup.string().required('please enter your age in numeric format'),
+    img: Yup.mixed().required('please select your photo'),
+    gender: Yup.string().required('please select your gender '),
+    email: Yup.string().email('Invalid email').required('please provide your email'),
+    address: Yup.string().required('please enter the address'),
+    contact: Yup.string().min(10, 'contact Must be of 10 digit').max(11, 'cannot be of more than 10 digit').required('Please fill in phone number in numeric format'),
+    account_no: Yup.string().required('Please enter account number'),
+
+
+  });
+  const eventValidationSchema = Yup.object({
+    name: Yup.string().required('please enter the event name'),
+    date: Yup.string().required('please select the date'),
+    venue: Yup.string().required('Please enter the venue')
+
+  });
 
   const handleChange = (e, setFieldValue) => {
-
     let reader = new FileReader();
     let file = e.target.files[0];
     reader.readAsDataURL(file);
     reader.onload = () => {
-      props.setGuestData({
-        ...props.guestData,
-        img: reader.result
-      });
       setFieldValue('img', reader.result)
 
     };
@@ -31,20 +43,16 @@ export default function FormEditLStorage(props) {
     <Box>
 
       {
-        props.guestPage ? <Formik
-          initialValues={{
-            id: props.editObj.id,
-            name: props.editObj.name,
-            email: props.editObj.email,
-            contact: props.editObj.contact,
-            img: props.editObj.img,
-            address: props.editObj.address
-          }}
+        props.isGuestPage ? <Formik
+
+          initialValues={
+            props.editObj
+          }
 
           onSubmit={(values) => {
 
             const updatedGuest = props.guest.map((guest) => {
-              if (guest.id === id) {
+              if (guest.id === props.editObj.id) {
                 return values
               }
               else {
@@ -54,34 +62,61 @@ export default function FormEditLStorage(props) {
             localStorage.setItem("guest_list", JSON.stringify(updatedGuest));
             props.setGuest(updatedGuest);
             props.setOpen(false)
-          }}>
+          }}
+          validationSchema={guestValidationSchema}>
 
           {({ values, setFieldValue }) => (
 
             <Form>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', width: '100%' }}>
-                <Box sx={{ width: '70%' }}>
-                  <Field
-                    placeholder="Guest Name"
-                    name="name"
-                    className="formikFieldGuest"
-                  />
 
-                  <Field
-                    placeholder="Email"
-                    name="email"
-                    className="formikFieldGuest"
-                  />
-                  <Field
-                    placeholder="Contact"
-                    name="contact"
-                    className="formikFieldGuest"
-                  />
-                  <Field
-                    placeholder="Address"
-                    name="address"
-                    className="formikFieldGuest"
-                  />
+
+                <Box sx={{ width: '70%' }}>
+                  <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'space-between' }}>
+                    <p style={{ width: '25%', textAlign: 'start' }}>Guest Name : </p>
+                    <div style={{ width: '70%' }}>
+                      <Field
+                        name="name"
+                        className="formikFieldGuest"
+                      />
+                      <ErrorMessage name='name' component='div' className='error' />
+                    </div>
+                  </Box>
+
+
+                  <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'space-between' }}>
+                    <p style={{ width: '25%', textAlign: 'start' }}>Email : </p>
+                    <div style={{ width: '70%' }}>
+
+                      <Field
+                        name="email"
+                        className="formikFieldGuest"
+                      />
+                      <ErrorMessage name='email' component='div' className='error' />
+                    </div>
+                  </Box>
+
+                  <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'space-between' }}>
+                    <p style={{ width: '25%', textAlign: 'start' }}>Contact : </p>
+                    <div style={{ width: '70%' }}>
+                      <Field
+                        name="contact"
+                        className="formikFieldGuest"
+                      />
+                      <ErrorMessage name='contact' component='div' className='error' />
+                    </div>
+                  </Box>
+
+                  <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'space-between' }}>
+                    <p style={{ width: '25%', textAlign: 'start' }}>Address : </p>
+                    <div style={{ width: '70%' }}>
+                      <Field
+                        name="address"
+                        className="formikFieldGuest"
+                      />
+                      <ErrorMessage name='address' component='div' className='error' />
+                    </div>
+                  </Box>
 
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p style={{ width: '30%' }}>Change Image : </p>
@@ -117,18 +152,11 @@ export default function FormEditLStorage(props) {
         </Formik>
 
           : <Formik
-            initialValues={{
-              id: props.editObj.id,
-              name: props.editObj.name,
-              date: props.editObj.date,
-              venue: props.editObj.venue
-            }}
+            initialValues={props.editObj}
             onSubmit={(values) => {
               props.setOpen(false)
-              console.log("submitting")
-
               const updatedEvent = props.rows.map((event) => {
-                if (event.id === id) {
+                if (event.id === props.editObj.id) {
                   return values
                 }
                 else {
@@ -138,25 +166,44 @@ export default function FormEditLStorage(props) {
               localStorage.setItem("event_list", JSON.stringify(updatedEvent));
               props.setRows(updatedEvent);
 
-            }}>
+            }}
+            validationSchema={eventValidationSchema}>
             {() => (
               <Form >
+                  <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'space-between' }}>
+                    <p style={{ width: '25%', textAlign: 'start' }}>Event name : </p>
+                    <div style={{ width: '70%' }}>
                 <Field
-                  placeholder="Event Name"
                   name="name"
                   className="formikFieldGuest"
                 />
+                  <ErrorMessage name='name' component='div' className='error' />
+                    </div>
+                  </Box>
+
+                  <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'space-between' }}>
+                    <p style={{ width: '25%', textAlign: 'start' }}>Date : </p>
+                    <div style={{ width: '70%' }}>
+
                 <Field
-                  placeholder="Date"
-                  type="date"
+              type="date"
                   name="date"
                   className="formikFieldGuest"
                 />
+                 <ErrorMessage name='date' component='div' className='error' />
+                    </div>
+                  </Box>
+                  <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'space-between' }}>
+                    <p style={{ width: '25%', textAlign: 'start' }}>Venue : </p>
+                    <div style={{ width: '70%' }}>
+
                 <Field
-                  placeholder="Venue"
                   name="venue"
                   className="formikFieldGuest"
                 />
+                  <ErrorMessage name='venue' component='div' className='error' />
+                    </div>
+                  </Box>
                 <Box sx={{ float: 'right' }}>
                   <Button type='submit' >
                     Save

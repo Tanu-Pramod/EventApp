@@ -27,29 +27,50 @@ function ContactDetail(props) {
       validationSchema={contactValidationSchema}>
       {() => (
         <Form >
+          <Box sx={{display:'flex', flexDirection:'row',pt:2}}>
+            <p style={{ width: '25%', textAlign: 'start' }}>
+              Email : 
+            </p>
+          <div style={{width:'75%'}}>
           <Field
-            placeholder="Email"
             type="email"
             name="email"
             className="formikFieldGuest"
           />
           <ErrorMessage name="email" component="div" className='error'    />
+          </div>
+         
+
+          </Box>
+          <Box sx={{display:'flex', flexDirection:'row',pt:2}}>
+            <p style={{width:'25%', textAlign:'start'}}>
+              Contact : 
+            </p>
+          <div style={{width:'75%'}}>
           <Field
-            placeholder="Contact"
             type="number"
             name="contact"
             className="formikFieldGuest"
           />
           <ErrorMessage name="contact" component="div" className='error' />
 
-          <Field
-            placeholder="Address"
+          </div>
+         
+          </Box>
+          <Box sx={{display:'flex', flexDirection:'row', pt:2}}>
+            <p style={{width:'25%',textAlign:'start'}}>Address : </p>
+            <div style={{width:'75%'}}>
+            <Field
             type="text"
             name="address"
             className="formikFieldGuest"
           />
           <ErrorMessage name="address" component="div" className='error' />
          
+            </div>
+          </Box>
+       
+          
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
               color="inherit"

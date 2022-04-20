@@ -24,7 +24,10 @@ function AccountDetail(props) {
       validationSchema={accountValidationSchema}>
       {() => (
         <Form >
-          <Field
+          <Box sx={{display:'flex', flexDirection:'row', pt:2}}>
+            <p style={{width:'25%', textAlign:'start'}}>Account No : </p>
+            <div style={{width:'75%'}}>
+            <Field
             placeholder="Account Number"
             type="number"
             name="account_no"
@@ -33,7 +36,10 @@ function AccountDetail(props) {
 
           />
           <ErrorMessage name="account_no" component="div" />
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+          
+            </div>
+          </Box>
+         <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
               color="inherit"
               disabled={props.activeStep === 0}

@@ -4,12 +4,13 @@ import Button from '@mui/material/Button';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { TextField } from '@mui/material';
+import CardMedia from '@mui/material/CardMedia';
 
 function PersonalDetail(props) {
   const personalValidationSchema = Yup.object({
     name: Yup.string().required('Please enter the guest name !!'),
     age: Yup.string().required('please enter your age in numeric format'),
-    //img: Yup.mixed().required('please select your photo'),
+    img: Yup.mixed().required('please select your photo'),
     gender: Yup.string().required('please select your gender ')
 
 
@@ -26,9 +27,6 @@ function PersonalDetail(props) {
     let file = event.target.files[0];
     reader.readAsDataURL(file);
     reader.onload = () => {
-      props.setGuestData({
-        ...props.guestData, img: reader.result
-      });
       setFieldValue("img", reader.result)
     };
   }
@@ -40,7 +38,7 @@ function PersonalDetail(props) {
       initialValues={props.guestData}
       onSubmit={handleSubmit}
       validationSchema={personalValidationSchema}>
-      {({ setFieldValue }) => (
+      {({ values,setFieldValue }) => (
         <Form >
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <p style={{ width: '25%', textAlign: 'start' }} >Guest Name : </p>
@@ -82,11 +80,18 @@ function PersonalDetail(props) {
 
               <ErrorMessage name="img" component="div" className='error' />
             </div>
+            <CardMedia
+              component="img"
+              height="140"
+              image={values.img}
+              sx={{width:'30%'}}
+              
+            />
           </Box>
 
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
 
-            <div style={{ width: '25%', textAlign: 'start' }} id="my-radio-group">Gender:</div>
+            <p style={{ width: '25%', textAlign: 'start' }} id="my-radio-group">Gender:</p>
 
             <div style={{ width: '75%', textAlign: 'start' }} role="group" aria-labelledby="my-radio-group">
 
@@ -99,10 +104,11 @@ function PersonalDetail(props) {
                 <Field type="radio" name="gender" value="Female" />
                 Female
               </label>
+              <ErrorMessage name="gender" component="div" style={{ marginTop: '15px' }} className='error' />
             </div>
 
           </Box>
-          <ErrorMessage name="gender" component="div" style={{ marginTop: '15px' }} className='error' />
+      
 
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button

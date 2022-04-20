@@ -66,7 +66,7 @@ export default function PopUpAddForm(props) {
   return (
     <div>
       <Button variant="contained" color="success" onClick={handleClickOpen}>
-        {props.guestPage? "Add Guest":"Add Event"}
+        {props.isGuestPage? "Add Guest":"Add Event"}
       </Button>
       <BootstrapDialog
         onClose={handleClose}
@@ -78,7 +78,7 @@ export default function PopUpAddForm(props) {
         </BootstrapDialogTitle>
         <DialogContent dividers>
           
-           <FormAddEvent setOpen={setOpen} guestPage={props.guestPage} rows={props.rows} setRows={props.setRows} guest={props.guest} setGuest={props.setGuest}  />
+           <FormAddEvent setOpen={setOpen} isGuestPage={props.isGuestPage} rows={props.rows} setRows={props.setRows} guest={props.guest} setGuest={props.setGuest}  />
           
 
         </DialogContent>

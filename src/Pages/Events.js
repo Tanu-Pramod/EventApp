@@ -7,6 +7,8 @@ import PopUpAddForm from '../components/PopUpAddForm';
 import PopUpEdit from '../components/PopUpEdit'
 import { DataGrid } from '@mui/x-data-grid';
 import DeleteDialog from '../components/DeleteDialogMui';
+import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 
 
@@ -31,7 +33,7 @@ export default function Events(props) {
     setFilteredEvent(filterdEvent)
   }, [searchTerm])
 
-  props.setGuestPage(false);
+  props.setIsGuestPage(false);
   const editHandle = (id) => {
     const editList = props.rows.filter((row) => {
       return row.id === id
@@ -45,7 +47,7 @@ export default function Events(props) {
  
   const columns = [
     { field: 'id', headerName: 'ID', width: 80 },
-    { field: 'name', width: 180, headerName: 'Name' },
+    { field: 'name', width: 100, headerName: 'Name' },
     {
       field: 'date',
       headerName: 'Date',
@@ -57,16 +59,32 @@ export default function Events(props) {
       headerName: 'Venue',
       width: 220
     },
-    { field: 'guests', headerName: 'Total Guests', width: 80 },
     {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
-      width: 200,
+      width: 450,
       cellClassName: 'actions',
       getActions: ({ id }) => {
 
         return [
+
+          <GridActionsCellItem
+          icon={<Link to='/Guests'>
+          <Button variant="contained" color="success" >
+  
+            Invite
+          </Button></Link>}
+          label="Invite Guest"
+      />,
+      <GridActionsCellItem
+      icon={<Link to=''>
+      <Button variant="contained" color="success" >
+
+        View Guests
+      </Button></Link>}
+      label="Invite Guest"
+  />,
           <GridActionsCellItem
             icon={<PopUpEdit editObj={editObj} id={id} rows={props.rows} setRows={props.setRows} />}
             label="Edit"
@@ -78,7 +96,8 @@ export default function Events(props) {
         <GridActionsCellItem
         icon={<DeleteDialog setRows={props.setRows} rows={props.rows} id={id} />}
         label="Delete"
-    />,
+    />
+   
   
         
         
@@ -105,7 +124,7 @@ export default function Events(props) {
       >
         <Box sx={{ flexGrow: 1, display: { xs: 'flex' }, justifyContent: 'space-between', mb: 2 }}>
           <TextField onFocus={() => { setIsSearch(true) }} onBlur={() => { setIsSearch(false) }} onChange={(e) => { setSearchTerm(e.target.value); }} id="outlined-basic" label="Search here" variant="outlined" />
-          <PopUpAddForm rows={props.rows} setRows={props.setRows} guestPage={props.guestPage} />
+          <PopUpAddForm rows={props.rows} setRows={props.setRows} IsGuestPage={props.isGuestPage} />
 
         </Box>
        
@@ -113,6 +132,9 @@ export default function Events(props) {
         <DataGrid
           rows={isSearch && searchTerm.length > 0 ? filteredEvent : props.rows}
           columns={columns}
+          pageSize={5}
+        rowsPerPageOptions={[5]}
+        checkboxSelection
         />
       </Box>
     </div>

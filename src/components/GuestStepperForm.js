@@ -61,7 +61,7 @@ export default function GuestStepperForm(props) {
 
 
 
-  const step = [<PersonalDetail steps={steps} activeStep={activeStep} setGuest={props.setGuest} guest={props.guest} guestData={props.guestData} setGuestData={props.setGuestData} next={handleNext} />, <ContactDetail steps={steps} activeStep={activeStep} guestData={props.guestData} next={handleNext} back={handleBack} />, <AccountDetail steps={steps} activeStep={activeStep} guestData={props.guestData} next={handleNext} back={handleBack} />]
+  const step = [<PersonalDetail  activeStep={activeStep} setGuest={props.setGuest} guest={props.guest} guestData={props.guestData} setGuestData={props.setGuestData} next={handleNext} />, <ContactDetail  activeStep={activeStep} guestData={props.guestData} next={handleNext} back={handleBack} />, <AccountDetail  activeStep={activeStep} guestData={props.guestData} next={handleNext} back={handleBack} />]
 
 
 

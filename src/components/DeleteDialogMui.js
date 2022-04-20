@@ -11,12 +11,13 @@ export default function DeleteDialog(props) {
 
   const handleDeleteClick = (id) => (event) => {
     event.stopPropagation();
-    if(props.guestPage){
+    if(props.isGuestPage){
       const newGuest = props.guest.filter((guest) => guest.id !== id)
       props.setGuest(newGuest);
       localStorage.setItem("guest_list", JSON.stringify(newGuest));
     }
     else{
+      console.log("submmiitttt")
       const newEvent = props.rows.filter((events) => events.id !== id)
       props.setRows(newEvent);
       localStorage.setItem("event_list", JSON.stringify(newEvent));

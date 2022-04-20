@@ -16,7 +16,7 @@ import FormEditLStorage from './components/FormEditLStorage';
 function App() {
   const [rows, setRows] = useState([]);
   const [guest, setGuest] = useState([]);
-  const [guestPage, setGuestPage] = useState(false);
+  const [isGuestPage, setIsGuestPage] = useState(false);
   const [guestData, setGuestData] = useState({
     name: '',
     id: new Date().getTime(),
@@ -45,9 +45,9 @@ function App() {
         <Navbar />
         <Routes>
           <Route path='/' element={<Navigate replace to="/Events" />} />
-          <Route path='/Events' element={<Events guestPage={guestPage} setGuestPage={setGuestPage} guest={guest} setGuest={setGuest} rows={rows} setRows={setRows} />} />
-          <Route path='/Guests' element={<Guests guest={guest} setGuest={setGuest} guestPage={guestPage} setGuestPage={setGuestPage} guestData={guestData} setGuestData={setGuestData} />} />
-          <Route path='/GuestStepperForm' element={<GuestStepperForm guest={guest} setGuest={setGuest} guestPage={guestPage} setGuestPage={setGuestPage} guestData={guestData} setGuestData={setGuestData} />} />
+          <Route path='/Events' element={<Events isGuestPage={isGuestPage} setIsGuestPage={setIsGuestPage} guest={guest} setGuest={setGuest} rows={rows} setRows={setRows} />} />
+          <Route path='/Guests' element={<Guests guest={guest} setGuest={setGuest} isGuestPage={isGuestPage} setIsGuestPage={setIsGuestPage} guestData={guestData} setGuestData={setGuestData} />} />
+          <Route path='/GuestStepperForm' element={<GuestStepperForm guest={guest} setGuest={setGuest} isGuestPage={isGuestPage} setIsGuestPage={setIsGuestPage} guestData={guestData} setGuestData={setGuestData} />} />
           <Route path='/GuestDetail/:id' element={<GuestDetail guest={guest} />} />
           
         </Routes>

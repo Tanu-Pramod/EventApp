@@ -18,7 +18,7 @@ export default function Guests(props) {
   const [filteredEvent, setFilteredEvent] = useState()
   const [editObj, setEditObj] = useState();
   const [searchTerm, setSearchTerm] = useState("")
-  props.setGuestPage(true)
+  props.setIsGuestPage(true)
 
   // useEffect(() => {
   //   console.log("search===>", searchTerm)
@@ -49,18 +49,18 @@ export default function Guests(props) {
   const columns = [
     { field: 'id', headerName: 'ID', width: 80 },
     { field: 'name', width: 180, headerName: 'Name' },
-   
+
     {
       field: 'email',
       headerName: 'Email',
-      width: 220
+      width: 180
     },
     {
       field: 'contact',
       headerName: 'Contact',
       width: 120
     },
-    
+
     {
       field: 'actions',
       type: 'actions',
@@ -71,16 +71,16 @@ export default function Guests(props) {
 
         return [
           <GridActionsCellItem
-            icon={ <Link to={`/GuestDetail/${id}`}>
-            <Button variant="contained" color="success" >
-        
-            View
-           </Button></Link>}
+            icon={<Link to={`/GuestDetail/${id}`}>
+              <Button variant="contained" color="success" >
+
+                View
+              </Button></Link>}
             label="View"
           />,
           <GridActionsCellItem
             icon={
-              <PopUpEdit guestPage={props.guestPage} editObj={editObj} id={id} guest={props.guest} setGuest={props.setGuest} guestData={props.guestData} setGuestData={props.setGuestData} />}
+              <PopUpEdit isGuestPage={props.isGuestPage} editObj={editObj} id={id} guest={props.guest} setGuest={props.setGuest} guestData={props.guestData} setGuestData={props.setGuestData} />}
             label="Edit"
             onClick={() => { editHandle(id) }}
             className="textPrimary"
@@ -88,7 +88,7 @@ export default function Guests(props) {
             color="inherit"
           />,
           <GridActionsCellItem
-            icon={<DeleteDialog guest={props.guest} setGuest={props.setGuest} guestPage={props.guestPage} id={id} />}
+            icon={<DeleteDialog guest={props.guest} setGuest={props.setGuest} isGuestPage={props.isGuestPage} id={id} />}
             label="Delete"
           />
 
@@ -117,20 +117,20 @@ export default function Guests(props) {
         <Box sx={{ flexGrow: 1, display: { xs: 'flex' }, justifyContent: 'space-between', mb: 2 }}>
           <TextField onFocus={() => { setIsSearch(true) }} onBlur={() => { setIsSearch(false) }} onChange={(e) => { setSearchTerm(e.target.value); }} id="outlined-basic" label="Search here" variant="outlined" />
           {/* <PopUpAddForm guest={props.guest} setGuest={props.setGuest} guestPage={props.guestPage} /> */}
-          
 
 
 
-    <Stack direction="row">
-    <Link to='/GuestStepperForm'>
-     
-      <Button variant="contained" color="success" >
-        
-       Add Guest
-      </Button>
-      </Link>
-     
-    </Stack>
+
+          <Stack direction="row">
+            <Link to='/GuestStepperForm'>
+
+              <Button variant="contained" color="success" >
+
+                Add Guest
+              </Button>
+            </Link>
+
+          </Stack>
 
 
 
@@ -140,6 +140,9 @@ export default function Guests(props) {
         <DataGrid
           rows={props.guest}
           columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          checkboxSelection
         />
       </Box>
     </div>

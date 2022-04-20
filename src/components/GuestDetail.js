@@ -10,6 +10,10 @@ import Box from '@mui/material/Box';
 
 
 
+
+
+
+
 export default function GuestDetail(props) {
   const params = useParams();
   console.log("propsss",props)

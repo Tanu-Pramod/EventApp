@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import InputAdornment from '@mui/material/InputAdornment';
+
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
@@ -38,41 +38,53 @@ export default function FormAddEvent(props) {
         }}
         validationSchema={eventValidationSchema}>{() => (
           <Form >
-            <Field
-            // component={TextField}
-            Placeholder="Event Name"
-              // Label="Event Name"
-              type="text"
-              name="name"
-              className='formikFieldGuest'
-              // sx={{ m: 1, width: '50ch' }}
-              
+            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+              <p style={{ width: '25%', textAlign: 'start' }}>Event Name : </p>
+              <div style={{ width: '75%' }}>
+                <Field
 
-            />
-            <ErrorMessage name="name" component="div" className='error' />
-            <Field
-              // component={TextField}
-              // Label="Date"
-              type="date"
-              name="date"
-              className='formikFieldGuest'
-              // sx={{ m: 1, width: '50ch' }}
-              
-            />
-            <ErrorMessage name="date" component="div" className='error' />
-            <Field
-              // component={TextField}
-              // Label="Venue"
-              Placeholder="Venue"
-              type="text"
-              name="venue"
-              className="formikFieldGuest"
-              // sx={{ m: 1, width: '50ch' }}
-          
-            />
-            <ErrorMessage name="venue" component="div" className='error' />
-            <Box sx={{float:'right'}}>
-              <Button  type='submit'>
+                  type="text"
+                  name="name"
+                  className='formikFieldGuest'
+
+
+                />
+                <ErrorMessage name="name" component="div" className='error' />
+
+              </div>
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+              <p style={{ width: '25%', textAlign: 'start' }}>Date : </p>
+              <div style={{ width: '75%' }}>
+                <Field
+
+                  type="date"
+                  name="date"
+                  className='formikFieldGuest'
+
+
+                />
+                <ErrorMessage name="date" component="div" className='error' />
+
+              </div>
+            </Box>
+
+            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+              <p style={{ width: '25%', textAlign: 'start' }}>Venue : </p>
+              <div style={{ width: '75%' }}>
+                <Field
+
+                  type="text"
+                  name="venue"
+                  className="formikFieldGuest"
+
+
+                />
+                <ErrorMessage name="venue" component="div" className='error' />
+              </div>
+            </Box>
+            <Box sx={{ float: 'right' }}>
+              <Button type='submit'>
                 Save
               </Button>
             </Box>

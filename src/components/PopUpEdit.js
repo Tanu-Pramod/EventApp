@@ -74,13 +74,13 @@ export default function PopUpEdit(props) {
         open={open}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          {props.guestPage ? "Edit Guest" :"Edit Event" }
+          {props.isGuestPage ? "Edit Guest" :"Edit Event" }
          
         </BootstrapDialogTitle>
         <DialogContent dividers>
           
         
-          <FormEditLStorage setOpen={setOpen} editObj={props.editObj} id={props.id} handleClose={handleClose} rows={props.rows} setRows={props.setRows} guestPage={props.guestPage} guest={props.guest} setGuest={props.setGuest} guestData={props.guestData} setGuestData={props.setGuestData} />
+          <FormEditLStorage setOpen={setOpen} editObj={props.editObj} id={props.id} handleClose={handleClose} rows={props.rows} setRows={props.setRows} isGuestPage={props.isGuestPage} guest={props.guest} setGuest={props.setGuest} guestData={props.guestData} setGuestData={props.setGuestData} />
           
         </DialogContent>
       </BootstrapDialog>
