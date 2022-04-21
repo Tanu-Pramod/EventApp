@@ -13,15 +13,15 @@ import { Link } from 'react-router-dom';
 
 
 
-export default function Guests(props) {
+export default function GuestAddInvite(props) {
   const [isSearch, setIsSearch] = useState(false);
-  const [filteredGuest, setFilteredGuest] = useState()
-  const [editObj, setEditObj] = useState();
-  const [searchTerm, setSearchTerm] = useState("")
+  const [filteredGuest, setFilteredGuest] = useState();
+  const [searchTerm, setSearchTerm] = useState("");
+
   props.setIsGuestPage(true)
 
   useEffect(() => {
-    console.log("search===>", searchTerm)
+
     const filteredGuest = props.guest.filter((guest) => {
 
       if (searchTerm === "") {
@@ -31,28 +31,32 @@ export default function Guests(props) {
         return guest
       }
     })
-    console.log("filteredArray", filteredGuest)
+
     setFilteredGuest(filteredGuest)
   }, [searchTerm])
 
 
-  const editHandle = (id) => {
-    const editList = props.guest.filter((guest) => {
-      return guest.id === id
-    })
 
-    editList.map((guest) => {
-      setEditObj(guest);
-    })
-  }
   const handleSelect = (id) => {
-    console.log("selected", id)
-    const selectedGuest = props.guest.filter((guest) => {
-      return guest.id === id
+    console.log("selectttt====>",id)
 
+    id.map((id) => {
+
+      const guests = props.guest.filter((guest) => {
+        return guest.id === id
+      })
+      guests.map((guest) => {
+        props.setInvitedGuest([...props.invitedGuest, guest])
+
+      })
     })
-    console.log("selectedGuest", selectedGuest)
+    console.log("invitedGuest",props.invitedGuest)
+
+
+
+
   }
+
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 80 },
@@ -68,42 +72,12 @@ export default function Guests(props) {
       headerName: 'Contact',
       width: 120
     },
-
     {
-      field: 'actions',
-      type: 'actions',
-      headerName: 'Actions',
-      width: 270,
-      cellClassName: 'actions',
-      getActions: ({ id }) => {
+      field: 'address',
+      headerName: 'Address',
+      width: 200
+    }
 
-        return [
-          <GridActionsCellItem
-            icon={<Link to={`/GuestDetail/${id}`} style={{textDecoration:'none'}}>
-              <Button variant="contained" color="success" >
-
-                View
-              </Button></Link>}
-            label="View"
-          />,
-          <GridActionsCellItem
-            icon={
-              <PopUpEdit isGuestPage={props.isGuestPage} editObj={editObj} id={id} guest={props.guest} setGuest={props.setGuest} guestData={props.guestData} setGuestData={props.setGuestData} />}
-            label="Edit"
-            onClick={() => { editHandle(id) }}
-            className="textPrimary"
-
-            color="inherit"
-          />,
-          <GridActionsCellItem
-            icon={<DeleteDialog guest={props.guest} setGuest={props.setGuest} isGuestPage={props.isGuestPage} id={id} />}
-            label="Delete"
-          />
-
-
-        ];
-      },
-    },
 
   ];
 
@@ -124,12 +98,17 @@ export default function Guests(props) {
       >
         <Box sx={{ flexGrow: 1, display: { xs: 'flex' }, justifyContent: 'space-between', mb: 2 }}>
           <TextField onFocus={() => { setIsSearch(true) }} onBlur={() => { setIsSearch(false) }} onChange={(e) => { setSearchTerm(e.target.value); }} id="outlined-basic" label="Search here" variant="outlined" />
-          {/* <PopUpAddForm guest={props.guest} setGuest={props.setGuest} guestPage={props.guestPage} /> */}
 
-
-
-
+          
           <Stack direction="row">
+
+
+            <Link to="" style={{textDecoration:'none'}}>
+              <Button variant="contained" color="primary" sx={{ mr: 2 }} >
+
+                Invite Guests
+              </Button>
+            </Link>
             <Link to='/GuestStepperForm' style={{textDecoration:'none'}}>
 
               <Button variant="contained" color="success" >
@@ -137,6 +116,8 @@ export default function Guests(props) {
                 Add Guest
               </Button>
             </Link>
+
+
 
           </Stack>
 
@@ -151,6 +132,7 @@ export default function Guests(props) {
           pageSize={5}
           rowsPerPageOptions={[5]}
           checkboxSelection
+          onSelectionModelChange={(id) => handleSelect(id)}
         />
       </Box>
     </div>

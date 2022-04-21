@@ -29,7 +29,7 @@ export default function Events(props) {
         return event
       }
     })
-    console.log("filteredArray", filterdEvent)
+  
     setFilteredEvent(filterdEvent)
   }, [searchTerm])
 
@@ -70,7 +70,7 @@ export default function Events(props) {
         return [
 
           <GridActionsCellItem
-          icon={<Link to='/Guests'>
+          icon={<Link to='/guestAddInvite' style={{textDecoration:'none'}}>
           <Button variant="contained" color="success" >
   
             Invite
@@ -78,10 +78,10 @@ export default function Events(props) {
           label="Invite Guest"
       />,
       <GridActionsCellItem
-      icon={<Link to=''>
-      <Button variant="contained" color="success" >
+      icon={<Link to='' style={{textDecoration:'none'}}>
+      <Button variant="contained" color="success"  >
 
-        View Guests
+        View
       </Button></Link>}
       label="Invite Guest"
   />,
@@ -106,7 +106,7 @@ export default function Events(props) {
     },
 
   ];
-  {console.log("eventrow",props.rows)}
+
 
   return (
 
