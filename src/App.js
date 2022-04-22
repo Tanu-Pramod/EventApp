@@ -31,7 +31,6 @@ function App() {
   
   })
 
-  
 
   useEffect(() => {
     const eventList = JSON.parse(localStorage.getItem("event_list"))

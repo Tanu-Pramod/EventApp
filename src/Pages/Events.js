@@ -19,7 +19,7 @@ export default function Events(props) {
   const [searchTerm, setSearchTerm] = useState("")
 
   useEffect(() => {
-    console.log("search===>", searchTerm)
+  
     const filterdEvent = props.rows.filter((event) => {
 
       if (searchTerm === "") {

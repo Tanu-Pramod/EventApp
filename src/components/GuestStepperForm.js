@@ -40,13 +40,6 @@ export default function GuestStepperForm(props) {
     }
 
   };
-  React.useEffect(() => {
-    console.log("nextguestData", props.guestData)
-  }, [props.guestData])
-
-  React.useEffect(() => {
-    console.log("newguest", props.guest)
-  }, [props.guest])
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);

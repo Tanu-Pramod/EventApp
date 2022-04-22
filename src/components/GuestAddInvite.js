@@ -18,6 +18,7 @@ export default function GuestAddInvite(props) {
   const [filteredGuest, setFilteredGuest] = useState();
   const [searchTerm, setSearchTerm] = useState("");
 
+
   props.setIsGuestPage(true)
 
   useEffect(() => {
@@ -37,29 +38,31 @@ export default function GuestAddInvite(props) {
 
 
 
+
+
   const handleSelect = (id) => {
-    console.log("selectttt====>",id)
+      const selectedGuest = props.guest.filter((guest ,i)=>{
+   
 
-    id.map((id) => {
+      if(id.includes(guest.id)){
+        return guest;
+    
+      }
 
-      const guests = props.guest.filter((guest) => {
-        return guest.id === id
-      })
-      guests.map((guest) => {
-        props.setInvitedGuest([...props.invitedGuest, guest])
-
-      })
     })
-    console.log("invitedGuest",props.invitedGuest)
+    props.setInvitedGuest(selectedGuest);
+ 
 
 
 
 
   }
+  console.log("invitedGuest", props.invitedGuest)
+  
 
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 80 },
+    { field: 'id', headerName: 'ID', width: 180 },
     { field: 'name', width: 180, headerName: 'Name' },
 
     {
@@ -99,17 +102,17 @@ export default function GuestAddInvite(props) {
         <Box sx={{ flexGrow: 1, display: { xs: 'flex' }, justifyContent: 'space-between', mb: 2 }}>
           <TextField onFocus={() => { setIsSearch(true) }} onBlur={() => { setIsSearch(false) }} onChange={(e) => { setSearchTerm(e.target.value); }} id="outlined-basic" label="Search here" variant="outlined" />
 
-          
+
           <Stack direction="row">
 
 
-            <Link to="" style={{textDecoration:'none'}}>
+            <Link to="" style={{ textDecoration: 'none' }}>
               <Button variant="contained" color="primary" sx={{ mr: 2 }} >
 
                 Invite Guests
               </Button>
             </Link>
-            <Link to='/GuestStepperForm' style={{textDecoration:'none'}}>
+            <Link to='/GuestStepperForm' style={{ textDecoration: 'none' }}>
 
               <Button variant="contained" color="success" >
 

@@ -21,7 +21,7 @@ export default function Guests(props) {
   props.setIsGuestPage(true)
 
   useEffect(() => {
-    console.log("search===>", searchTerm)
+
     const filteredGuest = props.guest.filter((guest) => {
 
       if (searchTerm === "") {
@@ -31,7 +31,7 @@ export default function Guests(props) {
         return guest
       }
     })
-    console.log("filteredArray", filteredGuest)
+
     setFilteredGuest(filteredGuest)
   }, [searchTerm])
 
@@ -45,14 +45,7 @@ export default function Guests(props) {
       setEditObj(guest);
     })
   }
-  const handleSelect = (id) => {
-    console.log("selected", id)
-    const selectedGuest = props.guest.filter((guest) => {
-      return guest.id === id
 
-    })
-    console.log("selectedGuest", selectedGuest)
-  }
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 80 },
