@@ -41,7 +41,7 @@ export default function GuestAddInvite(props) {
 
 
   const handleSelect = (id) => {
-      const selectedGuest = props.guest.filter((guest ,i)=>{
+      const selectedGuest = props.guest.filter((guest)=>{
    
 
       if(id.includes(guest.id)){
