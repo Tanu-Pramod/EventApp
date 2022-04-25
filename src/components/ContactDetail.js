@@ -6,18 +6,23 @@ import * as Yup from 'yup';
 
 function ContactDetail(props) {
 
+  // const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+
   const contactValidationSchema = Yup.object({
 
     email: Yup.string().email('Invalid email').required('please provide your email'),
     address: Yup.string().required('please enter the address'),
     contact: Yup.string().min(10, 'contact Must be of 10 digit').max(11, 'cannot be of more than 10 digit').required('Please fill in phone number in numeric format')
 
+
+    // contact: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
+
   });
-  const handleSubmit = (values)=>{
+  const handleSubmit = (values) => {
     props.next(values)
-  
+
   }
- 
+
   return (
     <Formik
       initialValues={props.guestData}
@@ -27,54 +32,54 @@ function ContactDetail(props) {
       validationSchema={contactValidationSchema}>
       {() => (
         <Form >
-          <Box sx={{display:'flex', flexDirection:'row',pt:2}}>
+          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <p style={{ width: '25%', textAlign: 'start' }}>
-              Email : 
+              Email :
             </p>
-          <div style={{width:'75%'}}>
-          <Field
-            type="email"
-            name="email"
-            className="formikFieldGuest"
-          />
-          <ErrorMessage name="email" component="div" className='error'    />
-          </div>
-         
+            <div style={{ width: '75%' }}>
+              <Field
+                type="email"
+                name="email"
+                className="formikFieldGuest"
+              />
+              <ErrorMessage name="email" component="div" className='error' />
+            </div>
+
 
           </Box>
-          <Box sx={{display:'flex', flexDirection:'row',pt:2}}>
-            <p style={{width:'25%', textAlign:'start'}}>
-              Contact : 
+          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+            <p style={{ width: '25%', textAlign: 'start' }}>
+              Contact :
             </p>
-          <div style={{width:'75%'}}>
-          <Field
-            type="number"
-            name="contact"
-            className="formikFieldGuest"
-          />
-          <ErrorMessage name="contact" component="div" className='error' />
+            <div style={{ width: '75%' }}>
+              <Field
+                type="number"
+                name="contact"
+                className="formikFieldGuest"
+              />
+              <ErrorMessage name="contact" component="div" className='error' />
 
-          </div>
-         
+            </div>
+
           </Box>
-          <Box sx={{display:'flex', flexDirection:'row', pt:2}}>
-            <p style={{width:'25%',textAlign:'start'}}>Address : </p>
-            <div style={{width:'75%'}}>
-            <Field
-            type="text"
-            name="address"
-            className="formikFieldGuest"
-          />
-          <ErrorMessage name="address" component="div" className='error' />
-         
+          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+            <p style={{ width: '25%', textAlign: 'start' }}>Address : </p>
+            <div style={{ width: '75%' }}>
+              <Field
+                type="text"
+                name="address"
+                className="formikFieldGuest"
+              />
+              <ErrorMessage name="address" component="div" className='error' />
+
             </div>
           </Box>
-       
-          
+
+
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
               color="inherit"
-          
+
               onClick={props.back}
               sx={{ mr: 1 }}
             >

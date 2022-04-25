@@ -16,7 +16,7 @@ import Box from '@mui/material/Box';
 
 export default function GuestDetail(props) {
   const params = useParams();
-  console.log("propsss",props)
+  
 
   return (
 
@@ -28,8 +28,8 @@ export default function GuestDetail(props) {
           
 
           <Card sx={{ maxWidth: 350, m: 'auto',p: 1}}>
-            {console.log("image",guest.img)}
-            {console.log("imageUrl====>", guest.img)}
+            
+          
             <Box sx={{ display: 'flex', flexDirection: 'row' }}>
           
              

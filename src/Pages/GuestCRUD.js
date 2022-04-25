@@ -13,13 +13,15 @@ import { Link } from 'react-router-dom';
 
 
 
-export default function GuestAddInvite(props) {
+export default function GuestCRUD(props) {
   const [isSearch, setIsSearch] = useState(false);
-  const [filteredGuest, setFilteredGuest] = useState();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredGuest, setFilteredGuest] = useState()
+  const [editObj, setEditObj] = useState();
+  const [searchTerm, setSearchTerm] = useState("")
+  
 
 
-  props.setIsGuestPage(true)
+props.setIsGuestPage(true);
 
   useEffect(() => {
 
@@ -37,32 +39,19 @@ export default function GuestAddInvite(props) {
   }, [searchTerm])
 
 
-
-
-
-  const handleSelect = (id) => {
-      const selectedGuest = props.guest.filter((guest ,i)=>{
-   
-
-      if(id.includes(guest.id)){
-        return guest;
-    
-      }
-
+  const editHandle = (id) => {
+    const editList = props.guest.filter((guest) => {
+      return guest.id === id
     })
-    props.setInvitedGuest(selectedGuest);
- 
 
-
-
-
+    editList.map((guest) => {
+      setEditObj(guest);
+    })
   }
-  console.log("invitedGuest", props.invitedGuest)
-  
 
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 180 },
+    { field: 'id', headerName: 'ID', width: 80 },
     { field: 'name', width: 180, headerName: 'Name' },
 
     {
@@ -78,9 +67,44 @@ export default function GuestAddInvite(props) {
     {
       field: 'address',
       headerName: 'Address',
-      width: 200
-    }
+      width: 120
+    },
 
+    {
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Actions',
+      width: 270,
+      cellClassName: 'actions',
+      getActions: ({ id }) => {
+
+        return [
+          <GridActionsCellItem
+            icon={<Link to={`/GuestDetail/${id}`} style={{textDecoration:'none'}}>
+              <Button variant="contained" color="success" >
+
+                View
+              </Button></Link>}
+            label="View"
+          />,
+          <GridActionsCellItem
+            icon={
+              <PopUpEdit isGuestPage={props.isGuestPage} editObj={editObj} id={id} guest={props.guest} setGuest={props.setGuest} guestData={props.guestData} setGuestData={props.setGuestData} />}
+            label="Edit"
+            onClick={() => { editHandle(id) }}
+            className="textPrimary"
+
+            color="inherit"
+          />,
+          <GridActionsCellItem
+            icon={<DeleteDialog guest={props.guest} setGuest={props.setGuest} isGuestPage={props.isGuestPage} id={id} />}
+            label="Delete"
+          />
+
+
+        ];
+      },
+    } ,
 
   ];
 
@@ -88,6 +112,8 @@ export default function GuestAddInvite(props) {
   return (
 
     <div style={{ height: 400, width: '90%', margin: 'auto', marginTop: '20px' }}>
+
+
 
       <Box
         sx={{
@@ -99,20 +125,16 @@ export default function GuestAddInvite(props) {
           },
         }}
       >
+        { props.isGuestPage &&
         <Box sx={{ flexGrow: 1, display: { xs: 'flex' }, justifyContent: 'space-between', mb: 2 }}>
           <TextField onFocus={() => { setIsSearch(true) }} onBlur={() => { setIsSearch(false) }} onChange={(e) => { setSearchTerm(e.target.value); }} id="outlined-basic" label="Search here" variant="outlined" />
+    
+
+
 
 
           <Stack direction="row">
-
-
-            <Link to="" style={{ textDecoration: 'none' }}>
-              <Button variant="contained" color="primary" sx={{ mr: 2 }} >
-
-                Invite Guests
-              </Button>
-            </Link>
-            <Link to='/GuestStepperForm' style={{ textDecoration: 'none' }}>
+            <Link to='/GuestStepperForm' style={{textDecoration:'none'}}>
 
               <Button variant="contained" color="success" >
 
@@ -120,14 +142,12 @@ export default function GuestAddInvite(props) {
               </Button>
             </Link>
 
-
-
           </Stack>
 
 
 
 
-        </Box>
+        </Box> }
 
         <DataGrid
           rows={isSearch && searchTerm.length > 0 ? filteredGuest : props.guest}
@@ -135,7 +155,6 @@ export default function GuestAddInvite(props) {
           pageSize={5}
           rowsPerPageOptions={[5]}
           checkboxSelection
-          onSelectionModelChange={(id) => handleSelect(id)}
         />
       </Box>
     </div>

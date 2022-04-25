@@ -27,9 +27,7 @@ const ResponsiveAppBar = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-  const handleClick = (page)=>{
-    // console.log("Page",page);
-  }
+ 
 
 
 
@@ -83,7 +81,7 @@ const ResponsiveAppBar = () => {
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">
                     
-                    <Link onClick={handleClick(page)} to={`/${page}`} style={{ textDecoration: "none", color: 'black' }}>{page}</Link>
+                    <Link  to={`/${page}`} style={{ textDecoration: "none", color: 'black' }}>{page}</Link>
                   </Typography>
                 </MenuItem>
               ))}
@@ -104,7 +102,7 @@ const ResponsiveAppBar = () => {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                <Link onClick={handleClick(page)}  to={`/${page}`} style={{ textDecoration: "none", color: 'white' }}>{page}</Link>
+                <Link   to={`/${page}`} style={{ textDecoration: "none", color: 'white' }}>{page}</Link>
               </Button>
             ))}
           </Box>

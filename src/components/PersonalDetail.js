@@ -9,11 +9,17 @@ import CardMedia from '@mui/material/CardMedia';
 function PersonalDetail(props) {
   const personalValidationSchema = Yup.object({
     name: Yup.string().required('Please enter the guest name !!'),
-    age: Yup.string().required('please enter your age in numeric format'),
-    img: Yup.mixed().required('please select your photo'),
-    gender: Yup.string().required('please select your gender ')
+    age: Yup.number()
+    .required('Please enter your age')
+    .test(
+      'Is positive?', 
+      'Age must be greater than 0', 
+      (value) => value > 0
+    ),
+    img: Yup.mixed().required('Please select your photo'),
+    gender: Yup.string().required('Please select your gender ')
 
-
+ 
   });
 
 

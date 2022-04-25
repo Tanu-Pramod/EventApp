@@ -20,9 +20,12 @@ export default function GuestStepperForm(props) {
   const handleNext = (newData) => {
     props.setGuestData(prev => ({ ...prev, ...newData }));
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
     if (activeStep === step.length - 1) {
+
       props.setGuest([...props.guest, newData]);
       localStorage.setItem('guest_list', JSON.stringify([...props.guest, newData]));
+      
       props.setGuestData({
         id: new Date().getTime(),
         name: '',
@@ -31,7 +34,7 @@ export default function GuestStepperForm(props) {
         gender: '',
         email: '',
         contact: '',
-        address:'',
+        address: '',
         account_no: '',
 
 
@@ -54,7 +57,7 @@ export default function GuestStepperForm(props) {
 
 
 
-  const step = [<PersonalDetail  activeStep={activeStep} setGuest={props.setGuest} guest={props.guest} guestData={props.guestData} setGuestData={props.setGuestData} next={handleNext} />, <ContactDetail  activeStep={activeStep} guestData={props.guestData} next={handleNext} back={handleBack} />, <AccountDetail  activeStep={activeStep} guestData={props.guestData} next={handleNext} back={handleBack} />]
+  const step = [<PersonalDetail activeStep={activeStep} setGuest={props.setGuest} guest={props.guest} guestData={props.guestData} setGuestData={props.setGuestData} next={handleNext} />, <ContactDetail activeStep={activeStep} guestData={props.guestData} next={handleNext} back={handleBack} />, <AccountDetail activeStep={activeStep} guestData={props.guestData} next={handleNext} back={handleBack} />]
 
 
 

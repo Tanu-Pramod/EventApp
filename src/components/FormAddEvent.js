@@ -11,10 +11,17 @@ import * as Yup from 'yup';
 
 
 export default function FormAddEvent(props) {
+const minDate = new Date();
+minDate.setDate(minDate.getDate()+2);
+minDate.setHours(0,0,0,0);
+
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const maxDate = new Date();
+maxDate.setMonth(maxDate.getMonth()+1);
 
   const eventValidationSchema = Yup.object({
     name: Yup.string().required('please enter the event name'),
-    date: Yup.string().required('please select the date'),
+    date: Yup.date().min(minDate,`You can book events from ${minDate.getDate()+0} ${months[minDate.getMonth()]} `).max(maxDate,"you can book events only one month in advance").required("Please select the date"),
     venue: Yup.string().required('Please enter the venue')
 
   });

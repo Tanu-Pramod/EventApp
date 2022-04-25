@@ -5,10 +5,11 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Events from './Pages/Events';
 import React from 'react';
-import Guests from './Pages/Guests';
+
 import GuestStepperForm from './components/GuestStepperForm';
 import GuestDetail from './components/GuestDetail';
-import GuestAddInvite from './components/GuestAddInvite';
+import GuestCRUD from './Pages/GuestCRUD';
+import GuestAddInviteTabs from './components/GuestAddInviteTabs';
 
 
 
@@ -16,6 +17,7 @@ import GuestAddInvite from './components/GuestAddInvite';
 function App() {
   const [rows, setRows] = useState([]);
   const [guest, setGuest] = useState([]);
+  const [isGuestAddInvite,setIsguestAddInvite] = useState(true)
   const [invitedGuest,setInvitedGuest] = useState([]);
   const [isGuestPage, setIsGuestPage] = useState(false);
   const [guestData, setGuestData] = useState({
@@ -47,10 +49,10 @@ function App() {
         <Routes>
           <Route path='/' element={<Navigate replace to="/Events" />} />
           <Route path='/Events' element={<Events  isGuestPage={isGuestPage} setIsGuestPage={setIsGuestPage} guest={guest} setGuest={setGuest} rows={rows} setRows={setRows} />} />
-          <Route path='/Guests' element={<Guests guest={guest} setGuest={setGuest} isGuestPage={isGuestPage} setIsGuestPage={setIsGuestPage} guestData={guestData} setGuestData={setGuestData} setInvitedGuest={setInvitedGuest} />} />
+          <Route path='/Guests' element={<GuestCRUD isGuestAddInvite={isGuestAddInvite} guest={guest} setGuest={setGuest} isGuestPage={isGuestPage} setIsGuestPage={setIsGuestPage} guestData={guestData} setGuestData={setGuestData} setInvitedGuest={setInvitedGuest} />} />
           <Route path='/GuestStepperForm' element={<GuestStepperForm guest={guest} setGuest={setGuest} isGuestPage={isGuestPage} setIsGuestPage={setIsGuestPage} guestData={guestData} setGuestData={setGuestData} />} />
           <Route path='/GuestDetail/:id' element={<GuestDetail guest={guest} />} />
-          <Route path='/guestAddInvite' element={<GuestAddInvite guest={guest} setGuest={setGuest} isGuestPage={isGuestPage} setIsGuestPage={setIsGuestPage} guestData={guestData} setGuestData={setGuestData} invitedGuest={invitedGuest} setInvitedGuest={setInvitedGuest} />} />
+          <Route path='/guestAddInviteTab' element={<GuestAddInviteTabs  guest={guest} setGuest={setGuest} isGuestPage={isGuestPage} setIsGuestPage={setIsGuestPage} guestData={guestData} setGuestData={setGuestData} invitedGuest={invitedGuest} setInvitedGuest={setInvitedGuest} />} />
           
         </Routes>
         

@@ -70,7 +70,7 @@ export default function Events(props) {
         return [
 
           <GridActionsCellItem
-          icon={<Link to='/guestAddInvite' style={{textDecoration:'none'}}>
+          icon={<Link to='/guestAddInviteTab' style={{textDecoration:'none'}}>
           <Button variant="contained" color="success" >
   
             Invite
@@ -79,7 +79,7 @@ export default function Events(props) {
       />,
       <GridActionsCellItem
       icon={<Link to='' style={{textDecoration:'none'}}>
-      <Button variant="contained" color="success"  >
+      <Button  variant="contained" color="success"  >
 
         View
       </Button></Link>}
