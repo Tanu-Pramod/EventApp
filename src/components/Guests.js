@@ -20,7 +20,15 @@ const handleSelect = (id) => {
 
     localStorage.setItem("invited_guest", JSON.stringify(selectedGuest))
   }
-  
+  const filteredGuest = props.guest.filter((guest)=>{
+    if(props.searchTerm === ""){
+      return guest
+    }
+    else if(guest.name.toLowerCase().includes(props.searchTerm.toLowerCase())){
+      return guest
+    }
+  })
+
 
 
 
@@ -67,7 +75,7 @@ const handleSelect = (id) => {
         
 
         <DataGrid
-          rows={props.isSearch && props.searchTerm.length > 0 ? props.filteredGuest : props.guest}
+          rows={filteredGuest}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}

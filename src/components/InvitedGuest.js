@@ -9,7 +9,14 @@ import { DataGrid } from '@mui/x-data-grid';
 export default function InvitedGuest(props) {
   
 
-
+  const filteredInvitedGuest = props.invitedGuest.filter((guest)=>{
+    if(props.searchTerm === ""){
+      return guest
+    }
+    else if(guest.name.toLowerCase().includes(props.searchTerm.toLowerCase())){
+      return guest
+    }
+  })
   
 
 
@@ -40,7 +47,7 @@ export default function InvitedGuest(props) {
 
   return (
 
-    <div style={{ height: 400, width: '90%', margin: 'auto', marginTop: '20px' }}>
+    <div style={{ height: 400, width: '90%', margin: 'auto'}}>
 
       <Box
         sx={{
@@ -57,7 +64,7 @@ export default function InvitedGuest(props) {
         
 
         <DataGrid
-          rows={props.isSearch && props.searchTerm.length > 0 ? props.searchedInvitedGuest : props.invitedGuest}
+          rows={filteredInvitedGuest}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}

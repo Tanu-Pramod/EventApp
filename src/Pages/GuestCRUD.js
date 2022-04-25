@@ -14,8 +14,8 @@ import { Link } from 'react-router-dom';
 
 
 export default function GuestCRUD(props) {
-  const [isSearch, setIsSearch] = useState(false);
-  const [filteredGuest, setFilteredGuest] = useState()
+  
+  
   const [editObj, setEditObj] = useState();
   const [searchTerm, setSearchTerm] = useState("")
   
@@ -23,9 +23,9 @@ export default function GuestCRUD(props) {
 
 props.setIsGuestPage(true);
 
-  useEffect(() => {
+  
 
-    const filteredGuest = props.guest.filter((guest) => {
+  const guest= props.guest.filter((guest) => {
 
       if (searchTerm === "") {
         return guest
@@ -35,8 +35,8 @@ props.setIsGuestPage(true);
       }
     })
 
-    setFilteredGuest(filteredGuest)
-  }, [searchTerm])
+  
+ 
 
 
   const editHandle = (id) => {
@@ -127,7 +127,7 @@ props.setIsGuestPage(true);
       >
         { props.isGuestPage &&
         <Box sx={{ flexGrow: 1, display: { xs: 'flex' }, justifyContent: 'space-between', mb: 2 }}>
-          <TextField onFocus={() => { setIsSearch(true) }} onBlur={() => { setIsSearch(false) }} onChange={(e) => { setSearchTerm(e.target.value); }} id="outlined-basic" label="Search here" variant="outlined" />
+          <TextField onChange={(e) => { setSearchTerm(e.target.value); }} id="outlined-basic" label="Search here" variant="outlined" />
     
 
 
@@ -150,7 +150,7 @@ props.setIsGuestPage(true);
         </Box> }
 
         <DataGrid
-          rows={isSearch && searchTerm.length > 0 ? filteredGuest : props.guest}
+          rows={guest}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}

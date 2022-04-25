@@ -18,8 +18,11 @@ export default function GuestAddInviteTabs(props) {
   const [filteredGuest, setFilteredGuest] = useState();
   const [searchedInvitedGuest,setSearchedInvitedGuest] = useState();
   const [searchTerm, setSearchTerm] = useState("");
-
+const [invitedGuest,setInvitedGuest] = useState([]);
   props.setIsGuestPage(false);
+  const inviteGuest=()=>{
+    setInvitedGuest(props.invitedGuest)
+  }
 
 
   useEffect(() => {
@@ -57,6 +60,10 @@ export default function GuestAddInviteTabs(props) {
     setValue(newValue);
   };
 
+  
+
+  
+
   return ( 
  
 
@@ -72,7 +79,7 @@ export default function GuestAddInviteTabs(props) {
         <Stack direction="row">
 
           <Link to="" style={{ textDecoration: 'none' }}>
-            <Button variant="contained" color="primary" sx={{ mr: 2 }} >
+            <Button onClick={inviteGuest}  variant="contained" color="primary" sx={{ mr: 2 }} >
               Invite Guests
             </Button>
           </Link>
@@ -108,9 +115,9 @@ export default function GuestAddInviteTabs(props) {
             </Box>
 
             <TabPanel value="1">
-              <Guests guest={props.guest} invitedGuest={props.invitedGuest} setInvitedGuest={props.setInvitedGuest} isSearch={isSearch} searchTerm={searchTerm} filteredGuest={filteredGuest} />
+              <Guests guest={props.guest} invitedGuest={props.invitedGuest} setInvitedGuest={props.setInvitedGuest} isSearch={isSearch} searchTerm={searchTerm} filteredGuest={filteredGuest}/>
             </TabPanel >
-            <TabPanel value="2"><InvitedGuest isSearch={isSearch} searchTerm={searchTerm} filteredGuest={filteredGuest} invitedGuest={props.invitedGuest} searchedInvitedGuest={searchedInvitedGuest} /></TabPanel>
+            <TabPanel value="2"><InvitedGuest isSearch={isSearch} searchTerm={searchTerm} filteredGuest={filteredGuest} invitedGuest={invitedGuest} searchedInvitedGuest={searchedInvitedGuest} /></TabPanel>
             <TabPanel value="3"></TabPanel>
 
           </TabContext>
