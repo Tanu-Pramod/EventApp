@@ -20,6 +20,7 @@ const handleSelect = (id) => {
 
     localStorage.setItem("invited_guest", JSON.stringify(selectedGuest))
   }
+  
   const filteredGuest = props.guest.filter((guest)=>{
     if(props.searchTerm === ""){
       return guest

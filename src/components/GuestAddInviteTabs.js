@@ -14,121 +14,98 @@ import InvitedGuest from './InvitedGuest'
 
 
 export default function GuestAddInviteTabs(props) {
-  const [isSearch, setIsSearch] = useState(false);
-  const [filteredGuest, setFilteredGuest] = useState();
-  const [searchedInvitedGuest,setSearchedInvitedGuest] = useState();
+  const [value, setValue] = React.useState('1');
+  
   const [searchTerm, setSearchTerm] = useState("");
-const [invitedGuest,setInvitedGuest] = useState([]);
+  const [invitedGuest, setInvitedGuest] = useState([]);
+  
   props.setIsGuestPage(false);
-  const inviteGuest=()=>{
-    setInvitedGuest(props.invitedGuest)
+  
+  const inviteGuest = () => {
+  
+    setInvitedGuest(props.invitedGuest);
+    
   }
 
 
-  useEffect(() => {
 
-    const filteredGuest = props.guest.filter((guest) => {
 
-      if (searchTerm === "") {
-        return guest
-      }
-      else if (guest.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-        return guest
-      }
-    })
 
-    setFilteredGuest(filteredGuest)
-
-    
-  }, [searchTerm])
-  useEffect(()=>{
-    const filteredInvitedGuest = props.invitedGuest.filter((guest)=>{
-      if(searchTerm === ""){
-        return guest
-      }
-      else if(guest.name.toLowerCase().includes(searchTerm.toLowerCase())){
-        return guest
-      }
-    })
-    setSearchedInvitedGuest(filteredInvitedGuest)
-  },[searchTerm])
   
-
-  const [value, setValue] = React.useState('1');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  
 
-  
 
-  return ( 
- 
+
+
+  return (
+
 
     <>
-     <Container sx={{marginTop:'20px'}}>
-      
-
-      <Box sx={{ flexGrow: 1, display: { xs: 'flex' }, justifyContent: 'space-between', mb: 2 }}>
-
-        <TextField onFocus={() => { setIsSearch(true) }} onBlur={() => { setIsSearch(false) }} onChange={(e) => { setSearchTerm(e.target.value); }} id="outlined-basic" label="Search here" variant="outlined" />
+      <Container sx={{ marginTop: '20px' }}>
 
 
-        <Stack direction="row">
+        <Box sx={{ flexGrow: 1, display: { xs: 'flex' }, justifyContent: 'space-between', mb: 2 }}>
 
-          <Link to="" style={{ textDecoration: 'none' }}>
-            <Button onClick={inviteGuest}  variant="contained" color="primary" sx={{ mr: 2 }} >
-              Invite Guests
-            </Button>
-          </Link>
+          <TextField onChange={(e) => { setSearchTerm(e.target.value); }} id="outlined-basic" label="Search here" variant="outlined" />
 
-          <Link to='/GuestStepperForm' style={{ textDecoration: 'none' }}>
 
-            <Button variant="contained" color="success" >
-              Add Guest
-            </Button>
-          </Link>
+          <Stack direction="row">
 
-        </Stack>
-      </Box>
+            <Link to="" style={{ textDecoration: 'none' }}>
+              <Button onClick={inviteGuest} variant="contained" color="primary" sx={{ mr: 2 }} >
+                Invite Guests
+              </Button>
+            </Link>
+
+            <Link to='/GuestStepperForm' style={{ textDecoration: 'none' }}>
+
+              <Button variant="contained" color="success" >
+                Add Guest
+              </Button>
+            </Link>
+
+          </Stack>
+        </Box>
       </Container>
 
-    
-    <Container>
-      <AppBar position='static' color='inherit'>
-        <Box sx={{ width: '100%', typography: 'body1' }}>
 
-          <TabContext value={value}>
+      <Container>
+        <AppBar position='static' color='inherit'>
+          <Box sx={{ width: '100%', typography: 'body1' }}>
 
-
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <TabList onChange={handleChange} aria-label="lab API tabs example" variant='fullWidth' >
-
-                <Tab label="All Guest" value="1" />
-                <Tab label="Invitation Sent" value="2" />
-                <Tab label="Invitation Accepted" value="3" />
+            <TabContext value={value}>
 
 
-              </TabList>
-            </Box>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <TabList onChange={handleChange} aria-label="lab API tabs example" variant='fullWidth' >
 
-            <TabPanel value="1">
-              <Guests guest={props.guest} invitedGuest={props.invitedGuest} setInvitedGuest={props.setInvitedGuest} isSearch={isSearch} searchTerm={searchTerm} filteredGuest={filteredGuest}/>
-            </TabPanel >
-            <TabPanel value="2"><InvitedGuest isSearch={isSearch} searchTerm={searchTerm} filteredGuest={filteredGuest} invitedGuest={invitedGuest} searchedInvitedGuest={searchedInvitedGuest} /></TabPanel>
-            <TabPanel value="3"></TabPanel>
+                  <Tab label="All Guest" value="1" />
+                  <Tab label="Invitation Sent" value="2" />
+                  <Tab label="Invitation Accepted" value="3" />
 
-          </TabContext>
-        </Box>
-      </AppBar>
-    </Container>
 
-  
+                </TabList>
+              </Box>
 
-</>
-   
+              <TabPanel value="1">
+                <Guests guest={props.guest} invitedGuest={props.invitedGuest} setInvitedGuest={props.setInvitedGuest}  searchTerm={searchTerm} />
+              </TabPanel >
+              <TabPanel value="2"><InvitedGuest  searchTerm={searchTerm} invitedGuest={invitedGuest} /></TabPanel>
+              <TabPanel value="3"></TabPanel>
+
+            </TabContext>
+          </Box>
+        </AppBar>
+      </Container>
+
+
+
+    </>
+
   );
 }
 

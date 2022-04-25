@@ -60,10 +60,7 @@ export default function InvitedGuest(props) {
           margin:'auto'
         }}
       >
-
-        
-
-        <DataGrid
+<DataGrid
           rows={filteredInvitedGuest}
           columns={columns}
           pageSize={5}
