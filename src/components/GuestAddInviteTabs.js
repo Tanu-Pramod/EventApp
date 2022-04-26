@@ -15,27 +15,43 @@ import InvitedGuest from './InvitedGuest'
 
 export default function GuestAddInviteTabs(props) {
   const [value, setValue] = React.useState('1');
-  
   const [searchTerm, setSearchTerm] = useState("");
-  const [invitedGuest, setInvitedGuest] = useState([]);
+
+  const [invitedGuestID, setInvitedGuestID] = useState([]);
   
-  props.setIsGuestPage(false);
   
-  const inviteGuest = () => {
   
-    setInvitedGuest(props.invitedGuest);
-    
-  }
-
-
-
-
-
   
 
-  const handleChange = (event, newValue) => {
+
+const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+
+  const handleSet = ()=>{
+
+    const selectedGuest = props.guest.filter((guest) => {
+
+      if (invitedGuestID.includes(guest.id)) {
+        return guest;
+      }
+
+    })
+
+    selectedGuest.map((guest)=>{
+      console.log("props.invitedGuest.includes(guest)",props.invitedGuest.includes(guest))
+      if(props.invitedGuest.includes(guest)){
+        alert("Guest already invited")
+      }
+      else{
+      props.setInvitedGuest([...props.invitedGuest,guest]);
+      localStorage.setItem("invited_guest", JSON.stringify([...props.invitedGuest,guest]))}
+    })
+   
+
+   
+  }
 
 
 
@@ -56,7 +72,8 @@ export default function GuestAddInviteTabs(props) {
           <Stack direction="row">
 
             <Link to="" style={{ textDecoration: 'none' }}>
-              <Button onClick={inviteGuest} variant="contained" color="primary" sx={{ mr: 2 }} >
+              <Button onClick={handleSet}  variant="contained" color="primary" sx={{ mr: 2 }} >
+
                 Invite Guests
               </Button>
             </Link>
@@ -92,9 +109,9 @@ export default function GuestAddInviteTabs(props) {
               </Box>
 
               <TabPanel value="1">
-                <Guests guest={props.guest} invitedGuest={props.invitedGuest} setInvitedGuest={props.setInvitedGuest}  searchTerm={searchTerm} />
+                <Guests guest={props.guest} invitedGuest={props.invitedGuest} setInvitedGuest={props.setInvitedGuest}  searchTerm={searchTerm} setInvitedGuestID={setInvitedGuestID}/>
               </TabPanel >
-              <TabPanel value="2"><InvitedGuest  searchTerm={searchTerm} invitedGuest={invitedGuest} /></TabPanel>
+              <TabPanel value="2"><InvitedGuest  searchTerm={searchTerm} invitedGuest={props.invitedGuest} /></TabPanel>
               <TabPanel value="3"></TabPanel>
 
             </TabContext>

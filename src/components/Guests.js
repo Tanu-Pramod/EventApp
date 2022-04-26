@@ -9,16 +9,7 @@ export default function Guests(props) {
   
 const handleSelect = (id) => {
   
-    const selectedGuest = props.guest.filter((guest, i) => {
-
-      if (id.includes(guest.id)) {
-        return guest;
-      }
-
-    })
-    props.setInvitedGuest(selectedGuest);
-
-    localStorage.setItem("invited_guest", JSON.stringify(selectedGuest))
+   props.setInvitedGuestID(id);
   }
   
   const filteredGuest = props.guest.filter((guest)=>{

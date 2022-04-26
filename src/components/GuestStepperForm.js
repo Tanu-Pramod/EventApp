@@ -96,7 +96,7 @@ export default function GuestStepperForm(props) {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <Box sx={{ mt: 5, mb: 1 }}><div style={{ width: '50%', margin: 'auto' }}>{step[activeStep]}</div></Box>
+          <Box sx={{ mt: 5, mb: 1 }}><div style={{ width: '50%', margin: 'auto',borderRadius:'2px solid black' }}>{step[activeStep]}</div></Box>
 
 
         </React.Fragment>

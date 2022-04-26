@@ -13,12 +13,12 @@ import { Button } from '@mui/material';
 
 
 export default function Events(props) {
-  const [isSearch, setIsSearch] = useState(false);
-  const [filteredEvent, setFilteredEvent] = useState()
+  
+  
   const [editObj, setEditObj] = useState();
   const [searchTerm, setSearchTerm] = useState("")
 
-  useEffect(() => {
+  
   
     const filterdEvent = props.rows.filter((event) => {
 
@@ -30,8 +30,7 @@ export default function Events(props) {
       }
     })
   
-    setFilteredEvent(filterdEvent)
-  }, [searchTerm])
+
 
   props.setIsGuestPage(false);
   const editHandle = (id) => {
@@ -70,7 +69,7 @@ export default function Events(props) {
         return [
 
           <GridActionsCellItem
-          icon={<Link to='/guestAddInviteTab' style={{textDecoration:'none'}}>
+          icon={<Link to={`/guestAddInviteTab/Event_ID-${id}`} style={{textDecoration:'none'}}>
           <Button variant="contained" color="success" >
   
             Invite
@@ -123,14 +122,14 @@ export default function Events(props) {
         }}
       >
         <Box sx={{ flexGrow: 1, display: { xs: 'flex' }, justifyContent: 'space-between', mb: 2 }}>
-          <TextField onFocus={() => { setIsSearch(true) }} onBlur={() => { setIsSearch(false) }} onChange={(e) => { setSearchTerm(e.target.value); }} id="outlined-basic" label="Search here" variant="outlined" />
+          <TextField onChange={(e) => { setSearchTerm(e.target.value); }} id="outlined-basic" label="Search here" variant="outlined" />
           <PopUpAddForm rows={props.rows} setRows={props.setRows} IsGuestPage={props.isGuestPage} />
 
         </Box>
        
 
         <DataGrid
-          rows={isSearch && searchTerm.length > 0 ? filteredEvent : props.rows}
+          rows={filterdEvent}
           columns={columns}
           pageSize={5}
         rowsPerPageOptions={[5]}
