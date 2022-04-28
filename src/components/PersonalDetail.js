@@ -1,25 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { TextField } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 
+import ImageDialog from './ImageDialog';
+
 function PersonalDetail(props) {
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+  const [image, setImage] = useState(null);
+  const [src, setSrc] = useState(null);
+
+
+
+
   const personalValidationSchema = Yup.object({
     name: Yup.string().required('Please enter the guest name !!'),
     age: Yup.number()
-    .required('Please enter your age')
-    .test(
-      'Is positive?', 
-      'Age must be greater than 0', 
-      (value) => value > 0
-    ),
+      .required('Please enter your age')
+      .test(
+        'Is positive?',
+        'Age must be greater than 0',
+        (value) => value > 0
+      ),
     img: Yup.mixed().required('Please select your photo'),
     gender: Yup.string().required('Please select your gender ')
 
- 
+
   });
 
 
@@ -27,16 +43,19 @@ function PersonalDetail(props) {
     props.next(values);
   }
 
-  const handleChange = (event, setFieldValue) => {
+  const handleChange = (event) => {
+
+    setOpen(true);
 
     let reader = new FileReader();
     let file = event.target.files[0];
     reader.readAsDataURL(file);
     reader.onload = () => {
-      setFieldValue("img", reader.result)
-    };
-  }
 
+      setImage(reader.result)
+    };
+
+  }
 
 
   return (
@@ -44,7 +63,7 @@ function PersonalDetail(props) {
       initialValues={props.guestData}
       onSubmit={handleSubmit}
       validationSchema={personalValidationSchema}>
-      {({ values,setFieldValue }) => (
+      {({ values, setFieldValue }) => (
         <Form >
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <p style={{ width: '25%', textAlign: 'start' }} >Guest Name : </p>
@@ -55,9 +74,11 @@ function PersonalDetail(props) {
                 name="name"
                 className="formikFieldGuest"
               />
+
               <ErrorMessage name="name" component="div" className='error' />
             </div>
           </Box>
+
 
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <p style={{ width: '25%', textAlign: 'start' }}>Age:</p>
@@ -72,7 +93,19 @@ function PersonalDetail(props) {
             </div>
           </Box>
 
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+          <CardMedia
+              component="img"
+              height="140"
+              image={src}
+              sx={{ width: 'auto' }}
+
+            />
+
+          </Box>
+
+
+          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, }}>
             <p style={{ width: '25%', textAlign: 'start' }} >Image : </p>
 
             <div style={{ width: '75%' }}>
@@ -84,22 +117,31 @@ function PersonalDetail(props) {
                 className="formikFieldGuest"
               />
 
+
               <ErrorMessage name="img" component="div" className='error' />
             </div>
-            <CardMedia
-              component="img"
-              height="140"
-              image={values.img}
-              sx={{width:'30%'}}
-              
-            />
+           
           </Box>
 
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+          <ImageDialog setFieldValue={setFieldValue} open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} setSrc={setSrc} image={image} />
+          
+          
+          
+
+
+
+
+         
+
+
+
+
+
+          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2}}>
 
             <p style={{ width: '25%', textAlign: 'start' }} id="my-radio-group">Gender:</p>
 
-            <div style={{ width: '75%', textAlign: 'start' }} role="group" aria-labelledby="my-radio-group">
+            <div style={{ width: '75%', textAlign: 'start', alignSelf:'center' }} role="group" aria-labelledby="my-radio-group">
 
               <label>
                 <Field type="radio" name="gender" value="Male" />
@@ -113,8 +155,9 @@ function PersonalDetail(props) {
               <ErrorMessage name="gender" component="div" style={{ marginTop: '15px' }} className='error' />
             </div>
 
+
           </Box>
-      
+
 
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button

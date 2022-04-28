@@ -24,10 +24,10 @@ export default function GuestDetail(props) {
       {
         props.guest.filter((guest) => {
           return guest.id === Number(params.id)
-        }).map(guest =>
+        }).map((guest,id)=>
           
 
-          <Card sx={{ maxWidth: 350, m: 'auto',p: 1}}>
+          <Card key={id} sx={{ maxWidth: 350, m: 'auto',p: 1}}>
             
           
             <Box sx={{ display: 'flex', flexDirection: 'row' }}>
@@ -52,7 +52,7 @@ export default function GuestDetail(props) {
               component="img"
               height="140"
               image={guest.img}
-              sx={{width:'30%'}}
+              sx={{width:'auto'}}
               
             />
             </Box>

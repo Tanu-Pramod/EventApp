@@ -28,7 +28,8 @@ const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-
+console.log("props invitedGuest",props.invitedGuest)
+const guestList = [...props.invitedGuest];
   const handleSet = ()=>{
 
     const selectedGuest = props.guest.filter((guest) => {
@@ -38,20 +39,41 @@ const handleChange = (event, newValue) => {
       }
 
     })
+    
+    
+
+    console.log("guestlist",guestList);
 
     selectedGuest.map((guest)=>{
-      console.log("props.invitedGuest.includes(guest)",props.invitedGuest.includes(guest))
-      if(props.invitedGuest.includes(guest)){
-        alert("Guest already invited")
-      }
-      else{
-      props.setInvitedGuest([...props.invitedGuest,guest]);
-      localStorage.setItem("invited_guest", JSON.stringify([...props.invitedGuest,guest]))}
+      console.log("inside map guestlist",guestList);
+      console.log("guestList includes",guestList.includes(guest))
+     
+        if(guestList.includes(guest)){
+          console.log(" already exist so not adding",guest.name)
+          alert("already Invited")
+
+        }
+        else{
+          console.log("so adding",guest.name)
+          guestList.push(guest);
+        }
+        console.log("inside map guestlist",guestList);
+       
+      
+       
     })
+    console.log("now guestlist",guestList);
+
+    props.setInvitedGuest(guestList);
+    localStorage.setItem("invited_guest", JSON.stringify(guestList))
+
+
+
    
 
    
   }
+  
 
 
 

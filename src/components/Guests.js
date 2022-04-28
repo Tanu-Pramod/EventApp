@@ -10,6 +10,7 @@ export default function Guests(props) {
 const handleSelect = (id) => {
   
    props.setInvitedGuestID(id);
+   
   }
   
   const filteredGuest = props.guest.filter((guest)=>{

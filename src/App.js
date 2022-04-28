@@ -32,6 +32,8 @@ const [invitedGuest,setInvitedGuest] = useState([]);
   
   })
 
+  
+
 
   useEffect(() => {
     const eventList = JSON.parse(localStorage.getItem("event_list"))
