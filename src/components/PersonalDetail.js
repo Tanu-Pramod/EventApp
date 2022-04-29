@@ -106,7 +106,7 @@ function PersonalDetail(props) {
               <input
                 type="file"
                 name="img"
-                onChange={(event) => handleChange(event, setFieldValue)}
+                onChange={(event) => handleChange(event)}
                 className="formikFieldGuest"
               />
 

@@ -134,8 +134,9 @@ setIsGuestPage(true);
 
 
 
+<Box sx={{alignSelf:'center'}}>
 
-          <Stack direction="row">
+<Stack direction="row">
             <Link to='/GuestStepperForm' style={{textDecoration:'none'}}>
 
               <Button variant="contained" color="success" >
@@ -145,6 +146,8 @@ setIsGuestPage(true);
             </Link>
 
           </Stack>
+</Box>
+          
 
 
 

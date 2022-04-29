@@ -34,8 +34,7 @@ function App() {
     account_no: '',
 
   })
-  console.log("event Id",eventID)
-  console.log("invitedGuest",invitedGuest)
+
 
 
 
@@ -52,6 +51,8 @@ function App() {
     const invitedGuestList = JSON.parse(localStorage.getItem("invited_guest_"+eventID))
     setInvitedGuest(invitedGuestList || [])
   },[eventID])
+  console.log("event Id",eventID)
+  console.log("invitedGuest",invitedGuest)
 
   return (
     <div className="App">

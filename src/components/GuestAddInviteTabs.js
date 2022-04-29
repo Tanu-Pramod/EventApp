@@ -27,12 +27,9 @@ export default function GuestAddInviteTabs() {
 
   const [value, setValue] = React.useState('1');
   const [searchTerm, setSearchTerm] = useState("");
+
   const eventId = useParams();
 
-
- 
-
-  
   const [invitedGuestID, setInvitedGuestID] = useState([]);
 
   const handleChange = (event, newValue) => {
@@ -46,7 +43,7 @@ export default function GuestAddInviteTabs() {
   const handleSet = () => {
 
     setEventID(eventId.name);
-    console.log("event idd",eventId.name)
+    console.log("event idd", eventID)
 
     const selectedGuest = guest.filter((guest) => {
 
@@ -71,7 +68,7 @@ export default function GuestAddInviteTabs() {
     })
 
     setInvitedGuest(guestList);
-    localStorage.setItem("invited_guest_" +eventId.name , JSON.stringify(guestList))
+    localStorage.setItem("invited_guest_"+eventID, JSON.stringify(guestList))
   }
 
 
@@ -90,24 +87,26 @@ export default function GuestAddInviteTabs() {
 
           <TextField onChange={(e) => { setSearchTerm(e.target.value); }} id="outlined-basic" label="Search here" variant="outlined" />
 
+          <Box sx={{ alignSelf: 'center' }}>
+            <Stack direction="row">
 
-          <Stack direction="row">
 
-            <Link to="" style={{ textDecoration: 'none' }}>
               <Button onClick={handleSet} variant="contained" color="primary" sx={{ mr: 2 }} >
 
                 Invite Guests
               </Button>
-            </Link>
 
-            <Link to='/GuestStepperForm' style={{ textDecoration: 'none' }}>
 
-              <Button variant="contained" color="success" >
-                Add Guest
-              </Button>
-            </Link>
+              <Link to='/GuestStepperForm' style={{ textDecoration: 'none' }}>
 
-          </Stack>
+                <Button variant="contained" color="success" >
+                  Add Guest
+                </Button>
+              </Link>
+
+            </Stack>
+          </Box>
+
         </Box>
       </Container>
 

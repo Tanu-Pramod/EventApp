@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -7,12 +7,26 @@ import CardMedia from '@mui/material/CardMedia';
 import { Form, Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { eventContext } from '../App';
-import { useContext } from 'react';
+import React, { useContext,useState } from 'react';
+import ImageDialog from './ImageDialog';
 
 
 export default function FormEditLStorage(props) {
 
   const { isGuestPage, guest, setGuest, rows, setRows} = useContext(eventContext)
+
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+  const [image, setImage] = useState(null);
+  const [src, setSrc] = useState(null);
+
 
   const minDate = new Date();
   minDate.setDate(minDate.getDate() + 2);
@@ -42,11 +56,12 @@ export default function FormEditLStorage(props) {
   });
 
   const handleChange = (e, setFieldValue) => {
+    setOpen(true);
     let reader = new FileReader();
     let file = e.target.files[0];
     reader.readAsDataURL(file);
     reader.onload = () => {
-      setFieldValue('img', reader.result)
+      setImage(reader.result)
 
     };
   }
@@ -134,7 +149,7 @@ export default function FormEditLStorage(props) {
                     <p style={{ width: '30%' }}>Change Image : </p>
                     <input
                       type="file"
-                      onChange={(e) => handleChange(e, setFieldValue)}
+                      onChange={(e) => handleChange(e)}
                       className="formikFieldGuest"
                       style={{ width: '70%' }}
                     />
@@ -146,11 +161,13 @@ export default function FormEditLStorage(props) {
                   <CardMedia
                     component="img"
                     height="140"
-                    image={values.img}
+                    image={values.img===null?src:values.img}
                     sx={{ width: '100%' }}
 
                   />
                 </Box>
+
+                <ImageDialog setFieldValue={setFieldValue} open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} setSrc={setSrc} image={image} />
               </Box>
 
               <Box sx={{ float: 'right' }}>

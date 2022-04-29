@@ -71,7 +71,9 @@ export default function Events() {
       headerName: 'Actions',
       width: 450,
       cellClassName: 'actions',
-      getActions: ({ id}) => {
+      getActions: ({ id,name}) => {
+
+        
 
         return [
 
@@ -130,7 +132,10 @@ export default function Events() {
       >
         <Box sx={{ flexGrow: 1, display: { xs: 'flex' }, justifyContent: 'space-between', mb: 2 }}>
           <TextField onChange={(e) => { setSearchTerm(e.target.value); }} id="outlined-basic" label="Search here" variant="outlined" />
-          <PopUpAddForm />
+          <Box sx={{alignSelf:'center'}}>
+          <PopUpAddForm  />
+          </Box>
+          
 
         </Box>
 
