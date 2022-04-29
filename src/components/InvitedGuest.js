@@ -2,14 +2,16 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 
 import { DataGrid } from '@mui/x-data-grid';
+import { eventContext } from '../App';
 
 
 
 
 export default function InvitedGuest(props) {
+  const {invitedGuest} = React.useContext(eventContext)
   
 
-  const filteredInvitedGuest = props.invitedGuest.filter((guest)=>{
+  const filteredInvitedGuest = invitedGuest.filter((guest)=>{
     if(props.searchTerm === ""){
       return guest
     }

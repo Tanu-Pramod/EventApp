@@ -6,17 +6,21 @@ import CardMedia from '@mui/material/CardMedia';
 
 import { Form, Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { eventContext } from '../App';
+import { useContext } from 'react';
 
 
 export default function FormEditLStorage(props) {
 
-  const minDate = new Date();
-minDate.setDate(minDate.getDate()+2);
-minDate.setHours(0,0,0,0);
+  const { isGuestPage, guest, setGuest, rows, setRows} = useContext(eventContext)
 
-const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const maxDate = new Date();
-maxDate.setMonth(maxDate.getMonth()+1);
+  const minDate = new Date();
+  minDate.setDate(minDate.getDate() + 2);
+  minDate.setHours(0, 0, 0, 0);
+
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const maxDate = new Date();
+  maxDate.setMonth(maxDate.getMonth() + 1);
 
   const guestValidationSchema = Yup.object({
     name: Yup.string().required('Please enter the guest name !!'),
@@ -32,7 +36,7 @@ maxDate.setMonth(maxDate.getMonth()+1);
   });
   const eventValidationSchema = Yup.object({
     name: Yup.string().required('please enter the event name'),
-    date: Yup.date().min(minDate,`You can book events from ${minDate.getDate()+0} ${months[minDate.getMonth()]} `).max(maxDate,"you can book events only one month in advance").required("Please select the date"),
+    date: Yup.date().min(minDate, `You can book events from ${minDate.getDate() + 0} ${months[minDate.getMonth()]} `).max(maxDate, "you can book events only one month in advance").required("Please select the date"),
     venue: Yup.string().required('Please enter the venue')
 
   });
@@ -51,7 +55,7 @@ maxDate.setMonth(maxDate.getMonth()+1);
     <Box>
 
       {
-        props.isGuestPage ? <Formik
+        isGuestPage ? <Formik
 
           initialValues={
             props.editObj
@@ -59,7 +63,7 @@ maxDate.setMonth(maxDate.getMonth()+1);
 
           onSubmit={(values) => {
 
-            const updatedGuest = props.guest.map((guest) => {
+            const updatedGuest = guest.map((guest) => {
               if (guest.id === props.editObj.id) {
                 return values
               }
@@ -68,7 +72,7 @@ maxDate.setMonth(maxDate.getMonth()+1);
               }
             })
             localStorage.setItem("guest_list", JSON.stringify(updatedGuest));
-            props.setGuest(updatedGuest);
+            setGuest(updatedGuest);
             props.setOpen(false)
           }}
           validationSchema={guestValidationSchema}>
@@ -163,7 +167,7 @@ maxDate.setMonth(maxDate.getMonth()+1);
             initialValues={props.editObj}
             onSubmit={(values) => {
               props.setOpen(false)
-              const updatedEvent = props.rows.map((event) => {
+              const updatedEvent = rows.map((event) => {
                 if (event.id === props.editObj.id) {
                   return values
                 }
@@ -172,46 +176,46 @@ maxDate.setMonth(maxDate.getMonth()+1);
                 }
               })
               localStorage.setItem("event_list", JSON.stringify(updatedEvent));
-              props.setRows(updatedEvent);
+              setRows(updatedEvent);
 
             }}
             validationSchema={eventValidationSchema}>
             {() => (
               <Form >
-                  <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'space-between' }}>
-                    <p style={{ width: '25%', textAlign: 'start' }}>Event name : </p>
-                    <div style={{ width: '70%' }}>
-                <Field
-                  name="name"
-                  className="formikFieldGuest"
-                />
-                  <ErrorMessage name='name' component='div' className='error' />
-                    </div>
-                  </Box>
+                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'space-between' }}>
+                  <p style={{ width: '25%', textAlign: 'start' }}>Event name : </p>
+                  <div style={{ width: '70%' }}>
+                    <Field
+                      name="name"
+                      className="formikFieldGuest"
+                    />
+                    <ErrorMessage name='name' component='div' className='error' />
+                  </div>
+                </Box>
 
-                  <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'space-between' }}>
-                    <p style={{ width: '25%', textAlign: 'start' }}>Date : </p>
-                    <div style={{ width: '70%' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'space-between' }}>
+                  <p style={{ width: '25%', textAlign: 'start' }}>Date : </p>
+                  <div style={{ width: '70%' }}>
 
-                <Field
-              type="date"
-                  name="date"
-                  className="formikFieldGuest"
-                />
-                 <ErrorMessage name='date' component='div' className='error' />
-                    </div>
-                  </Box>
-                  <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'space-between' }}>
-                    <p style={{ width: '25%', textAlign: 'start' }}>Venue : </p>
-                    <div style={{ width: '70%' }}>
+                    <Field
+                      type="date"
+                      name="date"
+                      className="formikFieldGuest"
+                    />
+                    <ErrorMessage name='date' component='div' className='error' />
+                  </div>
+                </Box>
+                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'space-between' }}>
+                  <p style={{ width: '25%', textAlign: 'start' }}>Venue : </p>
+                  <div style={{ width: '70%' }}>
 
-                <Field
-                  name="venue"
-                  className="formikFieldGuest"
-                />
-                  <ErrorMessage name='venue' component='div' className='error' />
-                    </div>
-                  </Box>
+                    <Field
+                      name="venue"
+                      className="formikFieldGuest"
+                    />
+                    <ErrorMessage name='venue' component='div' className='error' />
+                  </div>
+                </Box>
                 <Box sx={{ float: 'right' }}>
                   <Button type='submit' >
                     Save

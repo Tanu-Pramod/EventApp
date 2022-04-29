@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { eventContext } from '../App';
 
 function ContactDetail(props) {
+  const {guestData} = useContext(eventContext)
 
   // const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
@@ -25,7 +27,7 @@ function ContactDetail(props) {
 
   return (
     <Formik
-      initialValues={props.guestData}
+      initialValues={guestData}
 
       onSubmit={handleSubmit}
 

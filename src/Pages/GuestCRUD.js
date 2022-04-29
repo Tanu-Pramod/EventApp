@@ -10,10 +10,12 @@ import DeleteDialog from '../components/DeleteDialogMui';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+import { eventContext } from '../App';
+import { useContext } from 'react';
 
 
-
-export default function GuestCRUD(props) {
+export default function GuestCRUD() {
+  const {isGuestPage,setIsGuestPage,guest} = useContext(eventContext)
   
   
   const [editObj, setEditObj] = useState();
@@ -21,11 +23,11 @@ export default function GuestCRUD(props) {
   
 
 
-props.setIsGuestPage(true);
+setIsGuestPage(true);
 
   
 
-  const guest= props.guest.filter((guest) => {
+  const filteredGuest= guest.filter((guest) => {
 
       if (searchTerm === "") {
         return guest
@@ -40,7 +42,7 @@ props.setIsGuestPage(true);
 
 
   const editHandle = (id) => {
-    const editList = props.guest.filter((guest) => {
+    const editList = guest.filter((guest) => {
       return guest.id === id
     })
 
@@ -89,7 +91,7 @@ props.setIsGuestPage(true);
           />,
           <GridActionsCellItem
             icon={
-              <PopUpEdit isGuestPage={props.isGuestPage} editObj={editObj} id={id} guest={props.guest} setGuest={props.setGuest} guestData={props.guestData} setGuestData={props.setGuestData} />}
+              <PopUpEdit  editObj={editObj} id={id} />}
             label="Edit"
             onClick={() => { editHandle(id) }}
             className="textPrimary"
@@ -97,7 +99,7 @@ props.setIsGuestPage(true);
             color="inherit"
           />,
           <GridActionsCellItem
-            icon={<DeleteDialog guest={props.guest} setGuest={props.setGuest} isGuestPage={props.isGuestPage} id={id} />}
+            icon={<DeleteDialog  id={id} />}
             label="Delete"
           />
 
@@ -125,7 +127,7 @@ props.setIsGuestPage(true);
           },
         }}
       >
-        { props.isGuestPage &&
+        { isGuestPage &&
         <Box sx={{ flexGrow: 1, display: { xs: 'flex' }, justifyContent: 'space-between', mb: 2 }}>
           <TextField onChange={(e) => { setSearchTerm(e.target.value); }} id="outlined-basic" label="Search here" variant="outlined" />
     
@@ -150,7 +152,7 @@ props.setIsGuestPage(true);
         </Box> }
 
         <DataGrid
-          rows={guest}
+          rows={filteredGuest}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}

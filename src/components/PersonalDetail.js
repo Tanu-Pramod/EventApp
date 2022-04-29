@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -6,8 +6,10 @@ import * as Yup from 'yup';
 import CardMedia from '@mui/material/CardMedia';
 
 import ImageDialog from './ImageDialog';
+import { eventContext } from '../App';
 
 function PersonalDetail(props) {
+  const {guestData} = useContext(eventContext);
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -60,7 +62,7 @@ function PersonalDetail(props) {
 
   return (
     <Formik
-      initialValues={props.guestData}
+      initialValues={guestData}
       onSubmit={handleSubmit}
       validationSchema={personalValidationSchema}>
       {({ values, setFieldValue }) => (
@@ -93,16 +95,7 @@ function PersonalDetail(props) {
             </div>
           </Box>
 
-          <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
-          <CardMedia
-              component="img"
-              height="140"
-              image={src}
-              sx={{ width: 'auto' }}
-
-            />
-
-          </Box>
+         
 
 
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, }}>
@@ -120,8 +113,17 @@ function PersonalDetail(props) {
 
               <ErrorMessage name="img" component="div" className='error' />
             </div>
+            {image && 
+            <CardMedia
+              component="img"
+              height="140"
+              image={src}
+              sx={{ width: 'auto' }}
+
+            />}
            
           </Box>
+
 
           <ImageDialog setFieldValue={setFieldValue} open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} setSrc={setSrc} image={image} />
           

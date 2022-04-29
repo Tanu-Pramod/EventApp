@@ -10,7 +10,9 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import FormEditLStorage from './FormEditLStorage';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { eventContext } from '../App';
+import { useContext } from 'react';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -52,6 +54,9 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function PopUpEdit(props) {
+  const {isGuestPage} =useContext(eventContext)
+
+  
   const [open, setOpen] = React.useState(false);
 
 
@@ -74,13 +79,13 @@ export default function PopUpEdit(props) {
         open={open}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          {props.isGuestPage ? "Edit Guest" :"Edit Event" }
+          {isGuestPage ? "Edit Guest" :"Edit Event" }
          
         </BootstrapDialogTitle>
         <DialogContent dividers>
           
         
-          <FormEditLStorage setOpen={setOpen} editObj={props.editObj} id={props.id} handleClose={handleClose} rows={props.rows} setRows={props.setRows} isGuestPage={props.isGuestPage} guest={props.guest} setGuest={props.setGuest} guestData={props.guestData} setGuestData={props.setGuestData} />
+          <FormEditLStorage setOpen={setOpen} editObj={props.editObj} id={props.id} handleClose={handleClose} />
           
         </DialogContent>
       </BootstrapDialog>

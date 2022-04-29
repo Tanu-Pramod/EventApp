@@ -9,32 +9,39 @@ import { DataGrid } from '@mui/x-data-grid';
 import DeleteDialog from '../components/DeleteDialogMui';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
+import { eventContext } from '../App';
+import { useContext } from 'react';
 
 
+export default function Events() {
 
-export default function Events(props) {
-  
-  
+  const { rows, setIsGuestPage} = useContext(eventContext);
+
+
   const [editObj, setEditObj] = useState();
   const [searchTerm, setSearchTerm] = useState("")
 
-  
-  
-    const filterdEvent = props.rows.filter((event) => {
 
-      if (searchTerm === "") {
-        return event
-      }
-      else if (event.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-        return event
-      }
-    })
+
   
 
 
-  props.setIsGuestPage(false);
+
+  const filterdEvent = rows.filter((event) => {
+
+    if (searchTerm === "") {
+      return event
+    }
+    else if (event.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+      return event
+    }
+  })
+
+
+
+  setIsGuestPage(false);
   const editHandle = (id) => {
-    const editList = props.rows.filter((row) => {
+    const editList = rows.filter((row) => {
       return row.id === id
     })
 
@@ -43,7 +50,7 @@ export default function Events(props) {
     })
   }
 
- 
+
   const columns = [
     { field: 'id', headerName: 'ID', width: 80 },
     { field: 'name', width: 100, headerName: 'Name' },
@@ -64,42 +71,42 @@ export default function Events(props) {
       headerName: 'Actions',
       width: 450,
       cellClassName: 'actions',
-      getActions: ({ id }) => {
+      getActions: ({ id}) => {
 
         return [
 
           <GridActionsCellItem
-          icon={<Link to={`/guestAddInviteTab/Event_ID-${id}`} style={{textDecoration:'none'}}>
-          <Button variant="contained" color="success" >
-  
-            Invite
-          </Button></Link>}
-          label="Invite Guest"
-      />,
-      <GridActionsCellItem
-      icon={<Link to='' style={{textDecoration:'none'}}>
-      <Button  variant="contained" color="success"  >
+            icon={<Link to={`/guestAddInviteTab/${id}`} style={{ textDecoration: 'none' }}>
+              <Button variant="contained" color="success" >
 
-        View
-      </Button></Link>}
-      label="Invite Guest"
-  />,
+                Invite
+              </Button></Link>}
+            label="Invite Guest"
+          />,
           <GridActionsCellItem
-            icon={<PopUpEdit editObj={editObj} id={id} rows={props.rows} setRows={props.setRows} />}
+            icon={<Link to='' style={{ textDecoration: 'none' }}>
+              <Button variant="contained" color="success"  >
+
+                View
+              </Button></Link>}
+            label="Invite Guest"
+          />,
+          <GridActionsCellItem
+            icon={<PopUpEdit editObj={editObj} id={id} />}
             label="Edit"
             onClick={() => { editHandle(id) }}
             className="textPrimary"
 
             color="inherit"
           />,
-        <GridActionsCellItem
-        icon={<DeleteDialog setRows={props.setRows} rows={props.rows} id={id} />}
-        label="Delete"
-    />
-   
-  
-        
-        
+          <GridActionsCellItem
+            icon={<DeleteDialog id={id} />}
+            label="Delete"
+          />
+
+
+
+
         ];
       },
     },
@@ -123,17 +130,17 @@ export default function Events(props) {
       >
         <Box sx={{ flexGrow: 1, display: { xs: 'flex' }, justifyContent: 'space-between', mb: 2 }}>
           <TextField onChange={(e) => { setSearchTerm(e.target.value); }} id="outlined-basic" label="Search here" variant="outlined" />
-          <PopUpAddForm rows={props.rows} setRows={props.setRows} IsGuestPage={props.isGuestPage} />
+          <PopUpAddForm />
 
         </Box>
-       
+
 
         <DataGrid
           rows={filterdEvent}
           columns={columns}
           pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
+          rowsPerPageOptions={[5]}
+          checkboxSelection
         />
       </Box>
     </div>

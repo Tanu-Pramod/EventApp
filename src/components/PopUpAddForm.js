@@ -10,7 +10,8 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import FormAddEvent from './FormAddEvent';
-
+import { eventContext } from '../App';
+import { useContext } from 'react';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -53,7 +54,8 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function PopUpAddForm(props) {
+export default function PopUpAddForm() {
+  const {isGuestPage} = useContext(eventContext);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -66,7 +68,7 @@ export default function PopUpAddForm(props) {
   return (
     <div>
       <Button variant="contained" color="success" onClick={handleClickOpen}>
-        {props.isGuestPage? "Add Guest":"Add Event"}
+        {isGuestPage? "Add Guest":"Add Event"}
       </Button>
       <BootstrapDialog
         onClose={handleClose}
@@ -74,11 +76,11 @@ export default function PopUpAddForm(props) {
         open={open}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        {props.guestPage? "Add Guest":"Add Event"}
+        {isGuestPage? "Add Guest":"Add Event"}
         </BootstrapDialogTitle>
         <DialogContent dividers>
           
-           <FormAddEvent setOpen={setOpen} isGuestPage={props.isGuestPage} rows={props.rows} setRows={props.setRows} guest={props.guest} setGuest={props.setGuest}  />
+           <FormAddEvent setOpen={setOpen}   />
           
 
         </DialogContent>

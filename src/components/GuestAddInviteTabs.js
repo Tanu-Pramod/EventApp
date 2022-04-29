@@ -1,79 +1,79 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { AppBar, Button, Container } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { TextField } from '@mui/material';
 import { Stack } from '@mui/material';
 import Guests from './Guests';
 import InvitedGuest from './InvitedGuest'
+import { eventContext } from '../App';
 
 
 
-export default function GuestAddInviteTabs(props) {
+
+export default function GuestAddInviteTabs() {
+
+  const {
+    guest,
+    rows,
+    invitedGuest,
+    setInvitedGuest,
+    eventID,
+    setEventID } = useContext(eventContext);
+
   const [value, setValue] = React.useState('1');
   const [searchTerm, setSearchTerm] = useState("");
+  const eventId = useParams();
 
+
+ 
+
+  
   const [invitedGuestID, setInvitedGuestID] = useState([]);
-  
-  
-  
-  
 
-
-const handleChange = (event, newValue) => {
+  const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-console.log("props invitedGuest",props.invitedGuest)
-const guestList = [...props.invitedGuest];
-  const handleSet = ()=>{
 
-    const selectedGuest = props.guest.filter((guest) => {
+  const guestList = [...invitedGuest];
+
+
+  const handleSet = () => {
+
+    setEventID(eventId.name);
+    console.log("event idd",eventId.name)
+
+    const selectedGuest = guest.filter((guest) => {
 
       if (invitedGuestID.includes(guest.id)) {
         return guest;
       }
 
     })
-    
-    
 
-    console.log("guestlist",guestList);
+    selectedGuest.map((guest) => {
 
-    selectedGuest.map((guest)=>{
-      console.log("inside map guestlist",guestList);
-      console.log("guestList includes",guestList.includes(guest))
-     
-        if(guestList.includes(guest)){
-          console.log(" already exist so not adding",guest.name)
-          alert("already Invited")
 
-        }
-        else{
-          console.log("so adding",guest.name)
-          guestList.push(guest);
-        }
-        console.log("inside map guestlist",guestList);
-       
-      
-       
+      if (guestList.includes(guest)) {
+
+        alert("already Invited")
+
+      }
+      else {
+
+        guestList.push(guest);
+      }
     })
-    console.log("now guestlist",guestList);
 
-    props.setInvitedGuest(guestList);
-    localStorage.setItem("invited_guest", JSON.stringify(guestList))
-
-
-
-   
-
-   
+    setInvitedGuest(guestList);
+    localStorage.setItem("invited_guest_" +eventId.name , JSON.stringify(guestList))
   }
-  
+
 
 
 
@@ -94,7 +94,7 @@ const guestList = [...props.invitedGuest];
           <Stack direction="row">
 
             <Link to="" style={{ textDecoration: 'none' }}>
-              <Button onClick={handleSet}  variant="contained" color="primary" sx={{ mr: 2 }} >
+              <Button onClick={handleSet} variant="contained" color="primary" sx={{ mr: 2 }} >
 
                 Invite Guests
               </Button>
@@ -131,9 +131,9 @@ const guestList = [...props.invitedGuest];
               </Box>
 
               <TabPanel value="1">
-                <Guests guest={props.guest} invitedGuest={props.invitedGuest} setInvitedGuest={props.setInvitedGuest}  searchTerm={searchTerm} setInvitedGuestID={setInvitedGuestID}/>
+                <Guests searchTerm={searchTerm} setInvitedGuestID={setInvitedGuestID} />
               </TabPanel >
-              <TabPanel value="2"><InvitedGuest  searchTerm={searchTerm} invitedGuest={props.invitedGuest} /></TabPanel>
+              <TabPanel value="2"><InvitedGuest searchTerm={searchTerm} /></TabPanel>
               <TabPanel value="3"></TabPanel>
 
             </TabContext>

@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
+import { eventContext } from '../App';
 
 function AccountDetail(props) {
+  const {guestData} = useContext(eventContext);
 
   const accountValidationSchema = Yup.object({
     account_no: Yup.string().required('Please enter account number'),
@@ -19,7 +21,7 @@ function AccountDetail(props) {
 
   return (
     <Formik
-      initialValues={props.guestData}
+      initialValues={guestData}
       onSubmit={handleSubmit}
       validationSchema={accountValidationSchema}>
       {() => (

@@ -11,22 +11,24 @@ import ContactDetail from './ContactDetail';
 import PersonalDetail from './PersonalDetail';
 import AccountDetail from './AccountDetail';
 import { Link } from 'react-router-dom';
+import { eventContext } from '../App';
 
 
-export default function GuestStepperForm(props) {
+export default function GuestStepperForm() {
+  const {guest,setGuestData,setGuest} = React.useContext(eventContext)
   const steps = ['Personal Details', 'Contact Detail', 'Bank Detail'];
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = (newData) => {
-    props.setGuestData(prev => ({ ...prev, ...newData }));
+    setGuestData(prev => ({ ...prev, ...newData }));
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
     if (activeStep === step.length - 1) {
 
-      props.setGuest([...props.guest, newData]);
-      localStorage.setItem('guest_list', JSON.stringify([...props.guest, newData]));
+      setGuest([...guest, newData]);
+      localStorage.setItem('guest_list', JSON.stringify([...guest, newData]));
       
-      props.setGuestData({
+      setGuestData({
         id: new Date().getTime(),
         name: '',
         age: '',
@@ -57,7 +59,7 @@ export default function GuestStepperForm(props) {
 
 
 
-  const step = [<PersonalDetail activeStep={activeStep} setGuest={props.setGuest} guest={props.guest} guestData={props.guestData} setGuestData={props.setGuestData} next={handleNext} />, <ContactDetail activeStep={activeStep} guestData={props.guestData} next={handleNext} back={handleBack} />, <AccountDetail activeStep={activeStep} guestData={props.guestData} next={handleNext} back={handleBack} />]
+  const step = [<PersonalDetail activeStep={activeStep}   next={handleNext} />, <ContactDetail activeStep={activeStep}  next={handleNext} back={handleBack} />, <AccountDetail activeStep={activeStep}  next={handleNext} back={handleBack} />]
 
 
 

@@ -6,11 +6,13 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { eventContext } from '../App';
 
 
 
 
 export default function FormAddEvent(props) {
+const {rows,setRows} = React.useContext(eventContext)
 const minDate = new Date();
 minDate.setDate(minDate.getDate()+2);
 minDate.setHours(0,0,0,0);
@@ -38,8 +40,8 @@ maxDate.setMonth(maxDate.getMonth()+1);
         onSubmit={(values, { setSubmitting }) => {
 
           props.setOpen(false);
-          props.setRows([...props.rows, values]);
-          localStorage.setItem("event_list", JSON.stringify([...props.rows, values]));
+          setRows([...rows, values]);
+          localStorage.setItem("event_list", JSON.stringify([...rows, values]));
           setSubmitting(false);
 
         }}

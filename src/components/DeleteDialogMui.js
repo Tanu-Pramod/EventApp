@@ -4,22 +4,25 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
+import { eventContext } from '../App';
 
 
 export default function DeleteDialog(props) {
+
+  const {isGuestPage,guest,setGuest,rows,setRows} = React.useContext(eventContext)
   const [open, setOpen] = React.useState(false);
 
   const handleDeleteClick = (id) => (event) => {
     event.stopPropagation();
-    if(props.isGuestPage){
-      const newGuest = props.guest.filter((guest) => guest.id !== id)
-      props.setGuest(newGuest);
+    if(isGuestPage){
+      const newGuest = guest.filter((guest) => guest.id !== id)
+      setGuest(newGuest);
       localStorage.setItem("guest_list", JSON.stringify(newGuest));
     }
     else{
       console.log("submmiitttt")
-      const newEvent = props.rows.filter((events) => events.id !== id)
-      props.setRows(newEvent);
+      const newEvent = rows.filter((events) => events.id !== id)
+      setRows(newEvent);
       localStorage.setItem("event_list", JSON.stringify(newEvent));
     }
     

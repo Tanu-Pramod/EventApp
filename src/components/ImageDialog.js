@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import React, {useRef } from 'react'
+import React, { useRef } from 'react'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -51,27 +51,27 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ImageDialog(props) {
-  
 
-  
-  
-  
+
+
+
+
 
   const cropperRef = useRef(null);
   const onCrop = () => {
     const imageElement = cropperRef.current;
     const cropper = imageElement.cropper;
-   
+
     props.setSrc(cropper.getCroppedCanvas().toDataURL());
-    props.setFieldValue("img",cropper.getCroppedCanvas().toDataURL());
+    props.setFieldValue("img", cropper.getCroppedCanvas().toDataURL());
 
   };
 
-  
+
 
   return (
     <div>
-      
+
       <BootstrapDialog
         onClose={props.handleClose}
         aria-labelledby="customized-dialog-title"
@@ -86,7 +86,6 @@ export default function ImageDialog(props) {
             style={{ height: 'auto', width: "100%", margin: 'auto' }}
             // Cropper.js options
             initialAspectRatio={1}
-
             background={false}
             guides={false}
             crop={onCrop}
