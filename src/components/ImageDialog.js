@@ -56,11 +56,13 @@ export default function ImageDialog(props) {
   const cropperRef = useRef(null);
   const onCrop = () => {
 
+
     const imageElement = cropperRef.current;
     const cropper = imageElement.cropper;
 
     props.setSrc(cropper.getCroppedCanvas().toDataURL());
     props.setFieldValue("img", cropper.getCroppedCanvas().toDataURL());
+    props.setOpen(false);
 
 
 
@@ -89,12 +91,12 @@ export default function ImageDialog(props) {
             initialAspectRatio={1}
             background={false}
             guides={false}
-            crop={onCrop}
+            //crop={onCrop}
             ref={cropperRef}
           />
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={props.handleClose}>
+          <Button autoFocus onClick={onCrop}>
             Crop
           </Button>
         </DialogActions>

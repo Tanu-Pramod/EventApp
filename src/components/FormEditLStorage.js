@@ -16,9 +16,7 @@ export default function FormEditLStorage(props) {
   const { isGuestPage, guest, setGuest, rows, setRows} = useContext(eventContext)
 
   const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  
   const handleClose = () => {
     setOpen(false);
   };
@@ -167,7 +165,7 @@ export default function FormEditLStorage(props) {
                   />
                 </Box>
 
-                <ImageDialog setFieldValue={setFieldValue} open={open} handleClose={handleClose} setSrc={setSrc} image={image} />
+                <ImageDialog setFieldValue={setFieldValue} open={open} handleClose={handleClose} setOpen={setOpen} setSrc={setSrc} image={image} />
               </Box>
 
               <Box sx={{ float: 'right' }}>

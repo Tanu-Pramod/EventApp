@@ -123,7 +123,7 @@ function PersonalDetail(props) {
           </Box>
 
 
-          <ImageDialog handleClose={handleClose} setFieldValue={setFieldValue} open={open}   setSrc={setSrc} image={image} />
+          <ImageDialog handleClose={handleClose} setFieldValue={setFieldValue} open={open} setOpen={setOpen}  setSrc={setSrc} image={image} />
           
           
           
