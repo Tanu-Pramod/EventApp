@@ -45,14 +45,14 @@ function App() {
     const guestList = JSON.parse(localStorage.getItem("guest_list"))
     setGuest(guestList || [])
    
+   
   }, [])
 
   useEffect(()=>{
     const invitedGuestList = JSON.parse(localStorage.getItem("invited_guest_"+eventID))
     setInvitedGuest(invitedGuestList || [])
   },[eventID])
-  console.log("event Id",eventID)
-  console.log("invitedGuest",invitedGuest)
+
 
   return (
     <div className="App">

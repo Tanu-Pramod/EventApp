@@ -71,7 +71,7 @@ export default function Events() {
       headerName: 'Actions',
       width: 450,
       cellClassName: 'actions',
-      getActions: ({ id,name}) => {
+      getActions: ({ id}) => {
 
         
 
