@@ -69,7 +69,7 @@ export default function Events() {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
-      width: 450,
+      width: 350,
       cellClassName: 'actions',
       getActions: ({ id}) => {
 
@@ -81,18 +81,11 @@ export default function Events() {
             icon={<Link to={`/guestAddInviteTab/${id}`} style={{ textDecoration: 'none' }}>
               <Button variant="contained" color="success" >
 
-                Invite
-              </Button></Link>}
-            label="Invite Guest"
-          />,
-          <GridActionsCellItem
-            icon={<Link to='' style={{ textDecoration: 'none' }}>
-              <Button variant="contained" color="success"  >
-
                 View
               </Button></Link>}
             label="Invite Guest"
           />,
+         
           <GridActionsCellItem
             icon={<PopUpEdit editObj={editObj} id={id} />}
             label="Edit"

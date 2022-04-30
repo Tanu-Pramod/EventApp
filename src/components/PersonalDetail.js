@@ -11,13 +11,11 @@ import { eventContext } from '../App';
 function PersonalDetail(props) {
   const {guestData} = useContext(eventContext);
   const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+
+  
   const handleClose = () => {
     setOpen(false);
   };
-
 
   const [image, setImage] = useState(null);
   const [src, setSrc] = useState(null);
@@ -125,7 +123,7 @@ function PersonalDetail(props) {
           </Box>
 
 
-          <ImageDialog setFieldValue={setFieldValue} open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} setSrc={setSrc} image={image} />
+          <ImageDialog handleClose={handleClose} setFieldValue={setFieldValue} open={open}   setSrc={setSrc} image={image} />
           
           
           

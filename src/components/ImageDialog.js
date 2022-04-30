@@ -53,17 +53,18 @@ BootstrapDialogTitle.propTypes = {
 export default function ImageDialog(props) {
 
 
-
-
-
-
   const cropperRef = useRef(null);
   const onCrop = () => {
+
     const imageElement = cropperRef.current;
     const cropper = imageElement.cropper;
 
     props.setSrc(cropper.getCroppedCanvas().toDataURL());
     props.setFieldValue("img", cropper.getCroppedCanvas().toDataURL());
+
+
+
+
 
   };
 

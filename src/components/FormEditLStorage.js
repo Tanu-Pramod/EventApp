@@ -167,7 +167,7 @@ export default function FormEditLStorage(props) {
                   />
                 </Box>
 
-                <ImageDialog setFieldValue={setFieldValue} open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} setSrc={setSrc} image={image} />
+                <ImageDialog setFieldValue={setFieldValue} open={open} handleClose={handleClose} setSrc={setSrc} image={image} />
               </Box>
 
               <Box sx={{ float: 'right' }}>
