@@ -78,7 +78,7 @@ export default function Events() {
         return [
 
           <GridActionsCellItem
-            icon={<Link to={`/guestAddInviteTab/${id}`} style={{ textDecoration: 'none' }}>
+            icon={<Link to={`/EventDetail/${id}`} style={{ textDecoration: 'none' }}>
               <Button variant="contained" color="success" >
 
                 View

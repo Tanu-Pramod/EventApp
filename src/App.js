@@ -66,7 +66,7 @@ function App() {
             <Route path='/Guests' element={<GuestCRUD />} />
             <Route path='/GuestStepperForm' element={<GuestStepperForm />} />
             <Route path='/GuestDetail/:id' element={<GuestDetail />} />
-            <Route path='/guestAddInviteTab/:name' element={<GuestAddInviteTabs />} />
+            <Route path='/EventDetail/:name' element={<GuestAddInviteTabs />} />
 
           </Routes>
 
