@@ -10,53 +10,69 @@ import GuestStepperForm from './components/GuestStepperForm';
 import GuestDetail from './components/GuestDetail';
 import GuestCRUD from './Pages/GuestCRUD';
 import GuestAddInviteTabs from './components/GuestAddInviteTabs';
-import Context from '@mui/base/TabsUnstyled/TabsContext';
+import axios from 'axios';
 
 
 export const eventContext = createContext();
 
 
 function App() {
-  const [rows, setRows] = useState([]);
+  const [events, setEvents] = useState([]);
   const [guest, setGuest] = useState([]);
   const [invitedGuest, setInvitedGuest] = useState([]);
   const [isGuestPage, setIsGuestPage] = useState(false);
-  const [eventID,setEventID] =  useState('');
+  const [eventID, setEventID] = useState('');
   const [guestData, setGuestData] = useState({
-    name: '',
-    id: new Date().getTime(),
+    guest_name: '',
+    _id: new Date().getTime(),
     age: '',
     gender: '',
-    img: null,
+    image: null,
     email: '',
     contact: '',
     address: '',
     account_no: '',
 
   })
+  // console.log("guestData-----",guestData)
+
 
 
 
 
 
   useEffect(() => {
-    const eventList = JSON.parse(localStorage.getItem("event_list"))
-    setRows(eventList || [])
-    const guestList = JSON.parse(localStorage.getItem("guest_list"))
-    setGuest(guestList || [])
-   
-   
+
+
+    axios.get("http://localhost:3000/list").then(
+      (response) => {
+        setEvents(response.data.data)
+
+      }
+    )
+
+    axios.get("http://localhost:3000/guestIndex/guestlist").then((response) => {
+      setGuest(response.data.data)
+    })
+
+
+
   }, [])
 
-  useEffect(()=>{
-    const invitedGuestList = JSON.parse(localStorage.getItem("invited_guest_"+eventID))
+
+ 
+
+
+
+  useEffect(() => {
+    const invitedGuestList = JSON.parse(localStorage.getItem("invited_guest_" + eventID))
     setInvitedGuest(invitedGuestList || [])
-  },[eventID])
+  }, [eventID])
 
 
   return (
     <div className="App">
-      <eventContext.Provider value={{ rows, setRows, guest, setGuest, invitedGuest, setInvitedGuest, isGuestPage, setIsGuestPage, guestData, setGuestData,eventID,setEventID }}>
+      <eventContext.Provider value={{ events, setEvents, guest, setGuest, invitedGuest, setInvitedGuest, isGuestPage, setIsGuestPage, guestData, setGuestData, eventID, setEventID }}>
 
         <BrowserRouter>
           <Navbar />
@@ -66,7 +82,7 @@ function App() {
             <Route path='/Guests' element={<GuestCRUD />} />
             <Route path='/GuestStepperForm' element={<GuestStepperForm />} />
             <Route path='/GuestDetail/:id' element={<GuestDetail />} />
-            <Route path='/EventDetail/:name' element={<GuestAddInviteTabs />} />
+            <Route path='/EventDetail/:id' element={<GuestAddInviteTabs />} />
 
           </Routes>
 

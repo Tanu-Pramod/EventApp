@@ -2,6 +2,10 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import { eventContext } from '../App';
+import { GridActionsCellItem } from '@mui/x-data-grid-pro';
+import CardMedia from '@mui/material/CardMedia';
+
+
 
 
 
@@ -19,7 +23,7 @@ const handleSelect = (id) => {
     if(props.searchTerm === ""){
       return guest
     }
-    else if(guest.name.toLowerCase().includes(props.searchTerm.toLowerCase())){
+    else if(guest.guest_name.toLowerCase().includes(props.searchTerm.toLowerCase())){
       return guest
     }
   })
@@ -28,8 +32,8 @@ const handleSelect = (id) => {
 
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 180 },
-    { field: 'name', width: 180, headerName: 'Name' },
+    { field: '_id', headerName: 'ID', width: 180 },
+    { field: 'guest_name', width: 180, headerName: 'Name' },
 
     {
       field: 'email',
@@ -41,11 +45,44 @@ const handleSelect = (id) => {
       headerName: 'Contact',
       width: 120
     },
+    
     {
-      field: 'address',
-      headerName: 'Address',
-      width: 200
-    }
+      field: 'image',
+      type: 'actions',
+      headerName: 'Image',
+      width: 350,
+      cellClassName: 'actions',
+      getActions: ({ id}) => {
+        
+
+        
+
+        return [
+
+
+        
+          <GridActionsCellItem
+            icon={
+              <CardMedia
+              component="img"
+              height="140"
+              image={`http://localhost:3000/uploads/${guest.image}`}
+              sx={{width:'auto',p:1,alignSelf:'center'}}
+              
+            />}
+           
+          />
+         
+          
+
+
+
+
+        ];
+      },
+    },
+
+   
 
 
   ];
@@ -75,6 +112,7 @@ const handleSelect = (id) => {
           pageSize={5}
           rowsPerPageOptions={[5]}
           checkboxSelection
+          getRowId={row=>row._id}
           onSelectionModelChange={(id) => handleSelect(id)}
         />
       </Box>

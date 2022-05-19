@@ -25,7 +25,7 @@ function AccountDetail(props) {
       onSubmit={handleSubmit}
       validationSchema={accountValidationSchema}>
       {() => (
-        <Form >
+        <Form  >
           <Box sx={{display:'flex', flexDirection:'row', pt:2}}>
             <p style={{width:'25%', textAlign:'start'}}>Account No : </p>
             <div style={{width:'75%'}}>

@@ -19,7 +19,7 @@ export default function GuestAddInviteTabs() {
 
   const {
     guest,
-    rows,
+    events,
     invitedGuest,
     setInvitedGuest,
     eventID,
@@ -38,13 +38,13 @@ export default function GuestAddInviteTabs() {
   setEventID(eventId.name);
 
   const guestList = [...invitedGuest];
-  
+
 
 
   const handleSet = () => {
 
-    
- 
+
+
 
     const selectedGuest = guest.filter((guest) => {
 
@@ -54,7 +54,7 @@ export default function GuestAddInviteTabs() {
 
     })
 
-  
+
 
     selectedGuest.map((guest) => {
 
@@ -70,19 +70,19 @@ export default function GuestAddInviteTabs() {
       }
     })
 
-   
+
 
     setInvitedGuest(guestList);
 
-    
-    localStorage.setItem("invited_guest_"+eventId.name, JSON.stringify(guestList))
 
-    
+    localStorage.setItem("invited_guest_" + eventId.name, JSON.stringify(guestList))
 
-    
+
+
+
   }
 
- 
+
 
 
 

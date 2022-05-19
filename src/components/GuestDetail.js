@@ -19,6 +19,8 @@ import { useContext } from 'react';
 export default function GuestDetail() {
   const params = useParams();
   const {guest} = useContext(eventContext);
+
+
   
 
   return (
@@ -26,11 +28,14 @@ export default function GuestDetail() {
     <Box sx={{ pt: 4, display: 'flex', flexDirection: 'row',justifyContent:'center'}}>
       {
         guest.filter((guest) => {
-          return guest.id === Number(params.id)
+         
+          return guest._id === (params.id)
         }).map((guest,id)=>
           
 
           <Card key={id} sx={{ maxWidth: 550,p: 1}}>
+
+            {console.log("image",guest.image)}
             
           
             <Box sx={{ display: 'flex', flexDirection: 'row' }}>
@@ -38,7 +43,7 @@ export default function GuestDetail() {
              
             <CardContent sx={{textAlign:'left'}}>
               <Typography sx={{p:1}} gutterBottom  component="div">
-                Name : {guest.name}
+                Name : {guest.guest_name}
               </Typography>
               <Typography sx={{p:1}} gutterBottom  component="div" >
               Email : {guest.email}
@@ -46,15 +51,15 @@ export default function GuestDetail() {
               <Typography sx={{p:1}} gutterBottom  component="div" >
               Contact : {guest.contact}
               </Typography>
-              <Typography sx={{p:1}} gutterBottom  component="div" >
+              {/* <Typography sx={{p:1}} gutterBottom  component="div" >
               Address : {guest.address}
-              </Typography>
+              </Typography> */}
             </CardContent>
             <Box sx={{ flex: ' 1 1 auto' }} />
             <CardMedia
               component="img"
               height="140"
-              image={guest.img}
+              image={`http://localhost:3000/uploads/${guest.image}`}
               sx={{width:'auto',p:1,alignSelf:'center'}}
               
             />

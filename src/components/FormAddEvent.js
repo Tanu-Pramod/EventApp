@@ -7,42 +7,64 @@ import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { eventContext } from '../App';
+import axios from 'axios';
+import { useEffect , useContext} from 'react';
 
 
 
 
 export default function FormAddEvent(props) {
-const {rows,setRows} = React.useContext(eventContext)
-const minDate = new Date();
-minDate.setDate(minDate.getDate()+2);
-minDate.setHours(0,0,0,0);
+  const { setEvents } = useContext(eventContext)
+  const minDate = new Date();
+  minDate.setDate(minDate.getDate() + 2);
+  minDate.setHours(0, 0, 0, 0);
 
-const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const maxDate = new Date();
-maxDate.setMonth(maxDate.getMonth()+1);
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const maxDate = new Date();
+  maxDate.setMonth(maxDate.getMonth() + 1);
 
   const eventValidationSchema = Yup.object({
-    name: Yup.string().required('please enter the event name'),
-    date: Yup.date().min(minDate,`You can book events from ${minDate.getDate()+0} ${months[minDate.getMonth()]} `).max(maxDate,"you can book events only one month in advance").required("Please select the date"),
+    event_name: Yup.string().required('please enter the event name'),
+    date: Yup.date().min(minDate, `You can book events from ${minDate.getDate() + 0} ${months[minDate.getMonth()]} `).max(maxDate, "you can book events only one month in advance").required("Please select the date"),
     venue: Yup.string().required('Please enter the venue')
 
   });
+
+
+  useEffect(() => {
+    axios.get("http://localhost:3000/list").then(
+      (response) => {
+
+        setEvents(response.data.data)
+
+      }
+    )
+  }, [props.open])
+
+  console.log("open",props.open)
+
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
 
       <Formik
         initialValues={{
-          id: new Date().getTime(),
-          name: '',
+          _id: new Date().getTime(),
+          event_name: '',
           date: '',
           venue: ''
         }}
         onSubmit={(values, { setSubmitting }) => {
 
-          props.setOpen(false);
-          setRows([...rows, values]);
-          localStorage.setItem("event_list", JSON.stringify([...rows, values]));
+         
+
+          
+          axios.post("http://localhost:3000/addEvent", values)
+
+
+
           setSubmitting(false);
+          props.setOpen(false);
+
 
         }}
         validationSchema={eventValidationSchema}>{() => (
@@ -53,12 +75,12 @@ maxDate.setMonth(maxDate.getMonth()+1);
                 <Field
 
                   type="text"
-                  name="name"
+                  name="event_name"
                   className='formikFieldGuest'
 
 
                 />
-                <ErrorMessage name="name" component="div" className='error' />
+                <ErrorMessage name="event_name" component="div" className='error' />
 
               </div>
             </Box>

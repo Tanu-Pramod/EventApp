@@ -57,6 +57,8 @@ export default function PopUpEdit(props) {
   const {isGuestPage} =useContext(eventContext)
 
   
+
+  
   const [open, setOpen] = React.useState(false);
 
 
@@ -85,7 +87,7 @@ export default function PopUpEdit(props) {
         <DialogContent dividers>
           
         
-          <FormEditLStorage setOpen={setOpen} editObj={props.editObj} id={props.id} handleClose={handleClose} />
+          <FormEditLStorage open={open} setOpen={setOpen} editObj={props.editObj} id={props.id} handleClose={handleClose} />
           
         </DialogContent>
       </BootstrapDialog>

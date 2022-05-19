@@ -25,14 +25,17 @@ export default function GuestCRUD() {
 
 setIsGuestPage(true);
 
+
   
 
   const filteredGuest= guest.filter((guest) => {
 
+  
+
       if (searchTerm === "") {
         return guest
       }
-      else if (guest.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+      else if (guest.guest_name.toLowerCase().includes(searchTerm.toLowerCase())) {
         return guest
       }
     })
@@ -42,9 +45,13 @@ setIsGuestPage(true);
 
 
   const editHandle = (id) => {
+
+    
     const editList = guest.filter((guest) => {
-      return guest.id === id
+      return guest._id === id
     })
+
+   
 
     editList.map((guest) => {
       setEditObj(guest);
@@ -53,8 +60,8 @@ setIsGuestPage(true);
 
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 80 },
-    { field: 'name', width: 180, headerName: 'Name' },
+    { field: '_id', headerName: 'ID', width: 80 },
+    { field: 'guest_name', width: 180, headerName: 'Name' },
 
     {
       field: 'email',
@@ -66,11 +73,7 @@ setIsGuestPage(true);
       headerName: 'Contact',
       width: 120
     },
-    {
-      field: 'address',
-      headerName: 'Address',
-      width: 120
-    },
+  
 
     {
       field: 'actions',
@@ -158,6 +161,7 @@ setIsGuestPage(true);
           rows={filteredGuest}
           columns={columns}
           pageSize={5}
+          getRowId={row=>row._id}
           rowsPerPageOptions={[5]}
           checkboxSelection
         />

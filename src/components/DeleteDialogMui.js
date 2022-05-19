@@ -5,25 +5,47 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import { eventContext } from '../App';
+import axios from 'axios';
+import { useEffect } from 'react';
 
 
 export default function DeleteDialog(props) {
 
-  const {isGuestPage,guest,setGuest,rows,setRows} = React.useContext(eventContext)
+  const {isGuestPage,guest,setGuest,setEvents} = React.useContext(eventContext)
+
+ 
   const [open, setOpen] = React.useState(false);
+  useEffect(() => {
+    axios.get("http://localhost:3000/list").then(
+      (response) => {
+        setEvents(response.data.data)
+
+      }
+    )
+
+    axios.get("http://localhost:3000/guestIndex/guestlist").then((response) => {
+      setGuest(response.data.data)
+    })
+  }, [open])
 
   const handleDeleteClick = (id) => (event) => {
+
+    console.log("id",id)
     event.stopPropagation();
     if(isGuestPage){
-      const newGuest = guest.filter((guest) => guest.id !== id)
-      setGuest(newGuest);
-      localStorage.setItem("guest_list", JSON.stringify(newGuest));
+
+      axios.get(`http://localhost:3000/guestIndex/delete/${id}`)
+      setOpen(false);
+      // const newGuest = guest.filter((guest) => guest.id !== id)
+      // setGuest(newGuest);
+      // localStorage.setItem("guest_list", JSON.stringify(newGuest));
     }
     else{
-      console.log("submmiitttt")
-      const newEvent = rows.filter((events) => events.id !== id)
-      setRows(newEvent);
-      localStorage.setItem("event_list", JSON.stringify(newEvent));
+
+      axios.get(`http://localhost:3000/delete/${id}`)
+      setOpen(false);
+      
+      
     }
     
 

@@ -11,7 +11,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import FormAddEvent from './FormAddEvent';
 import { eventContext } from '../App';
-import { useContext } from 'react';
+import { useContext,useState } from 'react';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -56,7 +56,7 @@ BootstrapDialogTitle.propTypes = {
 
 export default function PopUpAddForm() {
   const {isGuestPage} = useContext(eventContext);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -80,7 +80,7 @@ export default function PopUpAddForm() {
         </BootstrapDialogTitle>
         <DialogContent dividers>
           
-           <FormAddEvent setOpen={setOpen}   />
+           <FormAddEvent open={open} setOpen={setOpen}   />
           
 
         </DialogContent>

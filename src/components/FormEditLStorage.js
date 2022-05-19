@@ -7,15 +7,26 @@ import CardMedia from '@mui/material/CardMedia';
 import { Form, Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { eventContext } from '../App';
-import React, { useContext,useState } from 'react';
+import React, { useContext,useState,useEffect } from 'react';
 import ImageDialog from './ImageDialog';
+import axios from 'axios';
 
 
 export default function FormEditLStorage(props) {
 
-  const { isGuestPage, guest, setGuest, rows, setRows} = useContext(eventContext)
+  const { isGuestPage, guest, setGuest, events, setEvents} = useContext(eventContext)
+
+
+  
+
+  
+ 
+
+  
 
   const [open, setOpen] = useState(false);
+
+  
   
   const handleClose = () => {
     setOpen(false);
@@ -35,9 +46,9 @@ export default function FormEditLStorage(props) {
   maxDate.setMonth(maxDate.getMonth() + 1);
 
   const guestValidationSchema = Yup.object({
-    name: Yup.string().required('Please enter the guest name !!'),
+    guest_name: Yup.string().required('Please enter the guest name !!'),
     age: Yup.string().required('please enter your age in numeric format'),
-    img: Yup.mixed().required('please select your photo'),
+    image: Yup.mixed().required('please select your photo'),
     gender: Yup.string().required('please select your gender '),
     email: Yup.string().email('Invalid email').required('please provide your email'),
     address: Yup.string().required('please enter the address'),
@@ -47,13 +58,13 @@ export default function FormEditLStorage(props) {
 
   });
   const eventValidationSchema = Yup.object({
-    name: Yup.string().required('please enter the event name'),
+    event_name: Yup.string().required('please enter the event name'),
     date: Yup.date().min(minDate, `You can book events from ${minDate.getDate() + 0} ${months[minDate.getMonth()]} `).max(maxDate, "you can book events only one month in advance").required("Please select the date"),
     venue: Yup.string().required('Please enter the venue')
 
   });
 
-  const handleChange = (e, setFieldValue) => {
+  const handleChange = (e) => {
     setOpen(true);
     let reader = new FileReader();
     let file = e.target.files[0];
@@ -63,6 +74,17 @@ export default function FormEditLStorage(props) {
 
     };
   }
+
+  useEffect(() => {
+    axios.get("http://localhost:3000/list").then(
+      (response) => {
+
+        setEvents(response.data.data)
+
+      }
+    )
+  }, [props.open])
+
 
   return (
     <Box>
@@ -101,7 +123,7 @@ export default function FormEditLStorage(props) {
                     <p style={{ width: '25%', textAlign: 'start' }}>Guest Name : </p>
                     <div style={{ width: '70%' }}>
                       <Field
-                        name="name"
+                        name="guest_name"
                         className="formikFieldGuest"
                       />
                       <ErrorMessage name='name' component='div' className='error' />
@@ -132,16 +154,7 @@ export default function FormEditLStorage(props) {
                     </div>
                   </Box>
 
-                  <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'space-between' }}>
-                    <p style={{ width: '25%', textAlign: 'start' }}>Address : </p>
-                    <div style={{ width: '70%' }}>
-                      <Field
-                        name="address"
-                        className="formikFieldGuest"
-                      />
-                      <ErrorMessage name='address' component='div' className='error' />
-                    </div>
-                  </Box>
+                 
 
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p style={{ width: '30%' }}>Change Image : </p>
@@ -156,10 +169,12 @@ export default function FormEditLStorage(props) {
                 <Box sx={{ flex: '1 1 auto' }} />
                 <Box sx={{ width: '20%' }}>
 
+                  {console.log("value image",values.image)}
+
                   <CardMedia
                     component="img"
                     height="140"
-                    image={values.img===null?src:values.img}
+                    image={values.image===null?src:`http://localhost:3000/uploads/${values.image}`}
                     sx={{ width: '100%' }}
 
                   />
@@ -179,19 +194,34 @@ export default function FormEditLStorage(props) {
         </Formik>
 
           : <Formik
-            initialValues={props.editObj}
+            initialValues={{
+              _id: props.editObj._id,
+              event_name:props.editObj.event_name,
+              date: props.editObj.date.slice(0,10),
+              venue:props.editObj.venue
+            }}
+            
             onSubmit={(values) => {
-              props.setOpen(false)
-              const updatedEvent = rows.map((event) => {
-                if (event.id === props.editObj.id) {
-                  return values
-                }
-                else {
-                  return event
-                }
-              })
-              localStorage.setItem("event_list", JSON.stringify(updatedEvent));
-              setRows(updatedEvent);
+            
+
+              axios.post(`http://localhost:3000/edit/${values._id}`,
+              values
+            );
+            props.setOpen(false)
+
+
+              // const updatedEvent = events.map((event) => {
+              //   if (event._id === props.editObj.id) {
+              //     return values
+              //   }
+              //   else {
+              //     return event
+              //   }
+              // })
+
+           
+              // localStorage.setItem("event_list", JSON.stringify(updatedEvent));
+              // setEvents(updatedEvent);
 
             }}
             validationSchema={eventValidationSchema}>
@@ -201,10 +231,10 @@ export default function FormEditLStorage(props) {
                   <p style={{ width: '25%', textAlign: 'start' }}>Event name : </p>
                   <div style={{ width: '70%' }}>
                     <Field
-                      name="name"
+                      name="event_name"
                       className="formikFieldGuest"
                     />
-                    <ErrorMessage name='name' component='div' className='error' />
+                    <ErrorMessage name='event_name' component='div' className='error' />
                   </div>
                 </Box>
 

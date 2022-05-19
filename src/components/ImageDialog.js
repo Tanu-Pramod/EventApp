@@ -12,6 +12,7 @@ import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import React, { useRef } from 'react'
 
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -53,6 +54,8 @@ BootstrapDialogTitle.propTypes = {
 export default function ImageDialog(props) {
 
 
+
+
   const cropperRef = useRef(null);
   const onCrop = () => {
 
@@ -60,8 +63,46 @@ export default function ImageDialog(props) {
     const imageElement = cropperRef.current;
     const cropper = imageElement.cropper;
 
+
+    const base64 = cropper.getCroppedCanvas().toDataURL();
+
+    const startIndex = base64.indexOf("base64,") + 7;
+    const b64 = base64.substr(startIndex);
+    const byteCharacters = window.atob(b64);
+    const byteArrays = [];
+    const sliceSize = 512;
+    const contentType = 'image/jpg';
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: contentType });
+
+    // to get blobUrl
+
+    // const blobUrl = URL.createObjectURL(blob);
+
+    const file = new File([blob], '.jpg',
+      {
+        type: blob.type,
+        lastModified: new Date().getTime()
+      }
+    )
+
     props.setSrc(cropper.getCroppedCanvas().toDataURL());
-    props.setFieldValue("img", cropper.getCroppedCanvas().toDataURL());
+
+
+
+    props.setFieldValue("image", file);
     props.setOpen(false);
 
 

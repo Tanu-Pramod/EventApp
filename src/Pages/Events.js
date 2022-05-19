@@ -15,11 +15,16 @@ import { useContext } from 'react';
 
 export default function Events() {
 
-  const { rows, setIsGuestPage} = useContext(eventContext);
+ 
+
+  const { events, setIsGuestPage} = useContext(eventContext);
+
 
 
   const [editObj, setEditObj] = useState();
   const [searchTerm, setSearchTerm] = useState("")
+
+  
 
 
 
@@ -27,12 +32,12 @@ export default function Events() {
 
 
 
-  const filterdEvent = rows.filter((event) => {
+  const filterdEvent = events.filter((event) => {
 
     if (searchTerm === "") {
       return event
     }
-    else if (event.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+    else if (event.event_name.toLowerCase().includes(searchTerm.toLowerCase())) {
       return event
     }
   })
@@ -40,20 +45,25 @@ export default function Events() {
 
 
   setIsGuestPage(false);
+
   const editHandle = (id) => {
-    const editList = rows.filter((row) => {
-      return row.id === id
+    const editList = events.filter((row) => {
+      return row._id === id
     })
+
+    
 
     editList.map((event) => {
       setEditObj(event);
     })
+
+    
   }
 
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 80 },
-    { field: 'name', width: 100, headerName: 'Name' },
+    { field: '_id', headerName: 'ID', width: 80 },
+    { field: 'event_name', width: 100, headerName: 'Name' },
     {
       field: 'date',
       headerName: 'Date',
@@ -139,6 +149,7 @@ export default function Events() {
           pageSize={5}
           rowsPerPageOptions={[5]}
           checkboxSelection
+          getRowId={row=>row._id}
         />
       </Box>
     </div>

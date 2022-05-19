@@ -20,11 +20,13 @@ function PersonalDetail(props) {
   const [image, setImage] = useState(null);
   const [src, setSrc] = useState(null);
 
+  
+
 
 
 
   const personalValidationSchema = Yup.object({
-    name: Yup.string().required('Please enter the guest name !!'),
+    guest_name: Yup.string().required('Please enter the guest name !!'),
     age: Yup.number()
       .required('Please enter your age')
       .test(
@@ -32,7 +34,7 @@ function PersonalDetail(props) {
         'Age must be greater than 0',
         (value) => value > 0
       ),
-    img: Yup.mixed().required('Please select your photo'),
+    image: Yup.mixed().required('Please select your photo'),
     gender: Yup.string().required('Please select your gender ')
 
 
@@ -40,6 +42,8 @@ function PersonalDetail(props) {
 
 
   const handleSubmit = (values) => {
+
+   
     props.next(values);
   }
 
@@ -64,18 +68,18 @@ function PersonalDetail(props) {
       onSubmit={handleSubmit}
       validationSchema={personalValidationSchema}>
       {({ values, setFieldValue }) => (
-        <Form >
+        <Form  >
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <p style={{ width: '25%', textAlign: 'start' }} >Guest Name : </p>
 
             <div style={{ width: '75%' }}>
               <Field
                 type="text"
-                name="name"
+                name="guest_name"
                 className="formikFieldGuest"
               />
 
-              <ErrorMessage name="name" component="div" className='error' />
+              <ErrorMessage name="guest_name" component="div" className='error' />
             </div>
           </Box>
 
@@ -103,13 +107,13 @@ function PersonalDetail(props) {
 
               <input
                 type="file"
-                name="img"
+                name="image"
                 onChange={(event) => handleChange(event)}
                 className="formikFieldGuest"
               />
 
 
-              <ErrorMessage name="img" component="div" className='error' />
+              <ErrorMessage name="image" component="div" className='error' />
             </div>
             {image && 
             <CardMedia
