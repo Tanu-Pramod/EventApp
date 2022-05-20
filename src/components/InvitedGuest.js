@@ -49,7 +49,7 @@ export default function InvitedGuest(props) {
 
   return (
 
-    <div style={{ height: 400, width: '90%', margin: 'auto'}}>
+    <div style={{ height: 400, width: '100%'}}>
 
       <Box
         sx={{

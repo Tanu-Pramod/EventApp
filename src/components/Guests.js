@@ -45,42 +45,24 @@ const handleSelect = (id) => {
       headerName: 'Contact',
       width: 120
     },
-    
-    {
-      field: 'image',
-      type: 'actions',
-      headerName: 'Image',
-      width: 350,
-      cellClassName: 'actions',
-      getActions: ({ id}) => {
-        
 
-        
-
-        return [
-
-
-        
-          <GridActionsCellItem
-            icon={
-              <CardMedia
-              component="img"
-              height="140"
-              image={`http://localhost:3000/uploads/${guest.image}`}
-              sx={{width:'auto',p:1,alignSelf:'center'}}
+    { field: 'image',
+    headerName: 'Image',
+    width: 80, 
+    renderCell: (params)=>
+    // <CardMedia
+    //   component="img"
+    //   height="140"
+    //   image={`http://localhost:3000/uploads/${params.row.image}`}
+    //   sx={{maxWidth:'100%',marginLeft:'auto',marginRight:'auto'}}
               
-            />}
-           
-          />
-         
-          
+    //         />
+    <img  style={{maxWidth:'100%',marginLeft:'auto',marginRight:'auto'}} src={`http://localhost:3000/uploads/${params.row.image}`} />
+      
+      
+     },
+    
 
-
-
-
-        ];
-      },
-    },
 
    
 
@@ -90,7 +72,7 @@ const handleSelect = (id) => {
 
   return (
 
-    <div style={{ height: 400, width: '90%', margin: 'auto' }}>
+    <div style={{ height: 400, width: '100%' }}>
 
       <Box
         sx={{
@@ -100,7 +82,7 @@ const handleSelect = (id) => {
           '& .textPrimary': {
             color: 'text.primary',
           },
-          margin:'auto'
+        
         }}
       >
 
@@ -110,6 +92,7 @@ const handleSelect = (id) => {
           rows={filteredGuest}
           columns={columns}
           pageSize={5}
+          rowHeight={80}
           rowsPerPageOptions={[5]}
           checkboxSelection
           getRowId={row=>row._id}

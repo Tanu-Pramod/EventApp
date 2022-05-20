@@ -124,7 +124,7 @@ export default function GuestAddInviteTabs() {
       </Container>
 
 
-      <Container>
+      <Container >
         <AppBar position='static' color='inherit'>
           <Box sx={{ width: '100%', typography: 'body1' }}>
 

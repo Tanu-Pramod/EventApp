@@ -18,38 +18,44 @@ import { useContext } from 'react';
 
 export default function GuestDetail() {
   const params = useParams();
-  const {guest} = useContext(eventContext);
+  const { guest } = useContext(eventContext);
 
 
-  
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%,-50%)',
+    boxShadow: '5px 10px 18px #888888'
+}
 
-  return (
+return (
 
-    <Box sx={{ pt: 4, display: 'flex', flexDirection: 'row',justifyContent:'center'}}>
-      {
-        guest.filter((guest) => {
-         
-          return guest._id === (params.id)
-        }).map((guest,id)=>
-          
+  <Box sx={style}>
+    {
+      guest.filter((guest) => {
 
-          <Card key={id} sx={{ maxWidth: 550,p: 1}}>
+        return guest._id === (params.id)
+      }).map((guest, id) =>
 
-            {console.log("image",guest.image)}
-            
-          
-            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-          
-             
-            <CardContent sx={{textAlign:'left'}}>
-              <Typography sx={{p:1}} gutterBottom  component="div">
+
+        <Card key={id} sx={{ maxWidth: 550, p: 1 }}>
+
+          {console.log("image", guest.image)}
+
+
+          <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+
+
+            <CardContent sx={{ textAlign: 'left' }}>
+              <Typography sx={{ p: 1 }} gutterBottom component="div">
                 Name : {guest.guest_name}
               </Typography>
-              <Typography sx={{p:1}} gutterBottom  component="div" >
-              Email : {guest.email}
+              <Typography sx={{ p: 1 }} gutterBottom component="div" >
+                Email : {guest.email}
               </Typography>
-              <Typography sx={{p:1}} gutterBottom  component="div" >
-              Contact : {guest.contact}
+              <Typography sx={{ p: 1 }} gutterBottom component="div" >
+                Contact : {guest.contact}
               </Typography>
               {/* <Typography sx={{p:1}} gutterBottom  component="div" >
               Address : {guest.address}
@@ -60,18 +66,18 @@ export default function GuestDetail() {
               component="img"
               height="140"
               image={`http://localhost:3000/uploads/${guest.image}`}
-              sx={{width:'auto',p:1,alignSelf:'center'}}
-              
-            />
-            </Box>
-            <CardActions sx={{float:'right'}}>
+              sx={{ width: 'auto', p: 1, alignSelf: 'center' }}
 
-              <Button size="small">Share</Button>
-             
-            </CardActions>
-          </Card>
-        )
-      }
-    </Box>
-  );
+            />
+          </Box>
+          <CardActions sx={{ float: 'right' }}>
+
+            <Button size="small">Share</Button>
+
+          </CardActions>
+        </Card>
+      )
+    }
+  </Box>
+);
 }

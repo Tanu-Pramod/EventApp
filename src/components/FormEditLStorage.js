@@ -7,27 +7,27 @@ import CardMedia from '@mui/material/CardMedia';
 import { Form, Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { eventContext } from '../App';
-import React, { useContext,useState,useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import ImageDialog from './ImageDialog';
 import axios from 'axios';
 
 
 export default function FormEditLStorage(props) {
 
-  const { isGuestPage, guest, setGuest, events, setEvents} = useContext(eventContext)
+  const { isGuestPage, guest, setGuest, events, setEvents } = useContext(eventContext)
 
 
-  
 
-  
- 
 
-  
+
+
+
+
 
   const [open, setOpen] = useState(false);
 
-  
-  
+
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -35,6 +35,7 @@ export default function FormEditLStorage(props) {
 
   const [image, setImage] = useState(null);
   const [src, setSrc] = useState(null);
+  
 
 
   const minDate = new Date();
@@ -47,13 +48,13 @@ export default function FormEditLStorage(props) {
 
   const guestValidationSchema = Yup.object({
     guest_name: Yup.string().required('Please enter the guest name !!'),
-    age: Yup.string().required('please enter your age in numeric format'),
+    //age: Yup.string().required('please enter your age in numeric format'),
     image: Yup.mixed().required('please select your photo'),
-    gender: Yup.string().required('please select your gender '),
+    //gender: Yup.string().required('please select your gender '),
     email: Yup.string().email('Invalid email').required('please provide your email'),
-    address: Yup.string().required('please enter the address'),
+    //address: Yup.string().required('please enter the address'),
     contact: Yup.string().min(10, 'contact Must be of 10 digit').max(11, 'cannot be of more than 10 digit').required('Please fill in phone number in numeric format'),
-    account_no: Yup.string().required('Please enter account number'),
+    //account_no: Yup.string().required('Please enter account number'),
 
 
   });
@@ -63,6 +64,8 @@ export default function FormEditLStorage(props) {
     venue: Yup.string().required('Please enter the venue')
 
   });
+
+  console.log("IsGuestPage",isGuestPage)
 
   const handleChange = (e) => {
     setOpen(true);
@@ -76,6 +79,15 @@ export default function FormEditLStorage(props) {
   }
 
   useEffect(() => {
+
+
+    if(isGuestPage){
+      axios.get("http://localhost:3000/guestIndex/guestlist").then((response) => {
+        setGuest(response.data.data)
+      })
+    }
+
+    else{
     axios.get("http://localhost:3000/list").then(
       (response) => {
 
@@ -83,6 +95,9 @@ export default function FormEditLStorage(props) {
 
       }
     )
+  }
+   
+
   }, [props.open])
 
 
@@ -98,16 +113,32 @@ export default function FormEditLStorage(props) {
 
           onSubmit={(values) => {
 
-            const updatedGuest = guest.map((guest) => {
-              if (guest.id === props.editObj.id) {
-                return values
-              }
-              else {
-                return guest
-              }
-            })
-            localStorage.setItem("guest_list", JSON.stringify(updatedGuest));
-            setGuest(updatedGuest);
+            const formdata = new FormData();
+
+            for (const properties in values) {
+
+              console.log("id",values._id)
+
+
+              formdata.append(`${properties}`, values[properties])
+            }
+
+            for (let [key, value] of formdata) {
+              console.log(`${key}: ${value}`)
+            }
+
+            axios.post(`http://localhost:3000/guestIndex/edit/${values._id}`, formdata)
+
+            // const updatedGuest = guest.map((guest) => {
+            //   if (guest.id === props.editObj.id) {
+            //     return values
+            //   }
+            //   else {
+            //     return guest
+            //   }
+            // })
+            // localStorage.setItem("guest_list", JSON.stringify(updatedGuest));
+            // setGuest(updatedGuest);
             props.setOpen(false)
           }}
           validationSchema={guestValidationSchema}>
@@ -154,27 +185,27 @@ export default function FormEditLStorage(props) {
                     </div>
                   </Box>
 
-                 
+
 
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p style={{ width: '30%' }}>Change Image : </p>
                     <input
                       type="file"
+                      name='image'
                       onChange={(e) => handleChange(e)}
                       className="formikFieldGuest"
                       style={{ width: '70%' }}
                     />
                   </div>
+                  <ErrorMessage name="image" component="div" className='error' />
                 </Box>
                 <Box sx={{ flex: '1 1 auto' }} />
                 <Box sx={{ width: '20%' }}>
 
-                  {console.log("value image",values.image)}
-
                   <CardMedia
                     component="img"
                     height="140"
-                    image={values.image===null?src:`http://localhost:3000/uploads/${values.image}`}
+                    image={src ? src : `http://localhost:3000/uploads/${values.image}`}
                     sx={{ width: '100%' }}
 
                   />
@@ -196,18 +227,20 @@ export default function FormEditLStorage(props) {
           : <Formik
             initialValues={{
               _id: props.editObj._id,
-              event_name:props.editObj.event_name,
-              date: props.editObj.date.slice(0,10),
-              venue:props.editObj.venue
+              event_name: props.editObj.event_name,
+              date: props.editObj.date.slice(0, 10),
+              venue: props.editObj.venue
             }}
-            
+
             onSubmit={(values) => {
-            
+
+              console.log("id---------", values._id)
+
 
               axios.post(`http://localhost:3000/edit/${values._id}`,
-              values
-            );
-            props.setOpen(false)
+                values
+              );
+              props.setOpen(false)
 
 
               // const updatedEvent = events.map((event) => {
@@ -219,7 +252,7 @@ export default function FormEditLStorage(props) {
               //   }
               // })
 
-           
+
               // localStorage.setItem("event_list", JSON.stringify(updatedEvent));
               // setEvents(updatedEvent);
 

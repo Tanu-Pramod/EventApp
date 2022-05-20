@@ -125,7 +125,7 @@ export default function Events() {
 
       <Box
         sx={{
-          height: 500,
+          height: 400,
           width: '100%',
           '& .actions': { color: 'text.secondary' },
           '& .textPrimary': {
