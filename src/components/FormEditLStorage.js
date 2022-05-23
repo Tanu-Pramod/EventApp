@@ -35,7 +35,8 @@ export default function FormEditLStorage(props) {
 
   const [image, setImage] = useState(null);
   const [src, setSrc] = useState(null);
-  const [file, setFile] = useState();
+
+  //const [base64, setBase64] = useState();
 
 
 
@@ -82,6 +83,24 @@ export default function FormEditLStorage(props) {
     };
   }
 
+  const getBase64FromUrl = async (url) => {
+    const data = await fetch(url);
+    const blob = await data.blob();
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => {
+        const base64data = reader.result;
+        resolve(base64data);
+      }
+    });
+  }
+
+
+
+
+
+
 
 
   useEffect(() => {
@@ -117,94 +136,98 @@ export default function FormEditLStorage(props) {
             props.editObj
           }
 
-          onSubmit={async (values) => {
+          onSubmit={(values) => {
 
-            console.log("iamge", values.image)
+
+
             if (src === null) {
 
+              getBase64FromUrl(`http://localhost:3000/uploads/${values.image}`).then(base64 => {
 
+                const startIndex = base64.indexOf("base64,") + 7;
+                const b64 = base64.substr(startIndex);
+                const byteCharacters = window.atob(b64);
+                const byteArrays = [];
+                const sliceSize = 512;
+                const contentType = 'image/jpg';
 
+                for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                  const slice = byteCharacters.slice(offset, offset + sliceSize);
 
-              await fetch(`http://localhost:3000/uploads/${values.image}`)
-                .then(response => {
-                  const blob = response.blob()
-                  console.log("blob==", blob)
-
-                  const file = new File([blob], '.jpg',
-                  
-                    {
-                      type: 'image/jpg',
-                      lastModified: new Date().getTime()
-                    }
-                  )
-                  console.log("fle--",file)
-
-                  const formdata = new FormData();
-
-                  for (const properties in values) {
-
-                    if(properties==='image'){
-
-                      console.log("fle--",file)
-
-                      formdata.append(`${properties}`, file)
-
-                    }
-                    else{
-                      formdata.append(`${properties}`, values[properties])
-
-                    }
-                    
+                  const byteNumbers = new Array(slice.length);
+                  for (let i = 0; i < slice.length; i++) {
+                    byteNumbers[i] = slice.charCodeAt(i);
                   }
 
-                  for (let [key, value] of formdata) {
-                    console.log(`${key}: ${value}`)
+                  const byteArray = new Uint8Array(byteNumbers);
+                  byteArrays.push(byteArray);
+                }
+
+                const blob = new Blob(byteArrays, { type: contentType });
+
+                console.log("blob", blob)
+
+
+
+                const file = new File([blob], '.jpg',
+                  {
+                    type: blob.type,
+                    lastModified: new Date().getTime()
                   }
-                  // console.log(formdata)
-
-                  axios.post(`http://localhost:3000/guestIndex/edit/${values._id}`, formdata)
-                })
+                )
 
 
+                const formdata = new FormData();
+
+                for (const properties in values) {
+                  if (properties === 'image') {
+
+                    formdata.append(`${properties}`, file)
+
+                  }
+                  else {
+
+                    formdata.append(`${properties}`, values[properties])
+
+                  }
+
+                }
+
+                for (let [key, value] of formdata) {
+                  console.log(`${key}: ${value}`)
+                }
+                console.log(formdata)
+
+                axios.post(`http://localhost:3000/guestIndex/edit/${values._id}`, formdata)
+
+                props.setOpen(false)
+
+
+              })
             }
 
-            else{
-
+            else {
               const formdata = new FormData();
-              for (const properties in values) {
 
+              for (const properties in values) {
                 formdata.append(`${properties}`, values[properties])
               }
+
+              for (let [key, value] of formdata) {
+                console.log(`${key}: ${value}`)
+              }
+              console.log(formdata)
+
               axios.post(`http://localhost:3000/guestIndex/edit/${values._id}`, formdata)
 
-
-              
-
+              props.setOpen(false)
             }
 
-           
 
 
 
 
 
-
-
-           
-
-            // const updatedGuest = guest.map((guest) => {
-            //   if (guest.id === props.editObj.id) {
-            //     return values
-            //   }
-            //   else {
-            //     return guest
-            //   }
-            // })
-            // localStorage.setItem("guest_list", JSON.stringify(updatedGuest));
-            // setGuest(updatedGuest);
-
-
-            props.setOpen(false)
           }}
           validationSchema={guestValidationSchema}>
 
