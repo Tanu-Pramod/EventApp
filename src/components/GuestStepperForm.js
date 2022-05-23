@@ -39,6 +39,8 @@ export default function GuestStepperForm() {
 
       formdata.append(`${properties}`, newData[properties])
     }
+
+   
     setGuestData(prev => ({ ...prev, ...newData }));
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
 

@@ -35,7 +35,11 @@ export default function FormEditLStorage(props) {
 
   const [image, setImage] = useState(null);
   const [src, setSrc] = useState(null);
-  
+  const [file, setFile] = useState();
+
+
+
+
 
 
   const minDate = new Date();
@@ -65,7 +69,7 @@ export default function FormEditLStorage(props) {
 
   });
 
-  console.log("IsGuestPage",isGuestPage)
+
 
   const handleChange = (e) => {
     setOpen(true);
@@ -78,25 +82,27 @@ export default function FormEditLStorage(props) {
     };
   }
 
+
+
   useEffect(() => {
 
 
-    if(isGuestPage){
+    if (isGuestPage) {
       axios.get("http://localhost:3000/guestIndex/guestlist").then((response) => {
         setGuest(response.data.data)
       })
     }
 
-    else{
-    axios.get("http://localhost:3000/list").then(
-      (response) => {
+    else {
+      axios.get("http://localhost:3000/list").then(
+        (response) => {
 
-        setEvents(response.data.data)
+          setEvents(response.data.data)
 
-      }
-    )
-  }
-   
+        }
+      )
+    }
+
 
   }, [props.open])
 
@@ -111,23 +117,80 @@ export default function FormEditLStorage(props) {
             props.editObj
           }
 
-          onSubmit={(values) => {
+          onSubmit={async (values) => {
 
-            const formdata = new FormData();
-
-            for (const properties in values) {
-
-              console.log("id",values._id)
+            console.log("iamge", values.image)
+            if (src === null) {
 
 
-              formdata.append(`${properties}`, values[properties])
+
+
+              await fetch(`http://localhost:3000/uploads/${values.image}`)
+                .then(response => {
+                  const blob = response.blob()
+                  console.log("blob==", blob)
+
+                  const file = new File([blob], '.jpg',
+                  
+                    {
+                      type: 'image/jpg',
+                      lastModified: new Date().getTime()
+                    }
+                  )
+                  console.log("fle--",file)
+
+                  const formdata = new FormData();
+
+                  for (const properties in values) {
+
+                    if(properties==='image'){
+
+                      console.log("fle--",file)
+
+                      formdata.append(`${properties}`, file)
+
+                    }
+                    else{
+                      formdata.append(`${properties}`, values[properties])
+
+                    }
+                    
+                  }
+
+                  for (let [key, value] of formdata) {
+                    console.log(`${key}: ${value}`)
+                  }
+                  // console.log(formdata)
+
+                  axios.post(`http://localhost:3000/guestIndex/edit/${values._id}`, formdata)
+                })
+
+
             }
 
-            for (let [key, value] of formdata) {
-              console.log(`${key}: ${value}`)
+            else{
+
+              const formdata = new FormData();
+              for (const properties in values) {
+
+                formdata.append(`${properties}`, values[properties])
+              }
+              axios.post(`http://localhost:3000/guestIndex/edit/${values._id}`, formdata)
+
+
+              
+
             }
 
-            axios.post(`http://localhost:3000/guestIndex/edit/${values._id}`, formdata)
+           
+
+
+
+
+
+
+
+           
 
             // const updatedGuest = guest.map((guest) => {
             //   if (guest.id === props.editObj.id) {
@@ -139,13 +202,19 @@ export default function FormEditLStorage(props) {
             // })
             // localStorage.setItem("guest_list", JSON.stringify(updatedGuest));
             // setGuest(updatedGuest);
+
+
             props.setOpen(false)
           }}
           validationSchema={guestValidationSchema}>
 
           {({ values, setFieldValue }) => (
 
+
+
             <Form>
+
+
               <Box sx={{ display: 'flex', flexWrap: 'wrap', width: '100%' }}>
 
 

@@ -53,6 +53,8 @@ function PersonalDetail(props) {
 
     let reader = new FileReader();
     let file = event.target.files[0];
+
+    // console.log("file",file)
     reader.readAsDataURL(file);
     reader.onload = () => {
 
@@ -116,11 +118,10 @@ function PersonalDetail(props) {
               <ErrorMessage name="image" component="div" className='error' />
             </div>
             {image && 
-            <CardMedia
-              component="img"
-              height="140"
-              image={src}
-              sx={{ width: 'auto' }}
+            <img
+              
+              src={src}
+              style={{ maxWidth: '30%',marginLeft:'auto',marginRight:'auto' }}
 
             />}
            

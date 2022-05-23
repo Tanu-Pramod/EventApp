@@ -41,7 +41,7 @@ return (
 
         <Card key={id} sx={{ maxWidth: 550, p: 1 }}>
 
-          {console.log("image", guest.image)}
+          
 
 
           <Box sx={{ display: 'flex', flexDirection: 'row' }}>

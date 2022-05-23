@@ -87,6 +87,8 @@ export default function ImageDialog(props) {
 
     const blob = new Blob(byteArrays, { type: contentType });
 
+    console.log("blob",blob)
+
     // to get blobUrl
 
     // const blobUrl = URL.createObjectURL(blob);
@@ -97,6 +99,7 @@ export default function ImageDialog(props) {
         lastModified: new Date().getTime()
       }
     )
+    console.log("file",file)
 
     props.setSrc(cropper.getCroppedCanvas().toDataURL());
 
