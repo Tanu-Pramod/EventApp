@@ -50,10 +50,14 @@ function App() {
       (response) => {
         const event = response.data.data
         const eData = event.map((ev) => {
+
+          const d = new Date(ev.date);
+          d.toLocaleDateString();
+
           return {
             _id: ev._id,
             event_name: ev.event_name,
-            date: ev.date.slice(0, 10),
+            date: d,
             venue: ev.venue
           }
         })
