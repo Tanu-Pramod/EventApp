@@ -115,9 +115,15 @@ export default function FormEditLStorage(props) {
     else {
       axios.get("http://localhost:3000/list").then(
         (response) => {
-
-          setEvents(response.data.data)
-
+          const event = response.data.data
+          const eData = event.map((ev)=>{
+            return {_id:ev._id,
+              event_name:ev.event_name,
+              date:ev.date.slice(0,10),
+            venue:ev.venue}
+          })
+          setEvents(eData)
+  
         }
       )
     }

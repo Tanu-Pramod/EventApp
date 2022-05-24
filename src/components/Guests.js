@@ -2,8 +2,8 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import { eventContext } from '../App';
-import { GridActionsCellItem } from '@mui/x-data-grid-pro';
-import CardMedia from '@mui/material/CardMedia';
+
+
 
 
 
@@ -50,13 +50,7 @@ const handleSelect = (id) => {
     headerName: 'Image',
     width: 80, 
     renderCell: (params)=>
-    // <CardMedia
-    //   component="img"
-    //   height="140"
-    //   image={`http://localhost:3000/uploads/${params.row.image}`}
-    //   sx={{maxWidth:'100%',marginLeft:'auto',marginRight:'auto'}}
-              
-    //         />
+  
     <img  style={{maxWidth:'100%',marginLeft:'auto',marginRight:'auto'}} src={`http://localhost:3000/uploads/${params.row.image}`} />
       
       

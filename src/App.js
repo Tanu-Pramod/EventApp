@@ -22,6 +22,8 @@ function App() {
   const [invitedGuest, setInvitedGuest] = useState([]);
   const [isGuestPage, setIsGuestPage] = useState(false);
   const [eventID, setEventID] = useState('');
+
+  const [eventt, setEventt] = useState({})
   const [guestData, setGuestData] = useState({
     guest_name: '',
     _id: new Date().getTime(),
@@ -34,7 +36,7 @@ function App() {
     account_no: '',
 
   })
-  // console.log("guestData-----",guestData)
+ 
 
 
 
@@ -46,10 +48,23 @@ function App() {
 
     axios.get("http://localhost:3000/list").then(
       (response) => {
-        setEvents(response.data.data)
+        const event = response.data.data
+        const eData = event.map((ev) => {
+          return {
+            _id: ev._id,
+            event_name: ev.event_name,
+            date: ev.date.slice(0, 10),
+            venue: ev.venue
+          }
+        })
+        
+        setEvents(eData)
 
       }
     )
+
+
+
 
     axios.get("http://localhost:3000/guestIndex/guestlist").then((response) => {
       setGuest(response.data.data)
@@ -60,7 +75,7 @@ function App() {
   }, [])
 
 
- 
+
 
 
 

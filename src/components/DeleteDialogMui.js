@@ -11,14 +11,26 @@ import { useEffect } from 'react';
 
 export default function DeleteDialog(props) {
 
-  const {isGuestPage,guest,setGuest,setEvents} = React.useContext(eventContext)
+  const { isGuestPage, guest, setGuest, setEvents } = React.useContext(eventContext)
 
- 
+
   const [open, setOpen] = React.useState(false);
+
+
   useEffect(() => {
     axios.get("http://localhost:3000/list").then(
       (response) => {
-        setEvents(response.data.data)
+        let event = response.data.data
+        const eData = event.map((ev) => {
+          return {
+            _id: ev._id,
+            event_name: ev.event_name,
+            date: ev.date.slice(0, 10),
+            venue: ev.venue
+          }
+        })
+        
+        setEvents(eData)
 
       }
     )
@@ -30,9 +42,9 @@ export default function DeleteDialog(props) {
 
   const handleDeleteClick = (id) => (event) => {
 
-    console.log("id",id)
+    console.log("id", id)
     event.stopPropagation();
-    if(isGuestPage){
+    if (isGuestPage) {
 
       axios.get(`http://localhost:3000/guestIndex/delete/${id}`)
       setOpen(false);
@@ -40,14 +52,14 @@ export default function DeleteDialog(props) {
       // setGuest(newGuest);
       // localStorage.setItem("guest_list", JSON.stringify(newGuest));
     }
-    else{
+    else {
 
       axios.get(`http://localhost:3000/delete/${id}`)
       setOpen(false);
-      
-      
+
+
     }
-    
+
 
   };
   const handleClickOpen = () => {
@@ -59,7 +71,7 @@ export default function DeleteDialog(props) {
   };
   return (
     <div>
-      <Button variant="outlined"  onClick={handleClickOpen}  >
+      <Button variant="outlined" onClick={handleClickOpen}  >
         Delete
       </Button>
       <Dialog
