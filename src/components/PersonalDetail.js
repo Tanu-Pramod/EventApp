@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import CardMedia from '@mui/material/CardMedia';
+
 
 import ImageDialog from './ImageDialog';
 import { eventContext } from '../App';
@@ -31,8 +31,8 @@ function PersonalDetail(props) {
       .required('Please enter your age')
       .test(
         'Is positive?',
-        'Age must be greater than 0',
-        (value) => value > 0
+        'Age must be in range of 0-100',
+        (value) => value > 0 && value <=100
       ),
     image: Yup.mixed().required('Please select your photo'),
     gender: Yup.string().required('Please select your gender ')
@@ -53,8 +53,6 @@ function PersonalDetail(props) {
 
     let reader = new FileReader();
     let file = event.target.files[0];
-
-    // console.log("file",file)
     reader.readAsDataURL(file);
     reader.onload = () => {
 
@@ -81,7 +79,7 @@ function PersonalDetail(props) {
                 className="formikFieldGuest"
               />
 
-              <ErrorMessage name="guest_name" component="div" className='error' />
+              <ErrorMessage name="guest_name" component="div" className='error'/>
             </div>
           </Box>
 

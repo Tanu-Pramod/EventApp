@@ -117,6 +117,68 @@ export default function Events() {
     },
 
   ];
+ 
+
+  const options = {
+    searchPlaceholder: 'Press Enter to Search',
+    filterType: 'dropdown',
+    responsive: 'scroll',
+    viewColumns: false,
+    selectableRows: false,
+    rowsPerPage: 100,
+    
+    fixedHeader: false,
+    print: false,
+    download: false,
+    filter: true,
+    sort: false,
+    // selectableRows: false,
+   
+    //orderList && orderList.metadata && orderList.metadata[0] && orderList.metadata[0].total,
+    serverSide: true,
+    server: true,
+    selectableRowsOnClick: false,
+    selectableRows: 'none',
+    fixedHeader: false,
+    search: true,
+    rangePage: true,
+    // rowsPerPageOptions:[],
+    // rowsPerPageOptions: [10, 100, 250, 500, 1000],
+    // downloadOptions: {
+    //   separator:',',
+    //   filename: 'tableDownload.csv',
+    // },
+    textLabels: {
+      filter: {
+        all: "",
+        title: "FILTERS",
+      },
+    },
+    onTableChange: (action, tableState) => {
+      console.log('action=', action, tableState)
+      switch (action) {
+        case 'changePage':
+          this.changePage(tableState.page);
+          break;
+        case 'changeRowsPerPage':
+          this.changeRowsPerPage(tableState.rowsPerPage)
+          break;
+   
+        case 'onSearchClose':
+          this.handleCloseSearch();
+          break;
+      }
+    },
+  }
+    // onDownload: () => {
+    //   onclick = (e) => {
+    //       this.handleDownload(e);
+    //      }
+    //     }
+    // (buildHead: (columns) ,
+    //  buildBody: (data)) => {
+
+    //  }
 
 
   return (
@@ -150,6 +212,10 @@ export default function Events() {
           rowsPerPageOptions={[5]}
           checkboxSelection
           getRowId={row=>row._id}
+          // options={options}
+          filterModel={{
+            items: [{ columnField: 'rating', operatorValue: '>', value: '2.5' }],
+          }}
         />
       </Box>
     </div>
